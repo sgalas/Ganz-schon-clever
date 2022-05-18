@@ -1,1 +1,13 @@
+Założenie naszego projektu było takie, że aby umożliwić rozgrywkę wieloosobową przeprowadzimy
+komunikację na zasadzie klient - serwer. Odpowiadać za to mają klasy serwera oraz klienta gry, które
+połączone będą z interfejsami.
 
+Sama gra realizowana będzie za pomocą wielu klas, tak aby spełniać zasady gry (z ang. Niezły Bystrzak).
+Tak więc potrzebne nam sa tablice, na których znajdować będa się pola, które z upływem czasu gry będą zajmowane
+akcjami gracza. Są one w osobnych klasach, gdyż niektóre z nich znacząco różnią się działaniem, dlatego prościej
+nam będzie je wykonywać w ten sposób. W interakcajch gracza przewidzieć musimy bonusy i dostęp do nich, oprócz
+tego pola którymi może dysponować gracz to: 6 kostek z losowymi wynikami po każdym ruchu, srebrana taca, na którą
+odkładane są kostki odrzucone ze względu na założenia gry oraz trzy pola oznaczające ruch w danej turze.
+
+Przewidziana jest również klasa (BestMove), która ma za zadanie znalezienie najbardziej optymalnego ruchu (takiego,
+przyzna największą liczbę punktów.
