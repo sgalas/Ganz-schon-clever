@@ -1,7 +1,7 @@
-//public enum Color extends java.awt.Color {
-//    green,
-//    blue,
-//    orange,
-//    yellow,
-//    violet
-//}
+public enum Color {
+    GREEN,
+    BLUE,
+    ORANGE,
+    YELLOW,
+    VIOLET
+}
