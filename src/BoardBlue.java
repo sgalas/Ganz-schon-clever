@@ -5,7 +5,7 @@ public class BoardBlue implements Board{
     @Override
     public int fillTile(Dice dice, int index) throws ImpossibleFill {
         if( !(tiles.get(index).getAllowedDiceList().contains(dice)))
-            throw new ImpossibleFill("Nie można umieścić tej kostki w planszy fioletowej!");
+            throw new ImpossibleFill("Nie można umieścić tej kostki w planszy niebieskiej!");
         return 0;
     }
 
