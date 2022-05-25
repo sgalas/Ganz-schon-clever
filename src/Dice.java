@@ -1,5 +1,5 @@
 public class Dice {
-    private Color color;
+    private java.awt.Color color;
     private int value;
 
     public int getValue() {

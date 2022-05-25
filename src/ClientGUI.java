@@ -14,6 +14,7 @@ public class ClientGUI {
     JButton b5 = new JButton();
     JButton b6 = new JButton();
     JButton b7 = new JButton();
+    JLabel x = new JLabel();
     public ClientGUI(){
 
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -27,6 +28,7 @@ public class ClientGUI {
 
         b2 = new JButton("3");
         b2.setBounds(170,115,41, 41);//x-axis, y-axis, width, height
+        b2.setOpaque(true);
         lp.add(b2, 2);//adding button in JFrame
         b2.setVisible(true);
 
@@ -50,10 +52,18 @@ public class ClientGUI {
         lp.add(b6, 2);//adding button in JFrame
         b6.setVisible(true);
 
-        b7 = new JButton("2");
-        b7.setBounds(110,265,41, 41);//x-axis, y-axis, width, height
-        lp.add(b7, 2);//adding button in JFrame
-        b7.setVisible(true);
+//        b7 = new JButton("2");
+//        b7.setBounds(110,265,41, 41);//x-axis, y-axis, width, height
+//        lp.add(b7, 2);//adding button in JFrame
+//        b7.setVisible(true);
+
+        x = new JLabel("X");
+        x.setBounds(110,265,41,41);
+        x.setBackground(java.awt.Color.BLUE);
+        x.setOpaque(true);
+        lp.add(x,2);
+        x.setVisible(true);
+
 //        b.addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
@@ -61,10 +71,12 @@ public class ClientGUI {
 //            }
 //        });
 
+
         JLabel background = new JLabel(new ImageIcon("src/Images/gownonapatyku.png"));
         background.setBounds(0,0,1292,835);
         background.setVisible(true);
         lp.add(background, 1);
+
 
 //        flaga = new JLabel(new ImageIcon("src/Images/FlagaSzkocji.png"));
 //        flaga.setBounds(100,100,100,100);
