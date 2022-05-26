@@ -1,8 +1,21 @@
-public class Dice {
-    private Color color;
-    private int value;
+import java.util.Random;
 
+public class Dice {
+    private final Color color;
+    private final int value;
+    Dice(Color color,int value){
+        this.color=color;
+        this.value=value;
+    }
     public int getValue() {
         return value;
+    }
+    public Color getColor() {
+        return color;
+    }
+    public static Dice getRandomDice(Color color){
+        Random random=new Random();
+        Dice dice=new Dice(color,random.nextInt());
+        return dice;
     }
 }
