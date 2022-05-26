@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class BoardGreen implements Board{
     private ArrayList<Tile> tiles;
@@ -12,5 +13,15 @@ public class BoardGreen implements Board{
     @Override
     public int getPoints() {
         return 0;
+    }
+
+    @Override
+    public List<PossibleMove> possibleMoves() {
+        return null;
+    }
+
+    @Override
+    public List<PossibleMove> possibleMovesWithDice(Dice dice) {
+        return null;
     }
 }
