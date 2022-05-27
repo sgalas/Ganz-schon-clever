@@ -80,9 +80,4 @@ public class Player {
     public void useAdditionalDice(){
         --additionalDiceCount;
     }
-    public void doMove(PossibleMove possibleMove) throws ImpossibleFill {
-        Board activeBoard = possibleMove.getBoard();
-        activeBoard.fillTile(possibleMove.getDice(), possibleMove.getIndex());
-    }
-
 }

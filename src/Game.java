@@ -12,4 +12,8 @@ public class Game {
     private void passivePlayerTurn(){
 
     }
+    private void doMove(PossibleMove possibleMove) throws ImpossibleFill {
+        Board activeBoard = possibleMove.getBoard();
+        activeBoard.fillTile(possibleMove.getDice(), possibleMove.getIndex());
+    }
 }
