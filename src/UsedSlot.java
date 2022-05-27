@@ -1,14 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class UsedSlot {
-    private List<Dice> usedSlot;
+    private final List<Dice> usedSlot;
     UsedSlot(List<Dice> usedSlot){
-        if(usedSlot!=null){
-            this.usedSlot=usedSlot;
-        } else {
-            usedSlot=new ArrayList<>();
-        }
+        this.usedSlot = Objects.requireNonNullElseGet(usedSlot, ArrayList::new);
     }
     public UsedSlot(){
         this(null);
