@@ -34,7 +34,7 @@ public class Player {
         return player;
     }
 
-        public List<PossibleMove> getPossibleMoves() {
+    public List<PossibleMove> getPossibleMoves() {
         List<PossibleMove> retList = boardGreen.possibleMoves();
         retList.addAll(boardViolet.possibleMoves());
         retList.addAll(boardOrange.possibleMoves());

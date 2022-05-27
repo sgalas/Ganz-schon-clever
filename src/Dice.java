@@ -3,7 +3,7 @@ import java.util.Random;
 public class Dice {
     private final Color color;
     private final int value;
-    Dice(Color color,int value){
+    public Dice(Color color,int value){
         this.color=color;
         this.value=value;
     }

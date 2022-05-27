@@ -10,7 +10,7 @@ public class UsedSlot {
             usedSlot=new ArrayList<>();
         }
     }
-    UsedSlot(){
+    public UsedSlot(){
         this(null);
     }
     public void putDice(Dice dice){

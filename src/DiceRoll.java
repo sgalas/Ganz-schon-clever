@@ -5,7 +5,7 @@ public class DiceRoll {
     private List<Dice> dices;
     private int dicesRetrievedCount;
 
-    DiceRoll(List<Dice> dices){
+    public DiceRoll(List<Dice> dices){
         this.dices=dices;
     }
     public static DiceRoll rollDice(){
