@@ -16,6 +16,7 @@ public class ClientGUI {
         return button;
     }
 
+
     JButton createImaged(JButton button, String path, int x, int y, JLayeredPane lp){
         button.setIcon(new ImageIcon(Objects.requireNonNull(this.getClass().getResource(path))));
         button.setBounds(x,y,41,41);
@@ -63,7 +64,8 @@ public class ClientGUI {
     JButton b20 = new JButton();
     JButton b21 = new JButton();
     JButton b23 = new JButton();
-    JToggleButton d1 = new JToggleButton();
+    //JToggleButton d1 = new JToggleButton();
+    JButton d1 = new JButton();
 
     public ClientGUI(){
 
@@ -96,18 +98,25 @@ public class ClientGUI {
         b12 = createFiled(b12, "7", 670,220,lp);
         b13 = createImaged(b13, "Images/12_Button.png", 740, 220, lp);
 
-//        d1.setIcon(new ImageIcon(Objects.requireNonNull(this.getClass().getResource(path))));
-//        d1.setBounds(x,y,41,41);
+//        d1.setIcon(new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/Dice_One.png"))));
+//        d1.setBounds(1000,600,41,41);
 //        d1.setMargin(new Insets(0,0,0,0));
 //        lp.add(d1);
 //        d1.setVisible(true);
         d1 = createImaged(d1, "Images/Dice_One.png", 1000, 600, lp);
-        //d1.setSelectedIcon(new ImageIcon("Images/Dice_One_Selected.png"));
+        //d1.setSelectedIcon(new ImageIcon("src/Images/Dice_One.png"));
+        d1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                d1.setIcon(new ImageIcon("src/Images/Dice_One_Selected.png"));
+            }
+        });
 
         y00.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                y00.setIcon(new ImageIcon("Images/X_Button.png"));
+                y00.setText("");
+                y00.setIcon(new ImageIcon("src/Images/X_Button.png"));
             }
         });
 
