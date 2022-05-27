@@ -37,8 +37,8 @@ public class SowaPlayground {
 
 
     public static void main(String[] args) throws InterruptedException {
-        //ClientGUI abc = new ClientGUI();
-        testgui();
+        ClientGUI abc = new ClientGUI();
+        //testgui();
     }
 
 }
