@@ -5,11 +5,16 @@ public class DiceRoll {
     private List<Dice> dices;
     private int dicesRetrievedCount;
 
-    DiceRoll(){
+    DiceRoll(List<Dice> dices){
+        this.dices=dices;
+    }
+    public static DiceRoll rollDice(){
+        List<Dice> dices = new ArrayList<>();
         for (Color color :Color.values()){
             dices=new ArrayList<>();
             dices.add(Dice.getRandomDice(color));
         }
+        return new DiceRoll(dices);
     }
     public List<Dice> getDices() {
         return dices;
