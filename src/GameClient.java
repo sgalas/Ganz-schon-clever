@@ -4,7 +4,12 @@ public class GameClient extends Game {
     public void connect(){
     }
     @Override
-    public void update() {
-        super.update();
+    protected void activePlayerTurn(Player player){
+
+    }
+
+    @Override
+    protected void passivePlayerTurn(Player player) {
+
     }
 }

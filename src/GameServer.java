@@ -50,4 +50,14 @@ public class GameServer extends Game{
         }
 
     }
+
+    @Override
+    protected void activePlayerTurn(Player player) {
+
+    }
+
+    @Override
+    protected void passivePlayerTurn(Player player) {
+
+    }
 }
