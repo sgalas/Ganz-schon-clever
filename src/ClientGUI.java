@@ -4,42 +4,65 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
+import java.util.Random;
 
 public class ClientGUI {
+    /**
+     * Metoda tworząca przycisk o odpowiednich parametrach, wypełniony odpowiednią wartością
+     * @param button obiekt przycisku - pusty, domyślny
+     * @param label tekst do wyświetlenia w przycisku
+     * @param x współrzędna x przycisku
+     * @param y współrzędna y przycisku
+     * @param lp obiekt JLayeredPane do którego ma należeć przycisk
+     * @return gotowy przycisk
+     */
     JButton createFiled(JButton button, String label, int x, int y, JLayeredPane lp){
         button = new JButton(label);
         button.setBackground(Color.white);
         button.setBounds(x,y,41, 41);//x-axis, y-axis, width, height
-        lp.add(button, 2);//adding button in JFrame
+        lp.add(button, JLayeredPane.POPUP_LAYER);//adding button in JFrame
         button.setVisible(true);
-
         return button;
     }
 
-
+    /**
+     * Metoda tworząca przycisk z obrazem jako tłem
+     * @param button  obiekt przycisku - pusty, domyślny
+     * @param path ścieżka do pliku obrazka
+     * @param x współrzędna x przycisku
+     * @param y współrzędna y przycisku
+     * @param lp obiekt JLayeredPane do którego ma należeć przycisk
+     * @return gotowy przycisk
+     */
     JButton createImaged(JButton button, String path, int x, int y, JLayeredPane lp){
         button.setIcon(new ImageIcon(Objects.requireNonNull(this.getClass().getResource(path))));
         button.setBounds(x,y,41,41);
         button.setMargin(new Insets(0,0,0,0));
-        lp.add(button);
+        lp.add(button, JLayeredPane.POPUP_LAYER);
         button.setVisible(true);
-
         return button;
     }
-    JToggleButton createImaged(JToggleButton button,  String path, int x, int y, JLayeredPane lp){
-        button.setIcon(new ImageIcon(Objects.requireNonNull(this.getClass().getResource(path))));
+
+    /**
+     * Metoda tworząca "pustą" kość - nie nadając jej wartości
+     * @param button pusty obiekt przycisku
+     * @param x współrzędna x przycisku
+     * @param y współrzędna y przycisku
+     * @param lp obiekt JLayeredPane do którego ma należeć przycisk
+     * @return gotowy przycisk
+     */
+    JButton createDice(JButton button, int x, int y, JLayeredPane lp){
         button.setBounds(x,y,41,41);
         button.setMargin(new Insets(0,0,0,0));
-        lp.add(button);
+        lp.add(button, JLayeredPane.POPUP_LAYER);
         button.setVisible(true);
-
         return button;
     }
-
-    JFrame f=new JFrame();//creating instance of JFrame
-    JLayeredPane lp = new JLayeredPane();
-    JButton y00 =new JButton(); //creating instance of JButton
-    JButton y01 = new JButton();
+    //Inicjalizacja wszystkich przycisków - konieczna w tym miejscu z powodu odnoszenia się do nich z różnych metod
+    JFrame f=new JFrame(); // Ramka "zerowa" - podstawa gui
+    JLayeredPane lp = new JLayeredPane(); // Jedyny element JFrame, zawierający wszystkie przyciski
+    JButton y00 =new JButton(); //Przycisk żółty - kolumna 0 rząd 0
+    JButton y01 = new JButton(); // Przycisk żółty - kolumna 0 rząd 1
     JButton y02 = new JButton();
     JButton y10 = new JButton();
     JButton y20 = new JButton();
@@ -64,13 +87,17 @@ public class ClientGUI {
     JButton b20 = new JButton();
     JButton b21 = new JButton();
     JButton b23 = new JButton();
-    //JToggleButton d1 = new JToggleButton();
-    JButton d1 = new JButton();
+    JButton diceWhite = new JButton(); //kość biała
+    JButton diceYellow = new JButton();
+    JButton diceBlue = new JButton();
+    JButton dicePurple = new JButton();
+    JButton diceGreen = new JButton();
+    JButton diceOrange = new JButton();
 
     public ClientGUI(){
 
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setSize(new Dimension(1920,1080));//400 width and 500 height
+        f.setSize(new Dimension(1310,850)); //Ustawienie wielkości okna
 
         y00 = createFiled(y00, "3", 110, 115, lp);
         y01 = createFiled(y01, "2", 110, 165, lp);
@@ -98,17 +125,39 @@ public class ClientGUI {
         b12 = createFiled(b12, "7", 670,220,lp);
         b13 = createImaged(b13, "Images/12_Button.png", 740, 220, lp);
 
-//        d1.setIcon(new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Images/Dice_One.png"))));
-//        d1.setBounds(1000,600,41,41);
-//        d1.setMargin(new Insets(0,0,0,0));
-//        lp.add(d1);
-//        d1.setVisible(true);
-        d1 = createImaged(d1, "Images/Dice_One.png", 1000, 600, lp);
+
+        diceWhite = createDice(diceWhite, 900, 400, lp);
+        Random random=new Random();
+        int startingDiceValue = random.nextInt(1,7);
+        switch (startingDiceValue){
+            case 1:
+                diceWhite.setIcon(new ImageIcon("src/Images/Dice_One.png"));
+                break;
+            case 2:
+                diceWhite.setIcon(new ImageIcon("src/Images/Dice_Two.png"));
+                break;
+            case 3:
+                diceWhite.setIcon(new ImageIcon("src/Images/Dice_Three.png"));
+                break;
+            case 4:
+                diceWhite.setIcon(new ImageIcon("src/Images/Dice_Four.png"));
+                break;
+            case 5:
+                diceWhite.setIcon(new ImageIcon("src/Images/Dice_Five.png"));
+                break;
+            case 6:
+                diceWhite.setIcon(new ImageIcon("src/Images/Dice_Six.png"));
+                break;
+            default:
+
+        }
+
+        //diceWhite = createImaged(diceWhite, "Images/Dice_One.png", 900, 400, lp);
         //d1.setSelectedIcon(new ImageIcon("src/Images/Dice_One.png"));
-        d1.addActionListener(new ActionListener() {
+        diceWhite.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                d1.setIcon(new ImageIcon("src/Images/Dice_One_Selected.png"));
+                diceWhite.setIcon(new ImageIcon("src/Images/Dice_One_Selected.png"));
             }
         });
 
@@ -124,11 +173,11 @@ public class ClientGUI {
         JLabel background = new JLabel(new ImageIcon("src/Images/BoardBackground.png"));
         background.setBounds(0,0,1292,835);
         background.setVisible(true);
-        lp.add(background, 1);
+        lp.add(background, JLayeredPane.DEFAULT_LAYER);
 
-        lp.repaint();
-        f.repaint();
         f.add(lp);
+
+        lp.setVisible(true);
         f.setLocationRelativeTo(null);
         f.setVisible(true);//making the frame visible
 

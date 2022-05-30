@@ -8,6 +8,7 @@ public class DiceRoll {
     public DiceRoll(List<Dice> dices){
         this.dices=dices;
     }
+
     public static DiceRoll rollDice(){
         List<Dice> dices = new ArrayList<>();
         for (Color color :Color.values()){
@@ -16,6 +17,7 @@ public class DiceRoll {
         }
         return new DiceRoll(dices);
     }
+
     public List<Dice> getDices() {
         return dices;
     }
