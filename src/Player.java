@@ -74,10 +74,16 @@ public class Player {
     public void useReroll(){
         --rerollCount;
     }
+    public void addReroll(){
+        ++rerollCount;
+    }
     public int getAdditionalDiceCount(){
         return additionalDiceCount;
     }
     public void useAdditionalDice(){
         --additionalDiceCount;
+    }
+    public void addAdditionalDice(){
+        ++additionalDiceCount;
     }
 }
