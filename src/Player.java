@@ -7,36 +7,36 @@ public class Player {
     private int additionalDiceCount;
     private int foxCount;
     private final BoardGreen boardGreen;
-    private final BoardViolet boardViolet;
+    private final BoardPurple boardPurple;
     private final BoardOrange boardOrange;
     private final BoardBlue boardBlue;
     private final BoardYellow boardYellow;
 
-    public Player(int id, String nick, int rerollCount, int additionalDiceCount, int foxCount, BoardGreen boardGreen, BoardViolet boardViolet, BoardOrange boardOrange, BoardBlue boardBlue, BoardYellow boardYellow) {
+    public Player(int id, String nick, int rerollCount, int additionalDiceCount, int foxCount, BoardGreen boardGreen, BoardPurple boardPurple, BoardOrange boardOrange, BoardBlue boardBlue, BoardYellow boardYellow) {
         this.id = id;
         this.nick = nick;
         this.rerollCount = rerollCount;
         this.additionalDiceCount = additionalDiceCount;
         this.foxCount = foxCount;
         this.boardGreen = boardGreen;
-        this.boardViolet = boardViolet;
+        this.boardPurple = boardPurple;
         this.boardOrange = boardOrange;
         this.boardBlue = boardBlue;
         this.boardYellow = boardYellow;
     }
     public static Player createNewPlayer(int id, String nick) {
         BoardGreen boardGreen=new BoardGreen();
-        BoardViolet boardViolet=new BoardViolet();
+        BoardPurple boardPurple =new BoardPurple();
         BoardOrange boardOrange=new BoardOrange();
         BoardBlue boardBlue=new BoardBlue();
         BoardYellow boardYellow=new BoardYellow();
-        Player player =new Player(id,nick,0,0,0,boardGreen,boardViolet,boardOrange,boardBlue,boardYellow);
+        Player player =new Player(id,nick,0,0,0,boardGreen, boardPurple,boardOrange,boardBlue,boardYellow);
         return player;
     }
 
     public List<PossibleMove> getPossibleMoves() {
         List<PossibleMove> retList = boardGreen.possibleMoves();
-        retList.addAll(boardViolet.possibleMoves());
+        retList.addAll(boardPurple.possibleMoves());
         retList.addAll(boardOrange.possibleMoves());
         retList.addAll(boardBlue.possibleMoves());
         retList.addAll(boardYellow.possibleMoves());
@@ -45,7 +45,7 @@ public class Player {
 
     public List<PossibleMove> getPossibleMovesForDice(Dice dice) {
         List<PossibleMove> retList = boardGreen.possibleMovesWithDice(dice);
-        retList.addAll(boardViolet.possibleMovesWithDice(dice));
+        retList.addAll(boardPurple.possibleMovesWithDice(dice));
         retList.addAll(boardOrange.possibleMovesWithDice(dice));
         retList.addAll(boardBlue.possibleMovesWithDice(dice));
         retList.addAll(boardYellow.possibleMovesWithDice(dice));

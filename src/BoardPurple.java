@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoardViolet implements Board{
+public class BoardPurple implements Board{
     private ArrayList<Tile> tiles;
     @Override
     public int fillTile(Dice dice, int index) throws ImpossibleFill {
