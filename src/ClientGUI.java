@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Random;
 
 public class ClientGUI {
+
     /**
      * Metoda tworząca przycisk o odpowiednich parametrach, wypełniony odpowiednią wartością
      * @param button obiekt przycisku - pusty, domyślny
@@ -19,6 +20,7 @@ public class ClientGUI {
     JButton createFiled(JButton button, String label, int x, int y, JLayeredPane lp){
         button.setBackground(Color.white);
         button.setBounds(x,y,41, 41);//x-axis, y-axis, width, height
+        button.setForeground(Color.black);
         lp.add(button, JLayeredPane.POPUP_LAYER);//adding button in JFrame
         button.setVisible(true);
         return button;
@@ -241,14 +243,7 @@ public class ClientGUI {
         more9 = createMore(more9, 689, 660, lp);
         more10 = createMore(more10, 757, 660, lp);
 
-        //diceWhite = createImaged(diceWhite, "Images/Dice_One.png", 900, 400, lp);
-        //d1.setSelectedIcon(new ImageIcon("src/Images/Dice_One.png"));
-        diceWhite.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                diceWhite.setIcon(new ImageIcon("src/Images/Dice_One_Selected.png"));
-            }
-        });
+        diceWhite.addActionListener(e -> diceWhite.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Selected.png")));
 
         y00.addActionListener(new ActionListener() {
             @Override

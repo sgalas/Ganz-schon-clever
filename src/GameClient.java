@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class GameClient extends Game {
     private Player currentPlayer;
     private void getID(){
@@ -17,6 +19,18 @@ public class GameClient extends Game {
 
         }
     }
+
+    public Dice[] getDiceRoll(){
+        return null;
+    }
+
+    public List<Dice> getTray(){
+        return null;
+    }
+    public List<Dice> getUsed(){
+        return null;
+    }
+
     public int getFoxCount(){
         return currentPlayer.getFoxCount();
     }
