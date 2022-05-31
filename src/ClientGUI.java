@@ -18,6 +18,7 @@ public class ClientGUI {
      * @return gotowy przycisk
      */
     JButton createFiled(JButton button, String label, int x, int y, JLayeredPane lp){
+        button = new JButton(label);
         button.setBackground(Color.white);
         button.setBounds(x,y,41, 41);//x-axis, y-axis, width, height
         button.setForeground(Color.black);
