@@ -17,7 +17,6 @@ public class ClientGUI {
      * @return gotowy przycisk
      */
     JButton createFiled(JButton button, String label, int x, int y, JLayeredPane lp){
-        button = new JButton(label);
         button.setBackground(Color.white);
         button.setBounds(x,y,41, 41);//x-axis, y-axis, width, height
         lp.add(button, JLayeredPane.POPUP_LAYER);//adding button in JFrame
@@ -58,6 +57,24 @@ public class ClientGUI {
         button.setVisible(true);
         return button;
     }
+
+    /**
+     * Metoda tworzaca label z tekstem "<"
+     * @param more obiekt jlabel
+     * @param x koordynat x
+     * @param y koordynat y
+     * @param lp obiekt JLayeredPane do którego ma należeć przycisk
+     * @return gotowy przycisk
+     */
+    JLabel createMore(JLabel more, int x, int y, JLayeredPane lp){
+        more.setBounds(x,y,40,40);
+        more.setFont(new Font("Serif", Font.PLAIN, 40));
+        more.setForeground(Color.white);
+        more.setVisible(true);
+        lp.add(more, JLayeredPane.DRAG_LAYER);
+
+        return more;
+    }
     //Inicjalizacja wszystkich przycisków - konieczna w tym miejscu z powodu odnoszenia się do nich z różnych metod
     JFrame f=new JFrame(); // Ramka "zerowa" - podstawa gui
     JLayeredPane lp = new JLayeredPane(); // Jedyny element JFrame, zawierający wszystkie przyciski
@@ -86,7 +103,54 @@ public class ClientGUI {
     JButton b13 = new JButton();
     JButton b20 = new JButton();
     JButton b21 = new JButton();
+    JButton b22 = new JButton();
     JButton b23 = new JButton();
+    JButton g1 = new JButton();
+    JButton g2 = new JButton();
+    JButton g3 = new JButton();
+    JButton g4 = new JButton();
+    JButton g5 = new JButton();
+    JButton g6 = new JButton();
+    JButton g7 = new JButton();
+    JButton g8 = new JButton();
+    JButton g9 = new JButton();
+    JButton g10 = new JButton();
+    JButton g11 = new JButton();
+    JButton o1 = new JButton();
+    JButton o2 = new JButton();
+    JButton o3 = new JButton();
+    JButton o4 = new JButton();
+    JButton o5 = new JButton();
+    JButton o6 = new JButton();
+    JButton o7 = new JButton();
+    JButton o8 = new JButton();
+    JButton o9 = new JButton();
+    JButton o10 = new JButton();
+    JButton o11 = new JButton();
+
+    JButton p1 = new JButton();
+    JButton p2 = new JButton();
+    JButton p3 = new JButton();
+    JButton p4 = new JButton();
+    JButton p5 = new JButton();
+    JButton p6 = new JButton();
+    JButton p7 = new JButton();
+    JButton p8 = new JButton();
+    JButton p9 = new JButton();
+    JButton p10 = new JButton();
+    JButton p11 = new JButton();
+
+    JLabel more1 = new JLabel("<");
+    JLabel more2 = new JLabel("<");
+    JLabel more3 = new JLabel("<");
+    JLabel more4 = new JLabel("<");
+    JLabel more5 = new JLabel("<");
+    JLabel more6 = new JLabel("<");
+    JLabel more7 = new JLabel("<");
+    JLabel more8 = new JLabel("<");
+    JLabel more9 = new JLabel("<");
+    JLabel more10 = new JLabel("<");
+
     JButton diceWhite = new JButton(); //kość biała
     JButton diceYellow = new JButton();
     JButton diceBlue = new JButton();
@@ -94,10 +158,11 @@ public class ClientGUI {
     JButton diceGreen = new JButton();
     JButton diceOrange = new JButton();
 
-    public ClientGUI(){
+
+    public ClientGUI() {
 
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setSize(new Dimension(1310,850)); //Ustawienie wielkości okna
+        f.setSize(new Dimension(1310, 850)); //Ustawienie wielkości okna
 
         y00 = createFiled(y00, "3", 110, 115, lp);
         y01 = createFiled(y01, "2", 110, 165, lp);
@@ -117,40 +182,64 @@ public class ClientGUI {
         y12 = createImaged(y12, "Images/X_Button.png", 175, 215, lp);
         y21 = createImaged(y21, "Images/X_Button.png", 240, 165, lp);
 
-        b01 = createFiled(b01, "2", 600,165,lp);
-        b02 = createFiled(b01, "3", 670,165,lp);
-        b03 = createFiled(b01, "4", 740,165,lp);
-        b10 = createFiled(b10, "5", 530,220,lp);
-        b11 = createFiled(b11, "6", 600,220,lp);
-        b12 = createFiled(b12, "7", 670,220,lp);
-        b13 = createImaged(b13, "Images/12_Button.png", 740, 220, lp);
+        b01 = createFiled(b01, "2", 600, 160, lp);
+        b02 = createFiled(b02, "3", 670, 160, lp);
+        b03 = createFiled(b03, "4", 740, 160, lp);
+        b10 = createFiled(b10, "5", 530, 210, lp);
+        b11 = createFiled(b11, "6", 600, 210, lp);
+        b12 = createFiled(b12, "7", 670, 210, lp);
+        b13 = createFiled(b13, "8", 740, 210, lp);
+        b20 = createFiled(b20, "9", 530, 260, lp);
+        b21 = createImaged(b21, "Images/10_Button.png", 600, 260, lp);
+        b22 = createImaged(b22, "Images/11_Button.png", 670, 260, lp);
+        b23 = createImaged(b23, "Images/12_Button.png", 740, 260, lp);
 
+        g1 = createImaged(g1, "Images/More_One_Button.png", 105, 410, lp);
+        g2 = createImaged(g2, "Images/More_Two_Button.png", 173, 410, lp);
+        g3 = createImaged(g3, "Images/More_Three_Button.png", 241, 410, lp);
+        g4 = createImaged(g4, "Images/More_Four_Button.png", 309, 410, lp);
+        g5 = createImaged(g5, "Images/More_Five_Button.png", 377, 410, lp);
+        g6 = createImaged(g6, "Images/More_One_Button.png", 445, 410, lp);
+        g7 = createImaged(g7, "Images/More_Two_Button.png", 513, 410, lp);
+        g8 = createImaged(g8, "Images/More_Three_Button.png", 581, 410, lp);
+        g9 = createImaged(g9, "Images/More_Four_Button.png", 649, 410, lp);
+        g10 = createImaged(g10, "Images/More_Five_Button.png", 717, 410, lp);
+        g11 = createImaged(g11, "Images/More_Six_Button.png", 785, 410, lp);
 
-        diceWhite = createDice(diceWhite, 900, 400, lp);
-        Random random=new Random();
-        int startingDiceValue = random.nextInt(1,7);
-        switch (startingDiceValue){
-            case 1:
-                diceWhite.setIcon(new ImageIcon("src/Images/Dice_One.png"));
-                break;
-            case 2:
-                diceWhite.setIcon(new ImageIcon("src/Images/Dice_Two.png"));
-                break;
-            case 3:
-                diceWhite.setIcon(new ImageIcon("src/Images/Dice_Three.png"));
-                break;
-            case 4:
-                diceWhite.setIcon(new ImageIcon("src/Images/Dice_Four.png"));
-                break;
-            case 5:
-                diceWhite.setIcon(new ImageIcon("src/Images/Dice_Five.png"));
-                break;
-            case 6:
-                diceWhite.setIcon(new ImageIcon("src/Images/Dice_Six.png"));
-                break;
-            default:
+        o1 = createFiled(o1, "", 105,535,lp);
+        o2 = createFiled(o2, "", 173,535,lp);
+        o3 = createFiled(o3, "", 241,535,lp);
+        o4 = createFiled(o4, "", 309,535,lp);
+        o5 = createFiled(o5, "", 377,535,lp);
+        o6 = createFiled(o6, "", 445,535,lp);
+        o7 = createFiled(o7, "", 513,535,lp);
+        o8 = createFiled(o8, "", 581,535,lp);
+        o9 = createFiled(o9, "", 649,535,lp);
+        o10 = createFiled(o10, "", 717,535,lp);
+        o11 = createFiled(o11, "", 785,535,lp);
 
-        }
+        p1 = createFiled(p1, "", 105,660,lp);
+        p2 = createFiled(p2, "", 173,660,lp);
+        p3 = createFiled(p3, "", 241,660,lp);
+        p4 = createFiled(p4, "", 309,660,lp);
+        p5 = createFiled(p5, "", 377,660,lp);
+        p6 = createFiled(p6, "", 445,660,lp);
+        p7 = createFiled(p7, "", 513,660,lp);
+        p8 = createFiled(p8, "", 581,660,lp);
+        p9 = createFiled(p9, "", 649,660,lp);
+        p10 = createFiled(p10, "", 717,660,lp);
+        p11 = createFiled(p11, "", 785,660,lp);
+
+        more1 = createMore(more1, 145, 660, lp);
+        more2 = createMore(more2, 213, 660, lp);
+        more3 = createMore(more3, 281, 660, lp);
+        more4 = createMore(more4, 349, 660, lp);
+        more5 = createMore(more5, 417, 660, lp);
+        more6 = createMore(more6, 485, 660, lp);
+        more7 = createMore(more7, 553, 660, lp);
+        more8 = createMore(more8, 621, 660, lp);
+        more9 = createMore(more9, 689, 660, lp);
+        more10 = createMore(more10, 757, 660, lp);
 
         //diceWhite = createImaged(diceWhite, "Images/Dice_One.png", 900, 400, lp);
         //d1.setSelectedIcon(new ImageIcon("src/Images/Dice_One.png"));
@@ -171,16 +260,162 @@ public class ClientGUI {
 
 
         JLabel background = new JLabel(new ImageIcon("src/Images/BoardBackground.png"));
-        background.setBounds(0,0,1292,835);
+        background.setBounds(0, 0, 1292, 835);
         background.setVisible(true);
         lp.add(background, JLayeredPane.DEFAULT_LAYER);
 
-        f.add(lp);
+//        more.setBounds(200,200,100,100);
+//        more.setFont(new Font("Serif", Font.PLAIN, 40));
+//        more.setVisible(true);
+//        lp.add(more, JLayeredPane.DRAG_LAYER);
 
+        f.add(lp);
         lp.setVisible(true);
         f.setLocationRelativeTo(null);
         f.setVisible(true);//making the frame visible
+        initialiseActive();
 
+    }
+
+    public void initialiseActive(){
+        diceWhite = createDice(diceWhite, 900, 400, lp);
+        Random random=new Random();
+        int startingDiceValue = random.nextInt(1,7);
+        switch (startingDiceValue){
+            case 1:
+                diceWhite.setIcon(new ImageIcon("src/Images/Dices/Dice_One.png"));
+                break;
+            case 2:
+                diceWhite.setIcon(new ImageIcon("src/Images/Dices/Dice_Two.png"));
+                break;
+            case 3:
+                diceWhite.setIcon(new ImageIcon("src/Images/Dices/Dice_Three.png"));
+                break;
+            case 4:
+                diceWhite.setIcon(new ImageIcon("src/Images/Dices/Dice_Four.png"));
+                break;
+            case 5:
+                diceWhite.setIcon(new ImageIcon("src/Images/Dices/Dice_Five.png"));
+                break;
+            case 6:
+                diceWhite.setIcon(new ImageIcon("src/Images/Dices/Dice_Six.png"));
+                break;
+        }
+
+        startingDiceValue = random.nextInt(1,7);
+        diceBlue = createDice(diceBlue, 1000, 400, lp);
+        switch (startingDiceValue){
+            case 1:
+                diceBlue.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
+                break;
+            case 2:
+                diceBlue.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Blue.png"));
+                break;
+            case 3:
+                diceBlue.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Blue.png"));
+                break;
+            case 4:
+                diceBlue.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Blue.png"));
+                break;
+            case 5:
+                diceBlue.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Blue.png"));
+                break;
+            case 6:
+                diceBlue.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Blue.png"));
+                break;
+        }
+
+        startingDiceValue = random.nextInt(1,7);
+        diceYellow = createDice(diceYellow, 1050, 450, lp);
+        switch (startingDiceValue){
+            case 1:
+                diceYellow.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
+                break;
+            case 2:
+                diceYellow.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Yellow.png"));
+                break;
+            case 3:
+                diceYellow.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Yellow.png"));
+                break;
+            case 4:
+                diceYellow.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Yellow.png"));
+                break;
+            case 5:
+                diceYellow.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Yellow.png"));
+                break;
+            case 6:
+                diceYellow.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Yellow.png"));
+                break;
+        }
+
+        startingDiceValue = random.nextInt(1,7);
+        diceGreen = createDice(diceGreen, 1100, 400, lp);
+        switch (startingDiceValue){
+            case 1:
+                diceGreen.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
+                break;
+            case 2:
+                diceGreen.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
+                break;
+            case 3:
+                diceGreen.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
+                break;
+            case 4:
+                diceGreen.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
+                break;
+            case 5:
+                diceGreen.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
+                break;
+            case 6:
+                diceGreen.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
+                break;
+        }
+
+        startingDiceValue = random.nextInt(1,7);
+        diceOrange = createDice(diceOrange, 950, 450, lp);
+        switch (startingDiceValue){
+            case 1:
+                diceOrange.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
+                break;
+            case 2:
+                diceOrange.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
+                break;
+            case 3:
+                diceOrange.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
+                break;
+            case 4:
+                diceOrange.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
+                break;
+            case 5:
+                diceOrange.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
+                break;
+            case 6:
+                diceOrange.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
+                break;
+        }
+
+        startingDiceValue = random.nextInt(1,7);
+        dicePurple = createDice(dicePurple, 1150, 450, lp);
+        switch (startingDiceValue){
+            case 1:
+                dicePurple.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
+                break;
+            case 2:
+                dicePurple.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
+                break;
+            case 3:
+                dicePurple.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
+                break;
+            case 4:
+                dicePurple.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
+                break;
+            case 5:
+                dicePurple.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
+                break;
+            case 6:
+                dicePurple.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
+                break;
+        }
 
     }
     public void testing(){
