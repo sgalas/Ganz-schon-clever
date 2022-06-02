@@ -16,7 +16,7 @@ public class UsedSlot {
     public void reset(){
         usedSlot.clear();
     }
-    public List<Dice> getUsed(){
+    public List<Dice> getDices(){
         return usedSlot;
     }
 }

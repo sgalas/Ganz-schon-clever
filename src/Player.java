@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Player {
@@ -55,6 +57,13 @@ public class Player {
         retList.addAll(boardOrange.possibleMovesWithDice(dice));
         retList.addAll(boardBlue.possibleMovesWithDice(dice));
         retList.addAll(boardYellow.possibleMovesWithDice(dice));
+        return retList;
+    }
+    public List<PossibleMove> getPossibleMovesForDices(List<Dice> dices) {
+        List<PossibleMove> retList=new LinkedList<>();
+        for(Dice dice:dices){
+            retList.addAll(getPossibleMovesForDice(dice));
+        }
         return retList;
     }
 
