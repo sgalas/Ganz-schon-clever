@@ -69,6 +69,7 @@ public class GameClient extends Game {
             moveIsFine=true;
             PossibleMove selectedMove=possibleMoves.get(0);//replace with gui chosing moves here
             TileSpecialAction tileSpecialAction = selectedMove.doMove();
+            currentPlayer.doSpecialAction(tileSpecialAction);
 
         } catch (ImpossibleFill e) {
             e.printStackTrace();//replace with showing error in gui
