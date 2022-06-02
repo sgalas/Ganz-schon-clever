@@ -1,4 +1,4 @@
-public enum SpecialAction {
+public enum TileSpecialAction {
     ADDFOX,
     ADDROLL,
     ADDADDITIONALDICE

@@ -4,8 +4,8 @@ import java.util.List;
 public class BoardOrange implements Board{
     private ArrayList<Tile> tiles;
     @Override
-    public int fillTile(Dice dice, int index) {
-        return 0;
+    public TileSpecialAction fillTile(Dice dice, int index) {
+        return tiles.get(index).fillWithDice(dice);
     }
 
     @Override

@@ -1,7 +1,7 @@
 import java.util.List;
 
 public interface Board {
-    int fillTile(Dice dice,int index) throws ImpossibleFill;
+    TileSpecialAction fillTile(Dice dice, int index) throws ImpossibleFill;
 
     int getPoints();
 

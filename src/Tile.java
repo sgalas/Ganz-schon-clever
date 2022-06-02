@@ -3,22 +3,23 @@ import java.util.List;
 public class Tile {
     private List<Dice> allowedDiceList;
     private Dice filledWith;
-    private final SpecialAction specialAction;
-    public Tile(List<Dice> allowedDiceList,SpecialAction specialAction ){
+    private final TileSpecialAction tileSpecialAction;
+    public Tile(List<Dice> allowedDiceList, TileSpecialAction tileSpecialAction){
         this.allowedDiceList=allowedDiceList;
-        this.specialAction=specialAction;
+        this.tileSpecialAction = tileSpecialAction;
     }
     public List<Dice> getAllowedDiceList() {
         return allowedDiceList;
     }
-    public SpecialAction getSpecialAction(){
-        return specialAction;
+    public TileSpecialAction getSpecialAction(){
+        return tileSpecialAction;
     }
     public void updateAllowedDiceList(List<Dice> dices){
         allowedDiceList=dices;
     }
-    public void fillWithDice(Dice dice){
+    public TileSpecialAction fillWithDice(Dice dice){
         filledWith=dice;
+        return getSpecialAction();
     }
 
     public Dice getFilledWith() {

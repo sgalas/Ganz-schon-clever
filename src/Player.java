@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -151,5 +150,18 @@ public class Player {
     }
     public void addAdditionalDice(){
         ++additionalDiceCount;
+    }
+    public void doSpecialAction(TileSpecialAction tileSpecialAction){
+        switch (tileSpecialAction){
+            case ADDFOX:
+                addFox();
+                break;
+            case ADDADDITIONALDICE:
+                addAdditionalDice();
+                break;
+            case ADDROLL:
+                addReroll();
+                break;
+        }
     }
 }
