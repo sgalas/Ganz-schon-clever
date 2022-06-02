@@ -11,6 +11,12 @@ public class Player {
     private final BoardOrange boardOrange;
     private final BoardBlue boardBlue;
     private final BoardYellow boardYellow;
+    private Dice yellowDice;
+    private Dice whiteDice;
+    private Dice blueDice;
+    private Dice orangeDice;
+    private Dice purpleDice;
+    private Dice greenDice;
 
     public Player(int id, String nick, int rerollCount, int additionalDiceCount, int foxCount, BoardGreen boardGreen, BoardPurple boardPurple, BoardOrange boardOrange, BoardBlue boardBlue, BoardYellow boardYellow) {
         this.id = id;
@@ -66,6 +72,30 @@ public class Player {
 
     public void addFox() {
         ++foxCount;
+    }
+
+    public Dice getBlueDice() {
+        return blueDice;
+    }
+
+    public Dice getGreenDice() {
+        return greenDice;
+    }
+
+    public Dice getOrangeDice() {
+        return orangeDice;
+    }
+
+    public Dice getPurpleDice() {
+        return purpleDice;
+    }
+
+    public Dice getWhiteDice() {
+        return whiteDice;
+    }
+
+    public Dice getYellowDice() {
+        return yellowDice;
     }
 
     public int getRerollCount() {

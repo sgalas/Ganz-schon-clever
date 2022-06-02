@@ -8,6 +8,8 @@ import java.util.Random;
 
 public class ClientGUI {
 
+    //Zmienna przechowujaca gracza - w celu wykonywania operacji - przekazywana na etapie tworzenia
+    private Player player;
     /**
      * Metoda tworząca przycisk o odpowiednich parametrach, wypełniony odpowiednią wartością
      * @param button obiekt przycisku - pusty, domyślny
@@ -162,8 +164,9 @@ public class ClientGUI {
     JButton diceOrange = new JButton();
 
 
-    public ClientGUI() {
+    public ClientGUI(Player player) {
 
+        this.player = player;
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(new Dimension(1310, 850)); //Ustawienie wielkości okna
 
@@ -275,9 +278,7 @@ public class ClientGUI {
 
     public void initialiseActive(){
         diceWhite = createDice(diceWhite, 900, 400, lp);
-        Random random=new Random();
-        int startingDiceValue = random.nextInt(1,7);
-        switch (startingDiceValue){
+        switch (player.getWhiteDice().getValue()){
             case 1:
                 diceWhite.setIcon(new ImageIcon("src/Images/Dices/Dice_One.png"));
                 break;
@@ -298,9 +299,8 @@ public class ClientGUI {
                 break;
         }
 
-        startingDiceValue = random.nextInt(1,7);
         diceBlue = createDice(diceBlue, 1000, 400, lp);
-        switch (startingDiceValue){
+        switch (player.getBlueDice().getValue()){
             case 1:
                 diceBlue.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
                 break;
@@ -321,9 +321,8 @@ public class ClientGUI {
                 break;
         }
 
-        startingDiceValue = random.nextInt(1,7);
         diceYellow = createDice(diceYellow, 1050, 450, lp);
-        switch (startingDiceValue){
+        switch (player.getYellowDice().getValue()){
             case 1:
                 diceYellow.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
                 break;
@@ -344,9 +343,8 @@ public class ClientGUI {
                 break;
         }
 
-        startingDiceValue = random.nextInt(1,7);
         diceGreen = createDice(diceGreen, 1100, 400, lp);
-        switch (startingDiceValue){
+        switch (player.getGreenDice().getValue()){
             case 1:
                 diceGreen.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
                 break;
@@ -367,9 +365,8 @@ public class ClientGUI {
                 break;
         }
 
-        startingDiceValue = random.nextInt(1,7);
         diceOrange = createDice(diceOrange, 950, 450, lp);
-        switch (startingDiceValue){
+        switch (player.getOrangeDice().getValue()){
             case 1:
                 diceOrange.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
                 break;
@@ -390,9 +387,8 @@ public class ClientGUI {
                 break;
         }
 
-        startingDiceValue = random.nextInt(1,7);
         dicePurple = createDice(dicePurple, 1150, 450, lp);
-        switch (startingDiceValue){
+        switch (player.getPurpleDice().getValue()){
             case 1:
                 dicePurple.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
                 break;
