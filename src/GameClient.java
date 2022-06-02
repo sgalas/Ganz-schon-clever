@@ -2,8 +2,6 @@ import java.util.List;
 
 public class GameClient extends Game {
     private Player currentPlayer;
-    private Tray tray=new Tray();
-    private UsedSlot usedSlot=new UsedSlot();
     private void getID(){
     }
     public void connect(){
@@ -23,13 +21,13 @@ public class GameClient extends Game {
         //somehow get Tray and UsedSlot from server
         Tray trayrecv=new Tray();
         UsedSlot usedSlotrecv=new UsedSlot();
-        tray=trayrecv;
-        usedSlot=usedSlotrecv;
-        List<PossibleMove> possibleMoves= currentPlayer.getPossibleMovesForDices(tray.getDices());
+        currentPlayer.setTray(trayrecv);
+        currentPlayer.setUsedSlot(usedSlotrecv);
+        List<PossibleMove> possibleMoves= currentPlayer.getPossibleMovesForDices(getTray().getDices());
         if(possibleMoves.size()==0){
-            possibleMoves=currentPlayer.getPossibleMovesForDices(usedSlot.getDices());
+            possibleMoves=currentPlayer.getPossibleMovesForDices(getUsed().getDices());
         }
-        boolean moveIsFine=true;
+        boolean moveIsFine;
         do{
             try {
                 moveIsFine=true;
@@ -52,10 +50,10 @@ public class GameClient extends Game {
     }
 
     public Tray getTray(){
-        return tray;
+        return currentPlayer.getTray();
     }
     public UsedSlot getUsed(){
-        return usedSlot;
+        return currentPlayer.getUsedSlot();
     }
 
     public int getFoxCount(){

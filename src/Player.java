@@ -13,12 +13,9 @@ public class Player {
     private final BoardOrange boardOrange;
     private final BoardBlue boardBlue;
     private final BoardYellow boardYellow;
-    private Dice yellowDice;
-    private Dice whiteDice;
-    private Dice blueDice;
-    private Dice orangeDice;
-    private Dice purpleDice;
-    private Dice greenDice;
+    private UsedSlot usedSlot;
+    private DiceRoll diceRoll;
+    private Tray tray;
 
     public Player(int id, String nick, int rerollCount, int additionalDiceCount, int foxCount, BoardGreen boardGreen, BoardPurple boardPurple, BoardOrange boardOrange, BoardBlue boardBlue, BoardYellow boardYellow) {
         this.id = id;
@@ -79,32 +76,52 @@ public class Player {
         return foxCount;
     }
 
+    public BoardGreen getBoardGreen() {
+        return boardGreen;
+    }
+
+    public BoardPurple getBoardPurple() {
+        return boardPurple;
+    }
+
+    public BoardOrange getBoardOrange() {
+        return boardOrange;
+    }
+
+    public BoardBlue getBoardBlue() {
+        return boardBlue;
+    }
+
+    public BoardYellow getBoardYellow() {
+        return boardYellow;
+    }
+
+    public UsedSlot getUsedSlot() {
+        return usedSlot;
+    }
+
+    public DiceRoll getDiceRoll() {
+        return diceRoll;
+    }
+
+    public Tray getTray() {
+        return tray;
+    }
+
+    public void setUsedSlot(UsedSlot usedSlot) {
+        this.usedSlot = usedSlot;
+    }
+
+    public void setDiceRoll(DiceRoll diceRoll) {
+        this.diceRoll = diceRoll;
+    }
+
+    public void setTray(Tray tray) {
+        this.tray = tray;
+    }
+
     public void addFox() {
         ++foxCount;
-    }
-
-    public Dice getBlueDice() {
-        return blueDice;
-    }
-
-    public Dice getGreenDice() {
-        return greenDice;
-    }
-
-    public Dice getOrangeDice() {
-        return orangeDice;
-    }
-
-    public Dice getPurpleDice() {
-        return purpleDice;
-    }
-
-    public Dice getWhiteDice() {
-        return whiteDice;
-    }
-
-    public Dice getYellowDice() {
-        return yellowDice;
     }
 
     public int getRerollCount() {
