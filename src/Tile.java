@@ -17,4 +17,11 @@ public class Tile {
     public void updateAllowedDiceList(List<Dice> dices){
         allowedDiceList=dices;
     }
+    public void fillWithDice(Dice dice){
+        filledWith=dice;
+    }
+
+    public Dice getFilledWith() {
+        return filledWith;
+    }
 }
