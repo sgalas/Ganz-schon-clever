@@ -12,7 +12,6 @@ public class DiceRoll {
     public static DiceRoll rollDice(){
         List<Dice> dices = new ArrayList<>();
         for (Color color :Color.values()){
-            dices=new ArrayList<>();
             dices.add(Dice.getRandomDice(color));
         }
         return new DiceRoll(dices);
