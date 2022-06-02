@@ -107,6 +107,16 @@ public class Player {
     public Tray getTray() {
         return tray;
     }
+    public List<Dice> getUsedDiceList() {
+        return usedSlot.getDices();
+    }
+
+    public List<Dice> getTrayDiceList() {
+        return tray.getDices();
+    }
+    public List<Dice> getRolledDiceList() {
+        return diceRoll.getDices();
+    }
 
     public void setUsedSlot(UsedSlot usedSlot) {
         this.usedSlot = usedSlot;
