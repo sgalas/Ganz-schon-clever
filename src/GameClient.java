@@ -79,30 +79,30 @@ public class GameClient extends Game {
         ClientGUI clientGUI = new ClientGUI(currentPlayer);
     }
 
-public DiceRoll getDiceRoll(){
+    public DiceRoll getDiceRoll(){
         return null;
-        }
+    }
 
-public Tray getTray(){
+    public Tray getTray(){
         return currentPlayer.getTray();
-        }
-public UsedSlot getUsed(){
+    }
+    public UsedSlot getUsed(){
         return currentPlayer.getUsedSlot();
-        }
+    }
 
-public int getFoxCount(){
+    public int getFoxCount(){
         return currentPlayer.getFoxCount();
-        }
-public int getAdditionalDiceCount(){
+    }
+    public int getAdditionalDiceCount(){
         return currentPlayer.getAdditionalDiceCount();
-        }
-public int getRerollCount(){
+    }
+    public int getRerollCount(){
         return currentPlayer.getRerollCount();
-        }
-public void useAdditionalDice(){
+    }
+    public void useAdditionalDice(){
 
-        }
-public void useReroll(){
+    }
+    public void useReroll(){
 
-        }
+    }
 }
