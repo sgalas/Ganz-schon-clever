@@ -28,8 +28,10 @@ public class BoardOrange implements Board{
     }
 
     @Override
-    public int fillTile(Dice dice, int index) {
-        return 0;
+    public TileSpecialAction fillTile(Dice dice, int index) throws ImpossibleFill {
+        if( !(tiles.get(index).getAllowedDiceList().contains(dice)))
+            throw new ImpossibleFill("Nie można umieścić tej kostki w planszy pomarańczowej!");
+        return tiles.get(index).fillWithDice(dice);
     }
 
     @Override

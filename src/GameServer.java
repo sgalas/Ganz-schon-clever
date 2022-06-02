@@ -58,6 +58,42 @@ public class GameServer extends Game{
                     aktyw.write(str_to_bb("\n"));
                 }
                 TimeUnit.SECONDS.sleep(1);
+                Set<SelectionKey> selectedKeys;
+                do {
+                    selector.select();
+                    selectedKeys = selector.selectedKeys();
+                } while(selectedKeys.isEmpty());
+                wiadomosc.clear();
+                aktyw.read(wiadomosc);
+                for (int j = 0; j < 4; j++) {
+                    if (i != j) {
+                        SocketChannel pasyw=gracze.get(i);
+                        pasyw.write(wiadomosc);
+                    }
+                }
+                int ileOdeslalo=0;
+                while(ileOdeslalo!=3)
+                {
+                    selector.select();
+                    selectedKeys = selector.selectedKeys();
+                    Iterator<SelectionKey> iter = selectedKeys.iterator();
+                    ileOdeslalo+=selectedKeys.size();
+                    while(iter.hasNext()) {
+                        SelectionKey key = iter.next();
+                        SocketChannel client = (SocketChannel) key.channel();
+                        try {
+                            int byteCount = client.read(buffer);
+                            if (byteCount == -1) {
+                                key.channel().close();
+                                key.cancel();
+                                continue;
+                            }
+                        } catch (IOException e) {
+                            client.close();
+                            key.cancel();
+                        }
+                    }
+                }
             }
         }
 
