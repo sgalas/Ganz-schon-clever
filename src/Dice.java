@@ -15,7 +15,7 @@ public class Dice {
     }
     public static Dice getRandomDice(Color color){
         Random random=new Random();
-        Dice dice=new Dice(color,random.nextInt()%6+1);
+        Dice dice=new Dice(color,random.nextInt(1,7));
         return dice;
     }
 }

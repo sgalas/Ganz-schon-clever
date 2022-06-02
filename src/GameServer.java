@@ -8,8 +8,10 @@ import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class GameServer extends Game{
     public static ByteBuffer str_to_bb(String msg){
@@ -25,7 +27,8 @@ public class GameServer extends Game{
         }
         return new String(bytes, StandardCharsets.UTF_8);
     }
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
+
         ByteBuffer wiadomosc=ByteBuffer.allocate(256);
         Selector selector = Selector.open();
         ServerSocketChannel serverSocket = ServerSocketChannel.open();
@@ -47,10 +50,14 @@ public class GameServer extends Game{
             {
                 SocketChannel aktyw=gracze.get(i);
                 wiadomosc.clear();
-                aktyw.read(wiadomosc);
-                String odczyt=bb_to_str(wiadomosc);
-                String wiado=bb_to_str(wiadomosc);
-                String kolory[]=wiado.split("\n");
+                List<Dice> kostki=DiceRoll.rollDice().getDices();
+                StringBuilder kosciB=new StringBuilder();
+                for(Dice kos:kostki)
+                {
+                    aktyw.write(str_to_bb(Integer.toString(kos.getColor().ordinal())+","+Integer.toString(kos.getValue())));
+                    aktyw.write(str_to_bb("\n"));
+                }
+                TimeUnit.SECONDS.sleep(1);
             }
         }
 
