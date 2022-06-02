@@ -1,5 +1,7 @@
 public enum SpecialAction {
     ADDFOX,
     ADDROLL,
-    ADDADDITIONALDICE
+    ADDADDITIONALDICE,
+    ADDRANDOM,
+    ADDCONST
 }
