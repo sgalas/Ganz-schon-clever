@@ -4,7 +4,9 @@ import java.util.List;
 public class BoardOrange implements Board{
     private ArrayList<Tile> tiles;
     @Override
-    public TileSpecialAction fillTile(Dice dice, int index) {
+    public TileSpecialAction fillTile(Dice dice, int index) throws ImpossibleFill {
+        if( !(tiles.get(index).getAllowedDiceList().contains(dice)))
+            throw new ImpossibleFill("Nie można umieścić tej kostki w planszy pomarańczowej!");
         return tiles.get(index).fillWithDice(dice);
     }
 
