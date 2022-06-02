@@ -3,8 +3,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class BoardOrange implements Board{
-    private ArrayList<Tile> tiles;
-    private List<Dice> dices;
+    private final ArrayList<Tile> tiles;
+    private final List<Dice> dices;
 
     public BoardOrange() {
         tiles = new ArrayList<>();
@@ -14,41 +14,59 @@ public class BoardOrange implements Board{
             dices.add(new Dice(Color.ORANGE,i));
             dices.add(new Dice(Color.WHITE,i));
         }
+        tiles.add(0, new Tile(dices,null));
         tiles.add(1, new Tile(dices,null));
-        tiles.add(2, new Tile(dices,null));
-        tiles.add(3, new Tile(dices,SpecialAction.ADDROLL));
-        tiles.add(4, new Tile(dices,null));
-        tiles.add(5, new Tile(dices,SpecialAction.ADDRANDOM));
-        tiles.add(6, new Tile(dices,SpecialAction.ADDADDITIONALDICE));
-        tiles.add(7, new Tile(dices,null));
-        tiles.add(8, new Tile(dices,SpecialAction.ADDFOX));
-        tiles.add(9, new Tile(dices,null));
-        tiles.add(10, new Tile(dices,SpecialAction.ADDCONST));
-        tiles.add(11, new Tile(dices,null));
+        tiles.add(2, new Tile(dices,TileSpecialAction.ADDROLL));
+        tiles.add(3, new Tile(dices,null));
+        tiles.add(4, new Tile(dices,TileSpecialAction.ADDRANDOM));
+        tiles.add(5, new Tile(dices,TileSpecialAction.ADDADDITIONALDICE));
+        tiles.add(6, new Tile(dices,null));
+        tiles.add(7, new Tile(dices,TileSpecialAction.ADDFOX));
+        tiles.add(8, new Tile(dices,null));
+        tiles.add(9, new Tile(dices,TileSpecialAction.ADDCONST));
+        tiles.add(10, new Tile(dices,null));
+    }
+
+    public ArrayList<Tile> getTiles() {
+        return tiles;
     }
 
     @Override
     public TileSpecialAction fillTile(Dice dice, int index) throws ImpossibleFill {
-        if( !(tiles.get(index).getAllowedDiceList().contains(dice)))
+
+        if( !(tiles.get(index).getAllowedDiceList().contains(dice))){
             throw new ImpossibleFill("Nie można umieścić tej kostki w planszy pomarańczowej!");
+        }
         return tiles.get(index).fillWithDice(dice);
     }
 
     @Override
     public int getPoints() {
-        return 0;
+        int points = 0;
+        for(int i = 0; i < tiles.size(); i++) {
+            int temp = tiles.get(1).getFilledWith().getValue();// x2 + x3 + warunek na liska
+            points = points + temp;
+        }
+        return points;
     }
 
     @Override
     public List<PossibleMove> possibleMoves() {
-        return null;
+        return null; //przekazać to samo co w possibleMoveWithDice
     }
 
     @Override
     public List<PossibleMove> possibleMovesWithDice(Dice dice) {
-        ArrayList<Tile> org = new ArrayList<>();
-        if(dice.getColor().equals(Color.ORANGE)) {
+        LinkedList<PossibleMove> moveWithDice = new LinkedList<>();
+
+        if(dices.contains(dice)){
+            for(int i = 0; i < tiles.size(); i++) {
+                if(!(tiles.get(i).getAllowedDiceList().contains(dice)))
+                    moveWithDice.add(new PossibleMove(this, dice, i)); // 1 element czy więcej?
+                break;
+            }
+            return moveWithDice;
         }
-        return null;
+      return null;
     }
 }
