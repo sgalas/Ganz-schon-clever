@@ -37,11 +37,11 @@ public class GameClient extends Game {
         //get tray and used from gui
         Tray tray=new Tray();
         UsedSlot used =new UsedSlot();
-        for(Dice tr:tray.getTray())
+        for(Dice tr:tray.getDices())
         {
             out.write(Integer.toString( tr.getColor().ordinal() )+","+Integer.toString(tr.getValue()) );
         }
-        for(Dice us:used.getUsed())
+        for(Dice us:used.getDices())
         {
             out.write("Z,"+Integer.toString( us.getColor().ordinal() )+","+Integer.toString(us.getValue()) );
         }
@@ -51,66 +51,58 @@ public class GameClient extends Game {
     @Override
     protected void passivePlayerTurn(Player player) {
 
-<<<<<<< HEAD
-=======
-        }
-        //somehow get Tray and UsedSlot from server
-        Tray trayrecv=new Tray();
-        UsedSlot usedSlotrecv=new UsedSlot();
+    //somehow get Tray and UsedSlot from server
+    Tray trayrecv=new Tray();
+    UsedSlot usedSlotrecv=new UsedSlot();
         currentPlayer.setTray(trayrecv);
         currentPlayer.setUsedSlot(usedSlotrecv);
-        List<PossibleMove> possibleMoves= currentPlayer.getPossibleMovesForDices(getTray().getDices());
+    List<PossibleMove> possibleMoves= currentPlayer.getPossibleMovesForDices(getTray().getDices());
         if(possibleMoves.size()==0){
-            possibleMoves=currentPlayer.getPossibleMovesForDices(getUsed().getDices());
-        }
-        boolean moveIsFine;
-        do{
-            try {
-                moveIsFine=true;
-                PossibleMove selectedMove=possibleMoves.get(0);//replace with gui chosing moves here
-                selectedMove.doMove();
-            } catch (ImpossibleFill e) {
-                e.printStackTrace();//replace with showing error in gui
-                moveIsFine=false;
-            }
-        } while (!moveIsFine);
-        //if fine add sending it to server
->>>>>>> origin/main
+        possibleMoves=currentPlayer.getPossibleMovesForDices(getUsed().getDices());
     }
+    boolean moveIsFine;
+        do{
+        try {
+            moveIsFine=true;
+            PossibleMove selectedMove=possibleMoves.get(0);//replace with gui chosing moves here
+            selectedMove.doMove();
+        } catch (ImpossibleFill e) {
+            e.printStackTrace();//replace with showing error in gui
+            moveIsFine=false;
+        }
+    } while (!moveIsFine);
+    //if fine add sending it to server
+
+}
 
     public void createGUI(){
         ClientGUI clientGUI = new ClientGUI(currentPlayer);
     }
-<<<<<<< HEAD
-    public Dice[] getDiceRoll(){
 
-=======
-
-    public DiceRoll getDiceRoll(){
->>>>>>> origin/main
+public DiceRoll getDiceRoll(){
         return null;
-    }
+        }
 
-    public Tray getTray(){
+public Tray getTray(){
         return currentPlayer.getTray();
-    }
-    public UsedSlot getUsed(){
+        }
+public UsedSlot getUsed(){
         return currentPlayer.getUsedSlot();
-    }
+        }
 
-    public int getFoxCount(){
+public int getFoxCount(){
         return currentPlayer.getFoxCount();
-    }
-    public int getAdditionalDiceCount(){
+        }
+public int getAdditionalDiceCount(){
         return currentPlayer.getAdditionalDiceCount();
-    }
-    public int getRerollCount(){
+        }
+public int getRerollCount(){
         return currentPlayer.getRerollCount();
-    }
-    public void useAdditionalDice(){
+        }
+public void useAdditionalDice(){
 
-    }
-    public void useReroll(){
+        }
+public void useReroll(){
 
-    }
+        }
 }
