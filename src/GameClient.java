@@ -32,10 +32,12 @@ public class GameClient extends Game {
         boolean moveIsFine=true;
         do{
             try {
+                moveIsFine=true;
                 PossibleMove selectedMove=possibleMoves.get(0);//replace with gui chosing moves here
                 selectedMove.doMove();
             } catch (ImpossibleFill e) {
                 e.printStackTrace();//replace with showing error in gui
+                moveIsFine=false;
             }
         } while (!moveIsFine);
         //if fine add sending it to server
