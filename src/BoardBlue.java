@@ -3,6 +3,13 @@ import java.util.List;
 
 public class BoardBlue implements Board{
     private ArrayList<Tile> tiles;
+
+
+    public ArrayList<Tile> fillBoard(){
+        for(int i = 2; i <= 12; i++){
+        }
+        return null;
+    }
     @Override
     public int fillTile(Dice dice, int index) throws ImpossibleFill {
         if( !(tiles.get(index).getAllowedDiceList().contains(dice)))
@@ -22,6 +29,9 @@ public class BoardBlue implements Board{
 
     @Override
     public List<PossibleMove> possibleMovesWithDice(Dice dice) {
+        if(dice.getColor().equals(Color.BLUE) || dice.getColor().equals(Color.WHITE)){
+
+        }
         return null;
     }
 }
