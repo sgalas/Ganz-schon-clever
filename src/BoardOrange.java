@@ -44,7 +44,7 @@ public class BoardOrange implements Board{
     public int getPoints() {
         int points = 0;
         for(int i = 0; i < tiles.size(); i++) {
-            int temp = tiles.get(1).getFilledWith().getValue();// x2 + x3 + warunek na liska
+            int temp = tiles.get(i).getFilledWith().getValue();// x2 + x3 + warunek na liska
             points = points + temp;
         }
         return points;
