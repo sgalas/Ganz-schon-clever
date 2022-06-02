@@ -19,4 +19,8 @@ public class PossibleMove {
     public int getIndex() {
         return index;
     }
+    public void doMove() throws ImpossibleFill {
+        Board activeBoard = getBoard();
+        activeBoard.fillTile(getDice(), getIndex());
+    }
 }

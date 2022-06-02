@@ -10,4 +10,7 @@ public class Tile {
     public int getSpecialAction(){
         return specialAction;
     }
+    public void updateAllowedDiceList(List<Dice> dices){
+        allowedDiceList=dices;
+    }
 }

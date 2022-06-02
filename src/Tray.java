@@ -16,7 +16,7 @@ public class Tray {
     public void reset(){
         tray.clear();
     }
-    public List<Dice> getTray(){
+    public List<Dice> getDices(){
         return tray;
     }
 }
