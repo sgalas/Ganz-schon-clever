@@ -37,15 +37,18 @@ public class GameClient extends Game {
         //get tray and used from gui
         Tray tray=new Tray();
         UsedSlot used =new UsedSlot();
+        StringBuilder builder=new StringBuilder();
         for(Dice tr:tray.getDices())
         {
-            out.write(Integer.toString( tr.getColor().ordinal() )+","+Integer.toString(tr.getValue()) );
+            builder.append(Integer.toString( tr.getColor().ordinal() )+","+Integer.toString(tr.getValue()) );
         }
+        out.write(builder.toString());
+        builder=new StringBuilder();
         for(Dice us:used.getDices())
         {
-            out.write("Z,"+Integer.toString( us.getColor().ordinal() )+","+Integer.toString(us.getValue()) );
+            builder.append("Z,"+Integer.toString( us.getColor().ordinal() )+","+Integer.toString(us.getValue()) );
         }
-
+        out.write(builder.toString());
     }
 
     @Override
