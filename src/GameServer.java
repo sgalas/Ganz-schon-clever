@@ -25,27 +25,32 @@ public class GameServer extends Game{
         }
         return new String(bytes, StandardCharsets.UTF_8);
     }
-
     public static void main(String[] args) throws IOException {
-        ServerSocketChannel serverSocket = ServerSocketChannel.open();
         ByteBuffer wiadomosc=ByteBuffer.allocate(256);
+        Selector selector = Selector.open();
+        ServerSocketChannel serverSocket = ServerSocketChannel.open();
         serverSocket.bind(new InetSocketAddress("localhost", 5454));
         serverSocket.configureBlocking(false);
+        serverSocket.register(selector, SelectionKey.OP_ACCEPT);
         ByteBuffer buffer = ByteBuffer.allocate(256);
         ArrayList<SocketChannel> gracze=new ArrayList<>();
         while(gracze.size()!=4)
-        {
-            SocketChannel client = serverSocket.accept();
-            gracze.add(client);
+        {   selector.select();
+            Set<SelectionKey> selectedKeys = selector.selectedKeys();
+            if(!selectedKeys.isEmpty()) {
+                SocketChannel client = serverSocket.accept();
+                gracze.add(client);
+            }
         }
         while(true) {
-            for(int i=0;i<3;i++)
+            for(int i=0;i<4;i++)
             {
                 SocketChannel aktyw=gracze.get(i);
-                aktyw.write(str_to_bb("Mozesz"));
+                wiadomosc.clear();
                 aktyw.read(wiadomosc);
                 String odczyt=bb_to_str(wiadomosc);
-                System.out.println(wiadomosc);
+                String wiado=bb_to_str(wiadomosc);
+                String kolory[]=wiado.split("\n");
             }
         }
 
