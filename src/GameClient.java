@@ -20,6 +20,9 @@ public class GameClient extends Game {
         }
     }
 
+    public void createGUI(){
+        ClientGUI clientGUI = new ClientGUI(currentPlayer);
+    }
     public Dice[] getDiceRoll(){
         return null;
     }

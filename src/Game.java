@@ -40,7 +40,7 @@ public abstract class Game {
     protected abstract void activePlayerTurn(Player player);
     protected abstract void passivePlayerTurn(Player player);
 
-    private void doMove(PossibleMove possibleMove) throws ImpossibleFill {
+    public static void doMove(PossibleMove possibleMove) throws ImpossibleFill {
         Board activeBoard = possibleMove.getBoard();
         activeBoard.fillTile(possibleMove.getDice(), possibleMove.getIndex());
     }
