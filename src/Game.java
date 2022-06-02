@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 public abstract class Game {
@@ -37,7 +38,7 @@ public abstract class Game {
         }
 
     }
-    protected abstract void activePlayerTurn(Player player);
+    protected abstract void activePlayerTurn(Player player) throws IOException;
     protected abstract void passivePlayerTurn(Player player);
 
     public static void doMove(PossibleMove possibleMove) throws ImpossibleFill {
