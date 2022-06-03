@@ -9,7 +9,6 @@ public class GameClient extends Game {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
-    private DiceRoll rzut;
     private Player currentPlayer;
     public GameClient(String hostname,int port,String nick) throws FailedToConnectException {
         connect(hostname,port);
@@ -40,7 +39,7 @@ public class GameClient extends Game {
             String buffor[]=odpowiedz.split(",");
             kosci.add(new Dice( Color.values()[ Integer.valueOf(buffor[0]) ], Integer.valueOf(buffor[1]) ));
         }
-        rzut=new DiceRoll(kosci);
+        currentPlayer.setDiceRoll(new DiceRoll(kosci));
         //get tray and used from gui
         Tray tray=new Tray();
         UsedSlot used =new UsedSlot();
