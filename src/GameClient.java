@@ -11,11 +11,15 @@ public class GameClient extends Game {
     private BufferedReader in;
     private DiceRoll rzut;
     private Player currentPlayer;
+    public GameClient(String hostname,int port,String nick){
+        connect(hostname,port);
+        currentPlayer=Player.createNewPlayer(retrieveID(),nick);
+    }
     private void getID(){
     }
-    public void connect(){
+    private void connect(String hostname,int port){
         try {
-            clientSocket = new Socket("127.0.0.1", 5454);
+            clientSocket = new Socket(hostname, port);
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         }
@@ -24,6 +28,9 @@ public class GameClient extends Game {
             System.out.println("Nie można się połączyć!");
             System.exit(1);
         }
+    }
+    private int retrieveID(){//retrieve id from server
+        return 0;
     }
     @Override
     protected void activePlayerTurn(Player player) throws IOException {
