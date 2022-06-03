@@ -19,10 +19,10 @@ public class BoardGreen implements Board{
         tiles.add(2, new Tile(dices,null));
         tiles.add(3, new Tile(dices,TileSpecialAction.ADDADDITIONALDICE));
         tiles.add(4, new Tile(dices,null));
-        tiles.add(5, new Tile(dices,TileSpecialAction.ADDRANDOM));
+        tiles.add(5, new Tile(dices,TileSpecialAction.ADDRANDOMBLUE));
         tiles.add(6, new Tile(dices,TileSpecialAction.ADDFOX));
         tiles.add(7, new Tile(dices,null));
-        tiles.add(8, new Tile(dices,TileSpecialAction.ADDCONST));
+        tiles.add(8, new Tile(dices,TileSpecialAction.ADDPURPLE6));
         tiles.add(9, new Tile(dices,TileSpecialAction.ADDROLL));
         tiles.add(10, new Tile(dices,null));
     }
