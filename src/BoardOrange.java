@@ -27,9 +27,6 @@ public class BoardOrange implements Board{
         tiles.add(10, new Tile(dices,null));
     }
 
-    public ArrayList<Tile> getTiles() {
-        return tiles;
-    }
 
     @Override
     public TileSpecialAction fillTile(Dice dice, int index) throws ImpossibleFill {
@@ -44,7 +41,7 @@ public class BoardOrange implements Board{
     @Override
     public int getPoints() {
         int points = 0;
-        for(int i = 0; i < tiles.size(); i++) {
+        for(int i = 0; i < tiles.size() + 1; i++) {
             int temp = tiles.get(i).getFilledWith().getValue();
             if (i == 3) {
                 temp = temp * 2;
@@ -65,8 +62,9 @@ public class BoardOrange implements Board{
         LinkedList<PossibleMove> moves = new LinkedList<>();
         for(int i = 0; i < tiles.size(); i++) {
             for(Dice dice: dices)
-            if(!(tiles.get(i).getAllowedDiceList().contains(dice)))
+            if((tiles.get(i).getAllowedDiceList().contains(dice))) {
                 moves.add(new PossibleMove(this, dice, i));
+            }
         }
 
         return moves;
