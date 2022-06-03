@@ -37,6 +37,7 @@ public class BoardOrange implements Board{
         if( !(tiles.get(index).getAllowedDiceList().contains(dice))){
             throw new ImpossibleFill("Nie można umieścić tej kostki w planszy pomarańczowej!");
         }
+        tiles.get(index).updateAllowedDiceList(null);
         return tiles.get(index).fillWithDice(dice);
     }
 
@@ -61,7 +62,14 @@ public class BoardOrange implements Board{
 
     @Override
     public List<PossibleMove> possibleMoves() {
-        return null; //przekazać to samo co w possibleMoveWithDice
+        LinkedList<PossibleMove> moves = new LinkedList<>();
+        for(int i = 0; i < tiles.size(); i++) {
+            for(Dice dice: dices)
+            if(!(tiles.get(i).getAllowedDiceList().contains(dice)))
+                moves.add(new PossibleMove(this, dice, i));
+        }
+
+        return moves;
     }
 
     @Override
@@ -70,11 +78,11 @@ public class BoardOrange implements Board{
 
         if(dices.contains(dice)){
             for(int i = 0; i < tiles.size(); i++) {
-                if(!(tiles.get(i).getAllowedDiceList().contains(dice)))
-                    moveWithDice.add(new PossibleMove(this, dice, i)); // 1 element czy więcej?
-                break;
+                if((tiles.get(i).getAllowedDiceList().contains(dice))) {
+                    moveWithDice.add(new PossibleMove(this, dice, i));
+                    return moveWithDice;
+                }
             }
-            return moveWithDice;
         }
       return null;
     }
