@@ -3,7 +3,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class BoardGreen implements Board{
-    private ArrayList<Tile> tiles;
+    private final ArrayList<Tile> tiles;
     private final List<Dice> dices;
 
     public BoardGreen() {
@@ -15,28 +15,93 @@ public class BoardGreen implements Board{
             dices.add(new Dice(Color.WHITE,i));
         }
         tiles.add(0, new Tile(dices,null));
-        tiles.add(1, new Tile(dices,null));
-        tiles.add(2, new Tile(dices,null));
-        tiles.add(3, new Tile(dices,TileSpecialAction.ADDADDITIONALDICE));
-        tiles.add(4, new Tile(dices,null));
-        tiles.add(5, new Tile(dices,TileSpecialAction.ADDRANDOMBLUE));
-        tiles.add(6, new Tile(dices,TileSpecialAction.ADDFOX));
-        tiles.add(7, new Tile(dices,null));
-        tiles.add(8, new Tile(dices,TileSpecialAction.ADDPURPLE6));
-        tiles.add(9, new Tile(dices,TileSpecialAction.ADDROLL));
-        tiles.add(10, new Tile(dices,null));
+        tiles.add(1, new Tile(null,null));
+        tiles.add(2, new Tile(null,null));
+        tiles.add(3, new Tile(null,TileSpecialAction.ADDADDITIONALDICE));
+        tiles.add(4, new Tile(null,null));
+        tiles.add(5, new Tile(null,TileSpecialAction.ADDRANDOMBLUE));
+        tiles.add(6, new Tile(null,TileSpecialAction.ADDFOX));
+        tiles.add(7, new Tile(null,null));
+        tiles.add(8, new Tile(null,TileSpecialAction.ADDPURPLE6));
+        tiles.add(9, new Tile(null,TileSpecialAction.ADDROLL));
+        tiles.add(10, new Tile(null,null));
     }
 
     @Override
     public TileSpecialAction fillTile(Dice dice, int index) throws ImpossibleFill {
         if( !(tiles.get(index).getAllowedDiceList().contains(dice)))
             throw new ImpossibleFill("Nie można umieścić tej kostki w planszy zielonej!");
+
+        List<Dice> condition;
+        condition = dices;
+        for (Dice dice1: dices){
+        if((index == 0 | index == 5) & dice1.getValue() == 1) {
+           condition.remove(dice1);
+        } else if((index == 1 | index == 6) & (dice1.getValue() == 1 | dice1.getValue() == 2)){
+           condition.remove(dice1);
+        } else if((index == 2 | index == 7) & (dice1.getValue() == 1 | dice1.getValue() == 2 | dice1.getValue() == 3)){
+           condition.remove(dice1);
+        } else if((index == 3 | index == 8) & (dice1.getValue() == 1 | dice1.getValue() == 2 | dice1.getValue() == 3 | dice1.getValue() == 4)){
+           condition.remove(dice1);
+        } else if(index == 4){
+           condition.addAll(dices);
+        } else if(index == 9 & dice1.getValue() == 6){
+           condition.removeAll(dices);
+           condition.add(dice1);
+        }
+       }
+        tiles.get(index).updateAllowedDiceList(null);
+        tiles.get(index + 1).updateAllowedDiceList(condition);
         return tiles.get(index).fillWithDice(dice);
     }
 
     @Override
     public int getPoints() {
-        return 0;
+        int points = 0;
+        int counter = 0;
+
+        for (int i = 0; i < tiles.size() + 1; i++){
+            if(tiles.get(i).getAllowedDiceList() == null){
+                counter = counter + 1;
+            }
+        }
+        if (counter == 0){
+            return points;
+        }
+        if (counter == 1){
+            points = 1;
+        }
+        if (counter == 2){
+            points = 3;
+        }
+        if (counter == 3){
+            points = 6;
+        }
+        if (counter == 4){
+            points = 10;
+        }
+        if (counter == 5){
+            points = 15;
+        }
+        if (counter == 6){
+            points = 21;
+        }
+        if (counter == 7){
+            points = 28;
+        }
+        if (counter == 8){
+            points = 36;
+        }
+        if (counter == 9){
+            points = 45;
+        }
+        if (counter == 10){
+            points = 55;
+        }
+        if (counter == 11){
+           points = 66;
+        }
+        return points;
     }
 
     @Override
