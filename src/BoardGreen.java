@@ -106,11 +106,29 @@ public class BoardGreen implements Board{
 
     @Override
     public List<PossibleMove> possibleMoves() {
-        return null;
+        LinkedList<PossibleMove> moves = new LinkedList<>();
+        for(int i = 0; i < tiles.size(); i++) {
+            for(Dice dice: dices)
+                if((tiles.get(i).getAllowedDiceList().contains(dice))) {
+                    moves.add(new PossibleMove(this, dice, i));
+                }
+        }
+
+        return moves;
     }
 
     @Override
     public List<PossibleMove> possibleMovesWithDice(Dice dice) {
+        LinkedList<PossibleMove> moveWithDice = new LinkedList<>();
+
+        if(dices.contains(dice)){
+            for(int i = 0; i < tiles.size(); i++) {
+                if((tiles.get(i).getAllowedDiceList().contains(dice))){
+                    moveWithDice.add(new PossibleMove(this, dice, i));
+                    return moveWithDice;
+                }
+            }
+        }
         return null;
     }
 }
