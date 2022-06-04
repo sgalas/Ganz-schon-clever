@@ -25,4 +25,7 @@ public class Tile {
     public Dice getFilledWith() {
         return filledWith;
     }
+    public boolean isEmpty(){
+        return getFilledWith()==null;
+    }
 }
