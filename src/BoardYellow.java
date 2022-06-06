@@ -1,27 +1,123 @@
+import javax.swing.text.html.HTMLDocument;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class BoardYellow implements Board{
-    private ArrayList<Tile> tiles;
+    private final ArrayList<Tile> tiles;
+    private final List<Dice> dices;
+
+    public BoardYellow() {
+        tiles = new ArrayList<>();
+        dices = new LinkedList<>();
+
+        LinkedList<Dice> value1 = new LinkedList<>();
+        value1.add(new Dice((Color.YELLOW),1));
+        value1.add(new Dice((Color.WHITE),1));
+
+        LinkedList<Dice> value2 = new LinkedList<>();
+        value1.add(new Dice((Color.YELLOW),2));
+        value1.add(new Dice((Color.WHITE),2));
+
+        LinkedList<Dice> value3 = new LinkedList<>();
+        value1.add(new Dice((Color.YELLOW),3));
+        value1.add(new Dice((Color.WHITE),3));
+
+        LinkedList<Dice> value4 = new LinkedList<>();
+        value1.add(new Dice((Color.YELLOW),4));
+        value1.add(new Dice((Color.WHITE),4));
+
+        LinkedList<Dice> value5 = new LinkedList<>();
+        value1.add(new Dice((Color.YELLOW),5));
+        value1.add(new Dice((Color.WHITE),5));
+
+        LinkedList<Dice> value6 = new LinkedList<>();
+        value1.add(new Dice((Color.YELLOW),6));
+        value1.add(new Dice((Color.WHITE),6));
+
+        for(int i = 1; i < 7; i++){
+            dices.add(new Dice(Color.YELLOW,i));
+            dices.add(new Dice(Color.WHITE,i));
+        }
+        tiles.add(0, new Tile(value3, null));
+        tiles.add(1, new Tile(value6,null));
+        tiles.add(2, new Tile(value5,null));
+
+        tiles.add(3, new Tile(value2,null));
+        tiles.add(4, new Tile(value1,null));
+        tiles.add(5, new Tile(value5,null));
+
+        tiles.add(6, new Tile(value1,null));
+        tiles.add(7, new Tile(value2,null));
+        tiles.add(8, new Tile(value4,null));
+
+        tiles.add(9, new Tile(value3,null));
+        tiles.add(10, new Tile(value4,null));
+        tiles.add(11, new Tile(value6,null));
+    }
+
     @Override
     public TileSpecialAction fillTile(Dice dice, int index) throws ImpossibleFill {
         if( !(tiles.get(index).getAllowedDiceList().contains(dice)))
             throw new ImpossibleFill("Nie można umieścić tej kostki w planszy żółtej!");
-        return tiles.get(index).fillWithDice(dice);
+        tiles.get(index).updateAllowedDiceList(null);
+        return getSpecialAction();
+    }
+
+    public TileSpecialAction getSpecialAction(){
+        if((!tiles.get(0).isEmpty()) | (!tiles.get(1).isEmpty()) | (!tiles.get(2).isEmpty())){
+            return TileSpecialAction.ADDRANDOMBLUE;
+        } else if((!tiles.get(3).isEmpty()) | (!tiles.get(4).isEmpty()) | (!tiles.get(5).isEmpty())){
+            return TileSpecialAction.ADDORANGE4;
+        } else if((!tiles.get(6).isEmpty()) | (!tiles.get(7).isEmpty()) | (!tiles.get(8).isEmpty())){
+            return TileSpecialAction.ADDRANDOMGREEN;
+        } else if((!tiles.get(9).isEmpty()) | (!tiles.get(10).isEmpty()) | (!tiles.get(11).isEmpty())){
+            return TileSpecialAction.ADDFOX;
+        } else {return null;
+        }
     }
 
     @Override
     public int getPoints() {
-        return 0;
+        int points = 0;
+        if((!tiles.get(0).isEmpty()) | (!tiles.get(3).isEmpty()) | (!tiles.get(6).isEmpty())){
+            points = points + 10;
+        }
+        if((!tiles.get(1).isEmpty()) | (!tiles.get(4).isEmpty()) | (!tiles.get(9).isEmpty())){
+            points = points + 14;
+        }
+        if((!tiles.get(2).isEmpty()) | (!tiles.get(7).isEmpty()) | (!tiles.get(10).isEmpty())){
+            points = points + 16;
+        }
+        if((!tiles.get(5).isEmpty()) | (!tiles.get(8).isEmpty()) | (!tiles.get(11).isEmpty())){
+            points = points + 20;
+        }
+        return points;
     }
 
     @Override
     public List<PossibleMove> possibleMoves() {
-        return null;
+        LinkedList<PossibleMove> moves = new LinkedList<>();
+        for(int i = 0; i < tiles.size(); i++) {
+            for(Dice dice: dices)
+                if((tiles.get(i).getAllowedDiceList().contains(dice))) {
+                    moves.add(new PossibleMove(this, dice, i));
+                }
+        }
+
+        return moves;
     }
 
     @Override
     public List<PossibleMove> possibleMovesWithDice(Dice dice) {
-        return null;
+        LinkedList<PossibleMove> moveWithDice = new LinkedList<>();
+
+        if(dices.contains(dice)){
+            for(int i = 0; i < tiles.size(); i++) {
+                if((tiles.get(i).getAllowedDiceList().contains(dice))){
+                    moveWithDice.add(new PossibleMove(this, dice, i));
+                }
+            }
+        }  return moveWithDice;
     }
 }
