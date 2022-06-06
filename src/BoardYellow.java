@@ -1,4 +1,3 @@
-import javax.swing.text.html.HTMLDocument;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,24 +15,24 @@ public class BoardYellow implements Board{
         value1.add(new Dice((Color.WHITE),1));
 
         LinkedList<Dice> value2 = new LinkedList<>();
-        value1.add(new Dice((Color.YELLOW),2));
-        value1.add(new Dice((Color.WHITE),2));
+        value2.add(new Dice((Color.YELLOW),2));
+        value2.add(new Dice((Color.WHITE),2));
 
         LinkedList<Dice> value3 = new LinkedList<>();
-        value1.add(new Dice((Color.YELLOW),3));
-        value1.add(new Dice((Color.WHITE),3));
+        value3.add(new Dice((Color.YELLOW),3));
+        value3.add(new Dice((Color.WHITE),3));
 
         LinkedList<Dice> value4 = new LinkedList<>();
-        value1.add(new Dice((Color.YELLOW),4));
-        value1.add(new Dice((Color.WHITE),4));
+        value4.add(new Dice((Color.YELLOW),4));
+        value4.add(new Dice((Color.WHITE),4));
 
         LinkedList<Dice> value5 = new LinkedList<>();
-        value1.add(new Dice((Color.YELLOW),5));
-        value1.add(new Dice((Color.WHITE),5));
+        value5.add(new Dice((Color.YELLOW),5));
+        value5.add(new Dice((Color.WHITE),5));
 
         LinkedList<Dice> value6 = new LinkedList<>();
-        value1.add(new Dice((Color.YELLOW),6));
-        value1.add(new Dice((Color.WHITE),6));
+        value6.add(new Dice((Color.YELLOW),6));
+        value6.add(new Dice((Color.WHITE),6));
 
         for(int i = 1; i < 7; i++){
             dices.add(new Dice(Color.YELLOW,i));
