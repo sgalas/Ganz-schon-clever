@@ -38,7 +38,8 @@ public class SowaPlayground {
 
 
     public static void main(String[] args) throws InterruptedException {
-        ClientGUI abc = new ClientGUI();
+        Player a = Player.createNewPlayer(12, "nick");
+        ClientGUI abc = new ClientGUI(a);
 //        JButton diceWhite = new JButton();  way to change icons into active ones
 //        diceWhite.setIcon(new ImageIcon("src/Images/Dice_Five.png"));
 //        ImageIcon temp = (ImageIcon) diceWhite.getIcon();

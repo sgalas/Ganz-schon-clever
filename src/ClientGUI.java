@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
@@ -67,12 +68,11 @@ public class ClientGUI {
      * Metoda tworzaca label z tekstem "<"
      * @param more obiekt jlabel
      * @param x koordynat x
-     * @param y koordynat y
      * @param lp obiekt JLayeredPane do którego ma należeć przycisk
      * @return gotowy przycisk
      */
-    JLabel createMore(JLabel more, int x, int y, JLayeredPane lp){
-        more.setBounds(x,y,40,40);
+    JLabel createMore(JLabel more, int x, JLayeredPane lp){
+        more.setBounds(x,660,40,40);
         more.setFont(new Font("Serif", Font.PLAIN, 40));
         more.setForeground(Color.white);
         more.setVisible(true);
@@ -156,13 +156,14 @@ public class ClientGUI {
     JLabel more9 = new JLabel("<");
     JLabel more10 = new JLabel("<");
 
-    JButton diceWhite = new JButton(); //kość biała
-    JButton diceYellow = new JButton();
-    JButton diceBlue = new JButton();
-    JButton dicePurple = new JButton();
-    JButton diceGreen = new JButton();
-    JButton diceOrange = new JButton();
+    JButton diceOne = new JButton();
+    JButton diceTwo = new JButton();
+    JButton diceThree = new JButton();
+    JButton diceFour = new JButton();
+    JButton diceFive = new JButton();
+    JButton diceSix = new JButton();
 
+    private int diceSel = 0; //Zmienna uzywana do ustalenia ilosci kosci juz ustawionych
 
     public ClientGUI(Player player) {
 
@@ -236,18 +237,18 @@ public class ClientGUI {
         p10 = createFiled(p10, "", 717,660,lp);
         p11 = createFiled(p11, "", 785,660,lp);
 
-        more1 = createMore(more1, 145, 660, lp);
-        more2 = createMore(more2, 213, 660, lp);
-        more3 = createMore(more3, 281, 660, lp);
-        more4 = createMore(more4, 349, 660, lp);
-        more5 = createMore(more5, 417, 660, lp);
-        more6 = createMore(more6, 485, 660, lp);
-        more7 = createMore(more7, 553, 660, lp);
-        more8 = createMore(more8, 621, 660, lp);
-        more9 = createMore(more9, 689, 660, lp);
-        more10 = createMore(more10, 757, 660, lp);
+        more1 = createMore(more1, 145,  lp);
+        more2 = createMore(more2, 213, lp);
+        more3 = createMore(more3, 281, lp);
+        more4 = createMore(more4, 349, lp);
+        more5 = createMore(more5, 417, lp);
+        more6 = createMore(more6, 485, lp);
+        more7 = createMore(more7, 553, lp);
+        more8 = createMore(more8, 621, lp);
+        more9 = createMore(more9, 689, lp);
+        more10 = createMore(more10, 757, lp);
 
-        diceWhite.addActionListener(e -> diceWhite.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Selected.png")));
+        diceOne.addActionListener(e -> diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Selected.png")));
 
         y00.addActionListener(new ActionListener() {
             @Override
@@ -277,135 +278,267 @@ public class ClientGUI {
     }
 
     public void initialiseActive(){
-        diceWhite = createDice(diceWhite, 900, 400, lp);
-        switch (player.getWhiteDice().getValue()){
+        List<Dice> rolledDice;
+        rolledDice = player.getRolledDiceList();
+
+        for(Dice d: rolledDice){
+            switch (diceSel){
+                case 0:{
+                    diceOne = createDice(diceOne, 900, 400, lp);
+                    switch (d.getColor()){
+                        case GREEN -> {
+                            switch (d.getValue()){
+                                case 1 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
+                                }
+                                case 2 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
+                                }
+                                case 3 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
+                                }
+                                case 4 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
+                                }
+                                case 5 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
+                                }
+                                case 6 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
+                                }
+                            }
+                        }
+                        case BLUE -> {
+                            switch (d.getValue()){
+                                case 1 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
+                                }
+                                case 2 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Blue.png"));
+                                }
+                                case 3 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Blue.png"));
+                                }
+                                case 4 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Blue.png"));
+                                }
+                                case 5 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Blue.png"));
+                                }
+                                case 6 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Blue.png"));
+                                }
+                            }
+                        }
+                        case ORANGE -> {
+                            switch (d.getValue()){
+                                case 1 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
+                                }
+                                case 2 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
+                                }
+                                case 3 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
+                                }
+                                case 4 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
+                                }
+                                case 5 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
+                                }
+                                case 6 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
+                                }
+                            }
+                        }
+                        case YELLOW -> {
+                            switch (d.getValue()){
+                                case 1 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
+                                }
+                                case 2 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Yellow.png"));
+                                }
+                                case 3 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Yellow.png"));
+                                }
+                                case 4 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Yellow.png"));
+                                }
+                                case 5 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Yellow.png"));
+                                }
+                                case 6 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Yellow.png"));
+                                }
+                            }
+                        }
+                        case PURPLE -> {
+                            switch (d.getValue()){
+                                case 1 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
+                                }
+                                case 2 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
+                                }
+                                case 3 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
+                                }
+                                case 4 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
+                                }
+                                case 5 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
+                                }
+                                case 6 ->{
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
+                                }
+                            }
+                        }
+                        case WHITE -> {
+                        }
+                    }
+                }
+                }
+
+
+        }
+        Random random=new Random();
+        int startingDiceValue = random.nextInt(1,7);
+        switch (startingDiceValue){
             case 1:
-                diceWhite.setIcon(new ImageIcon("src/Images/Dices/Dice_One.png"));
+                diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One.png"));
                 break;
             case 2:
-                diceWhite.setIcon(new ImageIcon("src/Images/Dices/Dice_Two.png"));
+                diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two.png"));
                 break;
             case 3:
-                diceWhite.setIcon(new ImageIcon("src/Images/Dices/Dice_Three.png"));
+                diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three.png"));
                 break;
             case 4:
-                diceWhite.setIcon(new ImageIcon("src/Images/Dices/Dice_Four.png"));
+                diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four.png"));
                 break;
             case 5:
-                diceWhite.setIcon(new ImageIcon("src/Images/Dices/Dice_Five.png"));
+                diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five.png"));
                 break;
             case 6:
-                diceWhite.setIcon(new ImageIcon("src/Images/Dices/Dice_Six.png"));
+                diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six.png"));
                 break;
         }
 
-        diceBlue = createDice(diceBlue, 1000, 400, lp);
-        switch (player.getBlueDice().getValue()){
+        startingDiceValue = random.nextInt(1,7);
+        diceThree = createDice(diceThree, 1000, 400, lp);
+        switch (startingDiceValue){
             case 1:
-                diceBlue.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
+                diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
                 break;
             case 2:
-                diceBlue.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Blue.png"));
+                diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Blue.png"));
                 break;
             case 3:
-                diceBlue.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Blue.png"));
+                diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Blue.png"));
                 break;
             case 4:
-                diceBlue.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Blue.png"));
+                diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Blue.png"));
                 break;
             case 5:
-                diceBlue.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Blue.png"));
+                diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Blue.png"));
                 break;
             case 6:
-                diceBlue.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Blue.png"));
+                diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Blue.png"));
                 break;
         }
 
-        diceYellow = createDice(diceYellow, 1050, 450, lp);
-        switch (player.getYellowDice().getValue()){
+        startingDiceValue = random.nextInt(1,7);
+        diceTwo = createDice(diceTwo, 1050, 450, lp);
+        switch (startingDiceValue){
             case 1:
-                diceYellow.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
+                diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
                 break;
             case 2:
-                diceYellow.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Yellow.png"));
+                diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Yellow.png"));
                 break;
             case 3:
-                diceYellow.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Yellow.png"));
+                diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Yellow.png"));
                 break;
             case 4:
-                diceYellow.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Yellow.png"));
+                diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Yellow.png"));
                 break;
             case 5:
-                diceYellow.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Yellow.png"));
+                diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Yellow.png"));
                 break;
             case 6:
-                diceYellow.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Yellow.png"));
+                diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Yellow.png"));
                 break;
         }
 
-        diceGreen = createDice(diceGreen, 1100, 400, lp);
-        switch (player.getGreenDice().getValue()){
+        startingDiceValue = random.nextInt(1,7);
+        diceFive = createDice(diceFive, 1100, 400, lp);
+        switch (startingDiceValue){
             case 1:
-                diceGreen.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
+                diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
                 break;
             case 2:
-                diceGreen.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
+                diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
                 break;
             case 3:
-                diceGreen.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
+                diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
                 break;
             case 4:
-                diceGreen.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
+                diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
                 break;
             case 5:
-                diceGreen.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
+                diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
                 break;
             case 6:
-                diceGreen.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
+                diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
                 break;
         }
 
-        diceOrange = createDice(diceOrange, 950, 450, lp);
-        switch (player.getOrangeDice().getValue()){
+        startingDiceValue = random.nextInt(1,7);
+        diceSix = createDice(diceSix, 950, 450, lp);
+        switch (startingDiceValue){
             case 1:
-                diceOrange.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
+                diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
                 break;
             case 2:
-                diceOrange.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
+                diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
                 break;
             case 3:
-                diceOrange.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
+                diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
                 break;
             case 4:
-                diceOrange.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
+                diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
                 break;
             case 5:
-                diceOrange.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
+                diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
                 break;
             case 6:
-                diceOrange.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
+                diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
                 break;
         }
 
-        dicePurple = createDice(dicePurple, 1150, 450, lp);
-        switch (player.getPurpleDice().getValue()){
+        startingDiceValue = random.nextInt(1,7);
+        diceFour = createDice(diceFour, 1150, 450, lp);
+        switch (startingDiceValue){
             case 1:
-                dicePurple.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
+                diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
                 break;
             case 2:
-                dicePurple.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
+                diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
                 break;
             case 3:
-                dicePurple.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
+                diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
                 break;
             case 4:
-                dicePurple.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
+                diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
                 break;
             case 5:
-                dicePurple.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
+                diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
                 break;
             case 6:
-                dicePurple.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
+                diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
                 break;
         }
 

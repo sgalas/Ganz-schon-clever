@@ -8,7 +8,7 @@ public abstract class Game {
     public Game(){
 
     }
-    public void nextTurn(){
+    public void nextTurn() throws IOException {
         activePlayerTurn(playerList.get(activePlayer));
         for (int i=0;i<playerList.size();i++){
             if(i!=activePlayer){

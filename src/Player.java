@@ -99,6 +99,7 @@ public class Player {
         return usedSlot;
     }
 
+    //is this necesary/useful? -m
     public DiceRoll getDiceRoll() {
         return diceRoll;
     }
