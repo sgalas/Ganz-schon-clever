@@ -146,7 +146,10 @@ public class Player {
         return additionalDiceCount;
     }
     public void useAdditionalDice(){
-        --additionalDiceCount;
+        if(additionalDiceCount>0){
+            --additionalDiceCount;
+            diceRoll.rollDices();
+        }
     }
     public void addAdditionalDice(){
         ++additionalDiceCount;
