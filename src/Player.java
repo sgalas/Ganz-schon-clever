@@ -137,7 +137,10 @@ public class Player {
         return rerollCount;
     }
     public void useReroll(){
-        --rerollCount;
+        if(rerollCount>0){
+            --rerollCount;
+            diceRoll.rollDices();
+        }
     }
     public void addReroll(){
         ++rerollCount;
@@ -146,10 +149,7 @@ public class Player {
         return additionalDiceCount;
     }
     public void useAdditionalDice(){
-        if(additionalDiceCount>0){
-            --additionalDiceCount;
-            diceRoll.rollDices();
-        }
+        --additionalDiceCount;
     }
     public void addAdditionalDice(){
         ++additionalDiceCount;
