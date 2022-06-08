@@ -84,45 +84,16 @@ public class BoardBlue implements Board{
 
     @Override
     public int getPoints() {
-        int points = 0;
+        int points = 1;
         int counter = 0;
         for(int i = 0; i < tiles.size() + 1; i++){
             if(!(tiles.get(i).isEmpty())){
+                points+=counter;
                 counter++;
             }
         }
-        if(counter == 1){
-            points = 1;
-        } else if (counter == 2){
-            points = 2;
-        }
-        else if (counter == 3){
-            points = 4;
-        }
-        else if (counter == 4){
-            points = 7;
-        }
-        else if (counter == 5){
-            points = 11;
-        }
-        else if (counter == 6){
-            points = 16;
-        }
-        else if (counter == 7){
-            points = 22;
-        }
-        else if (counter == 8){
-            points = 29;
-        }
-        else if (counter == 9){
-            points = 37;
-        }
-        else if (counter == 10){
-            points = 46;
-        }
-        else if (counter == 11){
-            points = 56;
-        }
+       if(counter==0)
+           points=0;
         return points;
     }
 
