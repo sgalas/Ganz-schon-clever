@@ -17,8 +17,9 @@ public class Player {
     private DiceRoll diceRoll;
     private Tray tray;
     private Queue<PossibleMove> moveQueue;
+    private PlayerState playerState;
 
-    public Player(int id, String nick, int rerollCount, int additionalDiceCount, int foxCount, BoardGreen boardGreen, BoardPurple boardPurple, BoardOrange boardOrange, BoardBlue boardBlue, BoardYellow boardYellow, Queue<PossibleMove> moveQueue) {
+    public Player(int id, String nick, int rerollCount, int additionalDiceCount, int foxCount, BoardGreen boardGreen, BoardPurple boardPurple, BoardOrange boardOrange, BoardBlue boardBlue, BoardYellow boardYellow, Queue<PossibleMove> moveQueue, PlayerState playerState) {
         this.id = id;
         this.nick = nick;
         this.rerollCount = rerollCount;
@@ -30,6 +31,7 @@ public class Player {
         this.boardBlue = boardBlue;
         this.boardYellow = boardYellow;
         this.moveQueue = moveQueue;
+        this.playerState = playerState;
     }
     public static Player createNewPlayer(int id, String nick) {
         BoardGreen boardGreen=new BoardGreen();
@@ -38,7 +40,8 @@ public class Player {
         BoardBlue boardBlue=new BoardBlue();
         BoardYellow boardYellow=new BoardYellow();
         Queue<PossibleMove> moveQueue=new LinkedList<>();
-        Player player =new Player(id,nick,0,0,0,boardGreen, boardPurple,boardOrange,boardBlue,boardYellow,moveQueue);
+        PlayerState playerState=PlayerState.FinishedTurn;
+        Player player =new Player(id,nick,0,0,0,boardGreen, boardPurple,boardOrange,boardBlue,boardYellow,moveQueue,playerState);
         return player;
     }
 
@@ -178,5 +181,13 @@ public class Player {
 
     public Queue<PossibleMove> getMoveQueue() {
         return moveQueue;
+    }
+
+    public PlayerState getPlayerState() {
+        return playerState;
+    }
+
+    public void setPlayerState(PlayerState playerState) {
+        this.playerState = playerState;
     }
 }
