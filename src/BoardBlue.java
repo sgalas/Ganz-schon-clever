@@ -10,53 +10,103 @@ public class BoardBlue implements Board{
         dices = new LinkedList<>();
 
         for (int i = 1; i < 7; i++) {
-            dices.add(new Dice(Color.BLUE, i));
-            dices.add(new Dice(Color.WHITE, i));
+            dices.add(new DiceCombination(new Dice (Color.BLUE, i)));
+            dices.add(new DiceCombination(new Dice (Color.WHITE, i)));
         }
 
-        LinkedList<Dice> sum2 = new LinkedList<>(); // prawdopodobnie lepiej byłoby upadateować AllowedDiceList w possibleMoveWithDice (w celu dodania kostek), a później w FillTile(zmienionym pod dwie kostki; w celu usunięcia)
-        sum2.add(new Dice((Color.BLUE),2));
-       // sum2.add(new Dice((Color.WHITE),1));
+        LinkedList<DiceCombination> sum2 = new LinkedList<>();// prawdopodobnie lepiej byłoby upadateować AllowedDiceList w possibleMoveWithDice (w celu dodania kostek), a później w FillTile(zmienionym pod dwie kostki; w celu usunięcia)
+        sum2.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,1),new Dice(Color.WHITE,1)));
+        sum2.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,1),new Dice(Color.BLUE,1)));
 
-        LinkedList<Dice> sum3 = new LinkedList<>();
-        sum3.add(new Dice((Color.BLUE),3));
-       // sum3.add(new Dice((Color.WHITE),2));
+        LinkedList<DiceCombination> sum3 = new LinkedList<>();
+        sum3.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,1),new Dice(Color.WHITE,2)));
+        sum3.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,2),new Dice(Color.WHITE,1)));
+        sum3.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,1),new Dice(Color.BLUE,2)));
+        sum3.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,2),new Dice(Color.BLUE,1)));
 
-        LinkedList<Dice> sum4 = new LinkedList<>();
-        sum4.add(new Dice((Color.BLUE),4));
-       // sum4.add(new Dice((Color.WHITE),3));
+        LinkedList<DiceCombination> sum4 = new LinkedList<>();
+        sum4.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,2),new Dice(Color.WHITE,2)));
+        sum4.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,2),new Dice(Color.BLUE,2)));
+        sum4.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,1),new Dice(Color.WHITE,3)));
+        sum4.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,3),new Dice(Color.WHITE,1)));
+        sum4.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,1),new Dice(Color.BLUE,3)));
+        sum4.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,3),new Dice(Color.BLUE,1)));
 
-        LinkedList<Dice> sum5 = new LinkedList<>();
-        sum5.add(new Dice((Color.BLUE),5));
-       // sum5.add(new Dice((Color.WHITE),4));
+        LinkedList<DiceCombination> sum5 = new LinkedList<>();
+        sum5.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,1),new Dice(Color.WHITE,4)));
+        sum5.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,4),new Dice(Color.WHITE,1)));
+        sum5.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,1),new Dice(Color.BLUE,4)));
+        sum5.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,4),new Dice(Color.BLUE,1)));
+        sum5.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,2),new Dice(Color.WHITE,3)));
+        sum5.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,3),new Dice(Color.WHITE,2)));
+        sum5.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,2),new Dice(Color.BLUE,3)));
+        sum5.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,3),new Dice(Color.BLUE,2)));
 
-        LinkedList<Dice> sum6 = new LinkedList<>();
-        sum6.add(new Dice((Color.BLUE),6));
-      //  sum6.add(new Dice((Color.WHITE),5));
+        LinkedList<DiceCombination> sum6 = new LinkedList<>();
+        sum6.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,1),new Dice(Color.WHITE,5)));
+        sum6.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,5),new Dice(Color.WHITE,1)));
+        sum6.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,1),new Dice(Color.BLUE,5)));
+        sum6.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,5),new Dice(Color.BLUE,1)));
+        sum6.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,2),new Dice(Color.WHITE,4)));
+        sum6.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,4),new Dice(Color.WHITE,2)));
+        sum6.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,2),new Dice(Color.BLUE,4)));
+        sum6.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,4),new Dice(Color.BLUE,2)));
+        sum6.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,3),new Dice(Color.WHITE,3)));
+        sum6.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,3),new Dice(Color.BLUE,3)));
 
-        LinkedList<Dice> sum7 = new LinkedList<>();
-        sum7.add(new Dice((Color.BLUE),7));
-      //  sum7.add(new Dice((Color.WHITE),6));
+        LinkedList<DiceCombination> sum7 = new LinkedList<>();
+        sum7.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,1),new Dice(Color.WHITE,6)));
+        sum7.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,6),new Dice(Color.WHITE,1)));
+        sum7.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,1),new Dice(Color.BLUE,6)));
+        sum7.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,6),new Dice(Color.BLUE,1)));
+        sum7.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,2),new Dice(Color.WHITE,5)));
+        sum7.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,5),new Dice(Color.WHITE,2)));
+        sum7.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,2),new Dice(Color.BLUE,5)));
+        sum7.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,5),new Dice(Color.BLUE,2)));
+        sum7.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,3),new Dice(Color.WHITE,4)));
+        sum7.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,4),new Dice(Color.WHITE,3)));
+        sum7.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,3),new Dice(Color.BLUE,4)));
+        sum7.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,4),new Dice(Color.BLUE,3)));
 
-        LinkedList<Dice> sum8 = new LinkedList<>();
-        sum8.add(new Dice((Color.BLUE),8));
-      //  sum8.add(new Dice((Color.WHITE),6));
+        LinkedList<DiceCombination> sum8 = new LinkedList<>();
+        sum8.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,2),new Dice(Color.WHITE,6)));
+        sum8.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,6),new Dice(Color.WHITE,2)));
+        sum8.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,2),new Dice(Color.BLUE,6)));
+        sum8.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,6),new Dice(Color.BLUE,2)));
+        sum8.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,3),new Dice(Color.WHITE,5)));
+        sum8.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,5),new Dice(Color.WHITE,3)));
+        sum8.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,3),new Dice(Color.BLUE,5)));
+        sum8.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,5),new Dice(Color.BLUE,3)));
+        sum8.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,4),new Dice(Color.WHITE,4)));
+        sum8.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,4),new Dice(Color.BLUE,4)));
 
-        LinkedList<Dice> sum9 = new LinkedList<>();
-        sum9.add(new Dice((Color.BLUE),9));
-     //  sum9.add(new Dice((Color.WHITE),6));
+        LinkedList<DiceCombination> sum9 = new LinkedList<>();
+        sum9.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,3),new Dice(Color.WHITE,6)));
+        sum9.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,6),new Dice(Color.WHITE,3)));
+        sum9.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,3),new Dice(Color.BLUE,6)));
+        sum9.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,6),new Dice(Color.BLUE,3)));
+        sum9.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,4),new Dice(Color.WHITE,5)));
+        sum9.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,5),new Dice(Color.WHITE,4)));
+        sum9.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,4),new Dice(Color.BLUE,5)));
+        sum9.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,5),new Dice(Color.BLUE,4)));
 
-        LinkedList<Dice> sum10 = new LinkedList<>();
-        sum10.add(new Dice((Color.BLUE),10));
-      //  sum10.add(new Dice((Color.WHITE),6));
+        LinkedList<DiceCombination> sum10 = new LinkedList<>();
+        sum10.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,4),new Dice(Color.WHITE,6)));
+        sum10.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,6),new Dice(Color.WHITE,4)));
+        sum10.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,4),new Dice(Color.BLUE,6)));
+        sum10.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,6),new Dice(Color.BLUE,4)));
+        sum10.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,5),new Dice(Color.WHITE,5)));
+        sum10.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,5),new Dice(Color.BLUE,5)));
 
-        LinkedList<Dice> sum11 = new LinkedList<>();
-        sum11.add(new Dice((Color.BLUE),11));
-      //  sum11.add(new Dice((Color.WHITE),6));
+        LinkedList<DiceCombination> sum11 = new LinkedList<>();
+        sum11.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,5),new Dice(Color.WHITE,6)));
+        sum11.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,6),new Dice(Color.WHITE,5)));
+        sum11.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,5),new Dice(Color.BLUE,6)));
+        sum11.add(DiceCombination.createTwoDiceCombo(new Dice(Color.WHITE,6),new Dice(Color.BLUE,5)));
 
-        LinkedList<Dice> sum12 = new LinkedList<>();
-        sum12.add(new Dice((Color.BLUE),12));
-       // sum12.add(new Dice((Color.WHITE),6));
+        LinkedList<DiceCombination> sum12 = new LinkedList<>();
+        sum12.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,6),new Dice(Color.WHITE,6)));
+        sum12.add(DiceCombination.createTwoDiceCombo(new Dice(Color.BLUE,6),new Dice(Color.WHITE,6)));
 
         tiles.add(0, new Tile(sum2,null));
         tiles.add(1, new Tile(sum3,null));
@@ -74,7 +124,7 @@ public class BoardBlue implements Board{
     }
 
     @Override
-    public TileSpecialAction fillTile(List<Dice> dice, int index) throws ImpossibleFill {
+    public TileSpecialAction fillTile(DiceCombination dice, int index) throws ImpossibleFill {
         if( !(tiles.get(index).getAllowedDiceCombinationList().contains(dice)))
             throw new ImpossibleFill("Nie można umieścić tej kostki w planszy niebieskiej!");
         tiles.get(index).updateAllowedDiceList(null);
@@ -82,19 +132,19 @@ public class BoardBlue implements Board{
     }
 
     public TileSpecialAction getSpecialAction(){
-        if((!tiles.get(0).isEmpty()) | (!tiles.get(1).isEmpty()) | (!tiles.get(2).isEmpty())){
+        if((!tiles.get(0).isEmpty()) & (!tiles.get(1).isEmpty()) & (!tiles.get(2).isEmpty())){
             return TileSpecialAction.ADDORANGE5;
-        } else if((!tiles.get(3).isEmpty()) | (!tiles.get(4).isEmpty()) | (!tiles.get(5).isEmpty()) | (!tiles.get(6).isEmpty())){
+        } else if((!tiles.get(3).isEmpty()) & (!tiles.get(4).isEmpty()) & (!tiles.get(5).isEmpty()) & (!tiles.get(6).isEmpty())){
             return TileSpecialAction.ADDRANDOMYELLOW;
-        } else if((!tiles.get(7).isEmpty()) | (!tiles.get(8).isEmpty()) | (!tiles.get(9).isEmpty()) | (!tiles.get(10).isEmpty())){
+        } else if((!tiles.get(7).isEmpty()) & (!tiles.get(8).isEmpty()) & (!tiles.get(9).isEmpty()) & (!tiles.get(10).isEmpty())){
             return TileSpecialAction.ADDFOX;
-        } else if((!tiles.get(3).isEmpty()) | (!tiles.get(7).isEmpty())){
+        } else if((!tiles.get(3).isEmpty()) & (!tiles.get(7).isEmpty())){
             return TileSpecialAction.ADDROLL;
-        } else if((!tiles.get(0).isEmpty()) | (!tiles.get(4).isEmpty()) | (!tiles.get(8).isEmpty())){
+        } else if((!tiles.get(0).isEmpty()) & (!tiles.get(4).isEmpty()) & (!tiles.get(8).isEmpty())){
             return TileSpecialAction.ADDRANDOMGREEN;
-        } else if((!tiles.get(1).isEmpty()) | (!tiles.get(5).isEmpty()) | (!tiles.get(9).isEmpty())) {
+        } else if((!tiles.get(1).isEmpty()) & (!tiles.get(5).isEmpty()) & (!tiles.get(9).isEmpty())) {
             return TileSpecialAction.ADDPURPLE6;
-        } else if((!tiles.get(2).isEmpty()) | (!tiles.get(6).isEmpty()) | (!tiles.get(10).isEmpty())) {
+        } else if((!tiles.get(2).isEmpty()) & (!tiles.get(6).isEmpty()) & (!tiles.get(10).isEmpty())) {
             return TileSpecialAction.ADDADDITIONALDICE;
         } else {return null;
         }
@@ -117,16 +167,24 @@ public class BoardBlue implements Board{
 
     @Override
     public List<PossibleMove> possibleMoves() {
-        return null;
+        LinkedList<PossibleMove> moves = new LinkedList<>();
+        for(int i = 0; i < tiles.size(); i++) {
+            for(DiceCombination dice: dices)
+                if((tiles.get(i).getAllowedDiceCombinationList().contains(dice.getPrimaryDice())) & tiles.get(i).getAllowedDiceCombinationList().contains(dice.getHelperDices())) {
+                    moves.add(new PossibleMove(this, dice, i));
+                }
+        }
+
+        return moves;
     }
 
     @Override
-    public List<PossibleMove> possibleMovesWithDice(Dice dice) {
+    public List<PossibleMove> possibleMovesWithDice(DiceCombination dice) {
         LinkedList<PossibleMove> moveWithDice = new LinkedList<>();
 
-        if (dice.getColor().equals(Color.BLUE) || dice.getColor().equals(Color.WHITE)) {
+        if (dices.contains(dice)) {
             for (int i = 0; i < tiles.size(); i++) {
-                if ((tiles.get(i).getAllowedDiceCombinationList().contains(dice))) {
+                if ((tiles.get(i).getAllowedDiceCombinationList().contains(dice.getPrimaryDice())) & tiles.get(i).getAllowedDiceCombinationList().contains(dice.getHelperDices())) {
                     moveWithDice.add(new PossibleMove(this, dice, i));
                 }
             }

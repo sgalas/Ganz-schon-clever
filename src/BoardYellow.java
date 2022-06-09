@@ -64,13 +64,13 @@ public class BoardYellow implements Board{
     }
 
     public TileSpecialAction getSpecialAction(){
-        if((!tiles.get(0).isEmpty()) | (!tiles.get(1).isEmpty()) | (!tiles.get(2).isEmpty())){
+        if((!tiles.get(0).isEmpty()) & (!tiles.get(1).isEmpty()) & (!tiles.get(2).isEmpty())){
             return TileSpecialAction.ADDRANDOMBLUE;
-        } else if((!tiles.get(3).isEmpty()) | (!tiles.get(4).isEmpty()) | (!tiles.get(5).isEmpty())){
+        } else if((!tiles.get(3).isEmpty()) & (!tiles.get(4).isEmpty()) & (!tiles.get(5).isEmpty())){
             return TileSpecialAction.ADDORANGE4;
-        } else if((!tiles.get(6).isEmpty()) | (!tiles.get(7).isEmpty()) | (!tiles.get(8).isEmpty())){
+        } else if((!tiles.get(6).isEmpty()) & (!tiles.get(7).isEmpty()) & (!tiles.get(8).isEmpty())){
             return TileSpecialAction.ADDRANDOMGREEN;
-        } else if((!tiles.get(9).isEmpty()) | (!tiles.get(10).isEmpty()) | (!tiles.get(11).isEmpty())){
+        } else if((!tiles.get(9).isEmpty()) & (!tiles.get(10).isEmpty()) & (!tiles.get(11).isEmpty())){
             return TileSpecialAction.ADDFOX;
         } else {return null;
         }
@@ -79,16 +79,16 @@ public class BoardYellow implements Board{
     @Override
     public int getPoints() {
         int points = 0;
-        if((!tiles.get(0).isEmpty()) | (!tiles.get(3).isEmpty()) | (!tiles.get(6).isEmpty())){
+        if((!tiles.get(0).isEmpty()) & (!tiles.get(3).isEmpty()) & (!tiles.get(6).isEmpty())){
             points = points + 10;
         }
-        if((!tiles.get(1).isEmpty()) | (!tiles.get(4).isEmpty()) | (!tiles.get(9).isEmpty())){
+        if((!tiles.get(1).isEmpty()) & (!tiles.get(4).isEmpty()) & (!tiles.get(9).isEmpty())){
             points = points + 14;
         }
-        if((!tiles.get(2).isEmpty()) | (!tiles.get(7).isEmpty()) | (!tiles.get(10).isEmpty())){
+        if((!tiles.get(2).isEmpty()) & (!tiles.get(7).isEmpty()) & (!tiles.get(10).isEmpty())){
             points = points + 16;
         }
-        if((!tiles.get(5).isEmpty()) | (!tiles.get(8).isEmpty()) | (!tiles.get(11).isEmpty())){
+        if((!tiles.get(5).isEmpty()) & (!tiles.get(8).isEmpty()) & (!tiles.get(11).isEmpty())){
             points = points + 20;
         }
         return points;

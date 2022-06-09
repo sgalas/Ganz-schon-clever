@@ -24,7 +24,7 @@ public class DiceCombination {
         return primaryDice;
     }
 
-    public List<Dice> getDices() {
+    public List<Dice> getHelperDices() {
         return dices;
     }
 
@@ -37,11 +37,11 @@ public class DiceCombination {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DiceCombination that = (DiceCombination) o;
-        return Objects.equals(getPrimaryDice(), that.getPrimaryDice()) && Objects.equals(getDices(), that.getDices());
+        return Objects.equals(getPrimaryDice(), that.getPrimaryDice()) && Objects.equals(getHelperDices(), that.getHelperDices());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getPrimaryDice(), getDices());
+        return Objects.hash(getPrimaryDice(), getHelperDices());
     }
 }
