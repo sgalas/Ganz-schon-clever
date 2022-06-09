@@ -7,12 +7,12 @@ import java.util.List;
 import java.net.*;
 import java.util.Random;
 
-public class GameClient extends Game {
+public class GameClient {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
-    private Player currentPlayer;
-    private ClientGUI clientGUI;
+    private final Player currentPlayer;
+    private final ClientGUI clientGUI;
     public GameClient(String hostname,int port,String nick) throws FailedToConnectException {
         connect(hostname,port);
         currentPlayer=Player.createNewPlayer(retrieveID(),nick);
@@ -35,8 +35,8 @@ public class GameClient extends Game {
     private int retrieveID(){//retrieve id from server
         return 0;
     }
-    @Override
-    protected void activePlayerTurn(Player player) throws IOException {
+
+    private void activePlayerTurn() throws IOException {
         String odpowiedz;
         List<Dice> kosci=new ArrayList<>();
         while((odpowiedz=in.readLine())!=null) {
@@ -61,8 +61,7 @@ public class GameClient extends Game {
         out.write(builder.toString());
     }
 
-    @Override
-    protected void passivePlayerTurn(Player player) {
+    protected void passivePlayerTurn() {
 
         //somehow get Tray and UsedSlot from server
         Tray trayrecv=new Tray();
@@ -204,5 +203,32 @@ public class GameClient extends Game {
             }
         }
         return tileSpecialAction;
+    }
+    public void nextRound() throws IOException {
+        boolean isActivePlayer=true;//get from server
+        if(isActivePlayer){
+            activePlayerTurn();
+        } else {
+            passivePlayerTurn();
+        }
+        giveBonuses();
+        currentPlayer.incrementRound();
+    }
+    private void giveBonuses(){
+        switch (currentPlayer.getRound()){
+            case 1:
+            case 3:
+                currentPlayer.addReroll();
+                break;
+            case 2:
+                currentPlayer.addAdditionalDice();
+                break;
+            case 4:
+            case 5:
+            case 6:
+            default:
+                break;
+        }
+
     }
 }
