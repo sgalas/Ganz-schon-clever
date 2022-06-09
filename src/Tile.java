@@ -1,14 +1,13 @@
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class Tile {
     private List<DiceCombination> allowedDiceList;
     private Dice filledWith;
     private final TileSpecialAction tileSpecialAction;
     public Tile(List<DiceCombination> allowedDiceList, TileSpecialAction tileSpecialAction){
-        if(allowedDiceList==null)
-            allowedDiceList=new LinkedList<>();
-        this.allowedDiceList=allowedDiceList;
+        this.allowedDiceList= Objects.requireNonNullElseGet(allowedDiceList, LinkedList::new); ;
         this.tileSpecialAction = tileSpecialAction;
     }
     public List<DiceCombination> getAllowedDiceCombinationList() {
