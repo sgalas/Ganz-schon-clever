@@ -3,7 +3,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class BoardBlue implements Board{
-    private ArrayList<Tile> tiles;
+    private final ArrayList<Tile> tiles;
     private final List<DiceCombination> dices;
     public BoardBlue() {
         tiles = new ArrayList<>();
@@ -170,8 +170,10 @@ public class BoardBlue implements Board{
         LinkedList<PossibleMove> moves = new LinkedList<>();
         for(int i = 0; i < tiles.size(); i++) {
             for(DiceCombination dice: dices)
-                if((tiles.get(i).getAllowedDiceCombinationList().contains(dice.getPrimaryDice())) & tiles.get(i).getAllowedDiceCombinationList().contains(dice.getHelperDices())) {
-                    moves.add(new PossibleMove(this, dice, i));
+                if((tiles.get(i).getAllowedDiceCombinationList().contains(dice))) {
+                    if(dice.getPrimaryDice().getValue() + dice.getHelperDices().get(0).getValue() == i + 2) {
+                        moves.add(new PossibleMove(this, dice, i));
+                    }
                 }
         }
 
@@ -184,8 +186,10 @@ public class BoardBlue implements Board{
 
         if (dices.contains(dice)) {
             for (int i = 0; i < tiles.size(); i++) {
-                if ((tiles.get(i).getAllowedDiceCombinationList().contains(dice.getPrimaryDice())) & tiles.get(i).getAllowedDiceCombinationList().contains(dice.getHelperDices())) {
-                    moveWithDice.add(new PossibleMove(this, dice, i));
+                if ((tiles.get(i).getAllowedDiceCombinationList().contains(dice))) {
+                    if(dice.getPrimaryDice().getValue() + dice.getHelperDices().get(0).getValue() == i + 2) {
+                        moveWithDice.add(new PossibleMove(this, dice, i));
+                    }
                 }
             }
         }
