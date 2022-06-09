@@ -182,7 +182,7 @@ public class Player {
         if(!getPossibleMoves().contains(possibleMove)){
             throw new InvalidMoveException();
         }
-        if(moveQueue.size()>0){
+        if(moveQueue.size()>0||playerState.equals(PlayerState.FINISHED_TURN)){
             throw new NotReadyException();
         }
     }
