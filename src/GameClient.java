@@ -60,31 +60,33 @@ public class GameClient extends Game {
     @Override
     protected void passivePlayerTurn(Player player) {
 
-    //somehow get Tray and UsedSlot from server
-    Tray trayrecv=new Tray();
-    UsedSlot usedSlotrecv=new UsedSlot();
+        //somehow get Tray and UsedSlot from server
+        Tray trayrecv=new Tray();
+        UsedSlot usedSlotrecv=new UsedSlot();
         currentPlayer.setTray(trayrecv);
         currentPlayer.setUsedSlot(usedSlotrecv);
-    List<PossibleMove> possibleMoves= currentPlayer.getPossibleMovesForDices(getTray().getDices());
+        List<PossibleMove> possibleMoves= currentPlayer.getPossibleMovesForDices(getTray().getDices());
         if(possibleMoves.size()==0){
-        possibleMoves=currentPlayer.getPossibleMovesForDices(getUsed().getDices());
-    }
-    boolean moveIsFine;
-        do{
-        try {
-            moveIsFine=true;
-            PossibleMove selectedMove=possibleMoves.get(0);//replace with gui chosing moves here
-            TileSpecialAction tileSpecialAction = selectedMove.doMove();
-            currentPlayer.doSpecialAction(tileSpecialAction);
-
-        } catch (ImpossibleFill e) {
-            e.printStackTrace();//replace with showing error in gui
-            moveIsFine=false;
+            possibleMoves=currentPlayer.getPossibleMovesForDices(getUsed().getDices());
         }
-    } while (!moveIsFine);
-    //if fine add sending it to server
+        boolean moveIsFine;
+        do{
+            try {
+                moveIsFine=true;
+                setPlayerState(PlayerState.PassiveTurn);
+                updateGUI();
+                waitOnGUI();
+                PossibleMove selectedMove=getMove();
+                TileSpecialAction tileSpecialAction = selectedMove.doMove();
+                currentPlayer.doSpecialAction(tileSpecialAction);
 
-}
+            } catch (ImpossibleFill e) {
+                e.printStackTrace();//replace with showing error in gui
+                moveIsFine=false;
+            }
+        } while (!moveIsFine);
+        //if fine add sending it to server
+    }
 
     public void createGUI(){
         ClientGUI clientGUI = new ClientGUI(currentPlayer);
@@ -115,5 +117,19 @@ public class GameClient extends Game {
     }
     public void useReroll(){
 
+    }
+    private void updateGUI(){
+
+    }
+    private void setPlayerState(PlayerState playerState){
+        currentPlayer.setPlayerState(playerState);
+    }
+    private void waitOnGUI(){
+        while (currentPlayer.getPlayerState()!=PlayerState.FinishedTurn){
+
+        }
+    }
+    private PossibleMove getMove(){
+        return currentPlayer.getMoveQueue().poll();
     }
 }
