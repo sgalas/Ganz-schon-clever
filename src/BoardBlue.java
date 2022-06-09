@@ -16,62 +16,62 @@ public class BoardBlue implements Board{
         }
 
         LinkedList<Dice> sum2 = new LinkedList<>(); // prawdopodobnie lepiej byłoby upadateować AllowedDiceList w possibleMoveWithDice (w celu dodania kostek), a później w FillTile(zmienionym pod dwie kostki; w celu usunięcia)
-        sum2.add(new Dice((Color.BLUE),1));
-        sum2.add(new Dice((Color.WHITE),1));
+        sum2.add(new Dice((Color.BLUE),2));
+       // sum2.add(new Dice((Color.WHITE),1));
 
         LinkedList<Dice> sum3 = new LinkedList<>();
-        sum3.add(new Dice((Color.BLUE),2));
-        sum3.add(new Dice((Color.WHITE),2));
+        sum3.add(new Dice((Color.BLUE),3));
+       // sum3.add(new Dice((Color.WHITE),2));
 
         LinkedList<Dice> sum4 = new LinkedList<>();
-        sum4.add(new Dice((Color.BLUE),3));
-        sum4.add(new Dice((Color.WHITE),3));
+        sum4.add(new Dice((Color.BLUE),4));
+       // sum4.add(new Dice((Color.WHITE),3));
 
         LinkedList<Dice> sum5 = new LinkedList<>();
-        sum5.add(new Dice((Color.BLUE),4));
-        sum5.add(new Dice((Color.WHITE),4));
+        sum5.add(new Dice((Color.BLUE),5));
+       // sum5.add(new Dice((Color.WHITE),4));
 
         LinkedList<Dice> sum6 = new LinkedList<>();
-        sum6.add(new Dice((Color.BLUE),5));
-        sum6.add(new Dice((Color.WHITE),5));
+        sum6.add(new Dice((Color.BLUE),6));
+      //  sum6.add(new Dice((Color.WHITE),5));
 
         LinkedList<Dice> sum7 = new LinkedList<>();
-        sum7.add(new Dice((Color.BLUE),6));
-        sum7.add(new Dice((Color.WHITE),6));
+        sum7.add(new Dice((Color.BLUE),7));
+      //  sum7.add(new Dice((Color.WHITE),6));
 
         LinkedList<Dice> sum8 = new LinkedList<>();
-        sum8.add(new Dice((Color.BLUE),6));
-        sum8.add(new Dice((Color.WHITE),6));
+        sum8.add(new Dice((Color.BLUE),8));
+      //  sum8.add(new Dice((Color.WHITE),6));
 
         LinkedList<Dice> sum9 = new LinkedList<>();
-        sum9.add(new Dice((Color.BLUE),6));
-        sum9.add(new Dice((Color.WHITE),6));
+        sum9.add(new Dice((Color.BLUE),9));
+     //  sum9.add(new Dice((Color.WHITE),6));
 
         LinkedList<Dice> sum10 = new LinkedList<>();
-        sum10.add(new Dice((Color.BLUE),6));
-        sum10.add(new Dice((Color.WHITE),6));
+        sum10.add(new Dice((Color.BLUE),10));
+      //  sum10.add(new Dice((Color.WHITE),6));
 
         LinkedList<Dice> sum11 = new LinkedList<>();
-        sum11.add(new Dice((Color.BLUE),6));
-        sum11.add(new Dice((Color.WHITE),6));
+        sum11.add(new Dice((Color.BLUE),11));
+      //  sum11.add(new Dice((Color.WHITE),6));
 
         LinkedList<Dice> sum12 = new LinkedList<>();
-        sum12.add(new Dice((Color.BLUE),6));
-        sum12.add(new Dice((Color.WHITE),6));
+        sum12.add(new Dice((Color.BLUE),12));
+       // sum12.add(new Dice((Color.WHITE),6));
 
-        tiles.add(0, new Tile(null,null));
-        tiles.add(1, new Tile(null,null));
-        tiles.add(2, new Tile(null,null));
+        tiles.add(0, new Tile(sum2,null));
+        tiles.add(1, new Tile(sum3,null));
+        tiles.add(2, new Tile(sum4,null));
 
-        tiles.add(3, new Tile(null,null));
-        tiles.add(4, new Tile(null,null));
-        tiles.add(5, new Tile(null,null));
-        tiles.add(6, new Tile(null,null));
+        tiles.add(3, new Tile(sum5,null));
+        tiles.add(4, new Tile(sum6,null));
+        tiles.add(5, new Tile(sum7,null));
+        tiles.add(6, new Tile(sum8,null));
 
-        tiles.add(7, new Tile(null,null));
-        tiles.add(8, new Tile(null,null));
-        tiles.add(9, new Tile(null,null));
-        tiles.add(10, new Tile(null,null));
+        tiles.add(7, new Tile(sum9,null));
+        tiles.add(8, new Tile(sum10,null));
+        tiles.add(9, new Tile(sum11,null));
+        tiles.add(10, new Tile(sum12,null));
     }
 
     @Override
@@ -123,9 +123,15 @@ public class BoardBlue implements Board{
 
     @Override
     public List<PossibleMove> possibleMovesWithDice(Dice dice) {
-        if(dice.getColor().equals(Color.BLUE) || dice.getColor().equals(Color.WHITE)){
-            //to do
+        LinkedList<PossibleMove> moveWithDice = new LinkedList<>();
+
+        if (dice.getColor().equals(Color.BLUE) || dice.getColor().equals(Color.WHITE)) {
+            for (int i = 0; i < tiles.size(); i++) {
+                if ((tiles.get(i).getAllowedDiceList().contains(dice))) {
+                    moveWithDice.add(new PossibleMove(this, dice, i));
+                }
+            }
         }
-        return null;
+        return moveWithDice;
     }
 }
