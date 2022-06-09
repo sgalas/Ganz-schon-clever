@@ -15,6 +15,7 @@ public class GameClient {
     private final ClientGUI clientGUI;
     public GameClient(String hostname,int port,String nick) throws FailedToConnectException {
         connect(hostname,port);
+        //add logic to either start new game or retrieve game state from server
         currentPlayer=Player.createNewPlayer(retrieveID(),nick);
         clientGUI=new ClientGUI(currentPlayer);
     }
