@@ -54,19 +54,12 @@ public class Player {
         return retList;
     }
 
-    public List<PossibleMove> getPossibleMovesForDice(Dice dice) {
+    public List<PossibleMove> getPossibleMovesForDice(DiceCombination dice) {
         List<PossibleMove> retList = boardGreen.possibleMovesWithDice(dice);
         retList.addAll(boardPurple.possibleMovesWithDice(dice));
         retList.addAll(boardOrange.possibleMovesWithDice(dice));
         retList.addAll(boardBlue.possibleMovesWithDice(dice));
         retList.addAll(boardYellow.possibleMovesWithDice(dice));
-        return retList;
-    }
-    public List<PossibleMove> getPossibleMovesForDices(List<Dice> dices) {
-        List<PossibleMove> retList=new LinkedList<>();
-        for(Dice dice:dices){
-            retList.addAll(getPossibleMovesForDice(dice));
-        }
         return retList;
     }
 
