@@ -169,7 +169,7 @@ public class GameClient extends Game {
                 break;
             case ADDRANDOMGREEN:
                 List<PossibleMove> list= currentPlayer.getBoardGreen().possibleMoves();
-                possibleMove =list.get(new Random().nextInt(0,list.size()-1));
+                possibleMove =list.get(new Random().nextInt(0,list.size()));
                 nextTileSpecialAction =possibleMove.doMove();
                 updateGUI();
                 doSpecialAction(nextTileSpecialAction);
