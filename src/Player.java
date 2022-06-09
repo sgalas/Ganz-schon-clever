@@ -104,7 +104,6 @@ public class Player {
         return usedSlot;
     }
 
-    //is this necesary/useful? -m
     public DiceRoll getDiceRoll() {
         return diceRoll;
     }
@@ -186,5 +185,14 @@ public class Player {
     }
     public void incrementRound(){
         ++round;
+    }
+    public int calculatePoints(){
+        int points=0;
+        points+=boardBlue.getPoints();
+        points+=boardGreen.getPoints();
+        points+=boardOrange.getPoints();
+        points+=boardYellow.getPoints();
+        points+=boardPurple.getPoints();
+        return points;
     }
 }
