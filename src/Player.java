@@ -40,7 +40,7 @@ public class Player {
         BoardBlue boardBlue=new BoardBlue();
         BoardYellow boardYellow=new BoardYellow();
         Queue<PossibleMove> moveQueue=new LinkedList<>();
-        PlayerState playerState=PlayerState.FinishedTurn;
+        PlayerState playerState=PlayerState.FINISHED_TURN;
         Player player =new Player(id,nick,0,0,0,boardGreen, boardPurple,boardOrange,boardBlue,boardYellow,moveQueue,playerState);
         return player;
     }
@@ -161,19 +161,6 @@ public class Player {
     }
     public void addAdditionalDice(){
         ++additionalDiceCount;
-    }
-    public void doSpecialAction(TileSpecialAction tileSpecialAction){
-        switch (tileSpecialAction){
-            case ADDFOX:
-                addFox();
-                break;
-            case ADDADDITIONALDICE:
-                addAdditionalDice();
-                break;
-            case ADDROLL:
-                addReroll();
-                break;
-        }
     }
     public void executeMove(PossibleMove possibleMove){
         moveQueue.add(possibleMove);

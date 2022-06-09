@@ -15,8 +15,11 @@ public class Dice {
         return color;
     }
     public static Dice getRandomDice(Color color){
+        return getRandomDice(color,1,7);
+    }
+    public static Dice getRandomDice(Color color,int origin,int bound){
         Random random=new Random();
-        Dice dice=new Dice(color,random.nextInt(1,7));
+        Dice dice=new Dice(color,random.nextInt(origin,bound));
         return dice;
     }
 

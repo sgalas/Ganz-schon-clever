@@ -1,5 +1,7 @@
 public enum PlayerState {
-    ActiveTurn,
-    PassiveTurn,
-    FinishedTurn
+    ACTIVE_TURN,
+    PLAYER_STATE,
+    FINISHED_TURN,
+    SELECTYELLOW,
+    SELECTBLUE
 }

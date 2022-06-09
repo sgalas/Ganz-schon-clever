@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.net.*;
+import java.util.Random;
+
 public class GameClient extends Game {
     private Socket clientSocket;
     private PrintWriter out;
@@ -73,12 +75,12 @@ public class GameClient extends Game {
         do{
             try {
                 moveIsFine=true;
-                setPlayerState(PlayerState.PassiveTurn);
+                setPlayerState(PlayerState.PLAYER_STATE);
                 updateGUI();
                 waitOnGUI();
                 PossibleMove selectedMove=getMove();
                 TileSpecialAction tileSpecialAction = selectedMove.doMove();
-                currentPlayer.doSpecialAction(tileSpecialAction);
+                doSpecialAction(tileSpecialAction);
 
             } catch (ImpossibleFill e) {
                 e.printStackTrace();//replace with showing error in gui
@@ -125,11 +127,70 @@ public class GameClient extends Game {
         currentPlayer.setPlayerState(playerState);
     }
     private void waitOnGUI(){
-        while (currentPlayer.getPlayerState()!=PlayerState.FinishedTurn){
+        while (currentPlayer.getPlayerState()!=PlayerState.FINISHED_TURN){
 
         }
     }
     private PossibleMove getMove(){
         return currentPlayer.getMoveQueue().poll();
+    }
+    public void doSpecialAction(TileSpecialAction tileSpecialAction) throws ImpossibleFill {
+        PossibleMove possibleMove;
+        TileSpecialAction nextTileSpecialAction;
+        switch (tileSpecialAction){
+            case ADDFOX:
+                currentPlayer.addFox();
+                updateGUI();
+                break;
+            case ADDADDITIONALDICE:
+                currentPlayer.addAdditionalDice();
+                updateGUI();
+                break;
+            case ADDROLL:
+                currentPlayer.addReroll();
+                updateGUI();
+                break;
+            case ADDORANGE4:
+                possibleMove= currentPlayer.getBoardOrange().possibleMovesWithDice(new Dice(Color.ORANGE,4)).get(0);
+                nextTileSpecialAction =possibleMove.doMove();
+                updateGUI();
+                doSpecialAction(nextTileSpecialAction);
+                break;
+            case ADDORANGE5:
+                possibleMove= currentPlayer.getBoardOrange().possibleMovesWithDice(new Dice(Color.ORANGE,5)).get(0);
+                nextTileSpecialAction =possibleMove.doMove();
+                updateGUI();
+                doSpecialAction(nextTileSpecialAction);
+                break;
+            case ADDORANGE6:
+                possibleMove= currentPlayer.getBoardOrange().possibleMovesWithDice(new Dice(Color.ORANGE,6)).get(0);
+                nextTileSpecialAction =possibleMove.doMove();
+                updateGUI();
+                doSpecialAction(nextTileSpecialAction);
+                break;
+            case ADDRANDOMGREEN:
+                List<PossibleMove> list= currentPlayer.getBoardGreen().possibleMoves();
+                possibleMove =list.get(new Random().nextInt(0,list.size()-1));
+                nextTileSpecialAction =possibleMove.doMove();
+                updateGUI();
+                doSpecialAction(nextTileSpecialAction);
+                break;
+            case ADDPURPLE6:
+                possibleMove= currentPlayer.getBoardPurple().possibleMovesWithDice(new Dice(Color.PURPLE,6)).get(0);
+                nextTileSpecialAction =possibleMove.doMove();
+                updateGUI();
+                doSpecialAction(nextTileSpecialAction);
+                break;
+            case ADDRANDOMBLUE:
+                setPlayerState(PlayerState.SELECTBLUE);
+                updateGUI();
+                waitOnGUI();
+                break;
+            case ADDRANDOMYELLOW:
+                setPlayerState(PlayerState.SELECTYELLOW);
+                updateGUI();
+                waitOnGUI();
+                break;
+        }
     }
 }
