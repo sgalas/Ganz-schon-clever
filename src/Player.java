@@ -1,5 +1,6 @@
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Player {
     private final int id;
@@ -15,8 +16,9 @@ public class Player {
     private UsedSlot usedSlot;
     private DiceRoll diceRoll;
     private Tray tray;
+    private Queue<PossibleMove> moveQueue;
 
-    public Player(int id, String nick, int rerollCount, int additionalDiceCount, int foxCount, BoardGreen boardGreen, BoardPurple boardPurple, BoardOrange boardOrange, BoardBlue boardBlue, BoardYellow boardYellow) {
+    public Player(int id, String nick, int rerollCount, int additionalDiceCount, int foxCount, BoardGreen boardGreen, BoardPurple boardPurple, BoardOrange boardOrange, BoardBlue boardBlue, BoardYellow boardYellow, Queue<PossibleMove> moveQueue) {
         this.id = id;
         this.nick = nick;
         this.rerollCount = rerollCount;
@@ -27,6 +29,7 @@ public class Player {
         this.boardOrange = boardOrange;
         this.boardBlue = boardBlue;
         this.boardYellow = boardYellow;
+        this.moveQueue = moveQueue;
     }
     public static Player createNewPlayer(int id, String nick) {
         BoardGreen boardGreen=new BoardGreen();
@@ -34,7 +37,8 @@ public class Player {
         BoardOrange boardOrange=new BoardOrange();
         BoardBlue boardBlue=new BoardBlue();
         BoardYellow boardYellow=new BoardYellow();
-        Player player =new Player(id,nick,0,0,0,boardGreen, boardPurple,boardOrange,boardBlue,boardYellow);
+        Queue<PossibleMove> moveQueue=new LinkedList<>();
+        Player player =new Player(id,nick,0,0,0,boardGreen, boardPurple,boardOrange,boardBlue,boardYellow,moveQueue);
         return player;
     }
 
@@ -167,5 +171,12 @@ public class Player {
                 addReroll();
                 break;
         }
+    }
+    public void executeMove(PossibleMove possibleMove){
+        moveQueue.add(possibleMove);
+    }
+
+    public Queue<PossibleMove> getMoveQueue() {
+        return moveQueue;
     }
 }
