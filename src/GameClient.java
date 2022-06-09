@@ -77,7 +77,7 @@ public class GameClient extends Game {
                 updateGUI();
                 waitOnGUI();
                 PossibleMove selectedMove=getMove();
-                TileSpecialAction tileSpecialAction = selectedMove.doMove();
+                TileSpecialAction tileSpecialAction = performMove(selectedMove);
                 doSpecialAction(tileSpecialAction);
 
             } catch (ImpossibleFill e) {
@@ -191,5 +191,12 @@ public class GameClient extends Game {
                 waitOnGUI();
                 break;
         }
+    }
+    private TileSpecialAction performMove(PossibleMove possibleMove) throws ImpossibleFill {
+        Dice dice=possibleMove.getDice();
+        TileSpecialAction tileSpecialAction= possibleMove.doMove();
+        currentPlayer.getDiceRoll().removeDice(dice);
+        currentPlayer.getUsedSlot().putDice(dice);
+        return tileSpecialAction;
     }
 }
