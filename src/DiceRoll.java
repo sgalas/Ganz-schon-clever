@@ -10,10 +10,22 @@ public class DiceRoll {
     }
 
     public static DiceRoll rollDice(){
+        int counter = 0;
+        int blueind = 0;
+        int whiteind = 0;
         List<Dice> dices = new ArrayList<>();
         for (Color color :Color.values()){
             dices.add(Dice.getRandomDice(color));
+            if(color == Color.BLUE){
+                blueind = counter;
+            }
+            if(color == Color.WHITE){
+                whiteind = counter;
+            }
+            counter++;
         }
+        dices.add(new Dice(Color.BLUE, dices.get(blueind).getValue() + dices.get(whiteind).getValue()));
+        dices.remove(dices.get(blueind));
         return new DiceRoll(dices);
     }
 
