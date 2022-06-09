@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 import java.util.List;
 
 public class Tile {
@@ -5,6 +6,8 @@ public class Tile {
     private Dice filledWith;
     private final TileSpecialAction tileSpecialAction;
     public Tile(List<DiceCombination> allowedDiceList, TileSpecialAction tileSpecialAction){
+        if(allowedDiceList==null)
+            allowedDiceList=new LinkedList<>();
         this.allowedDiceList=allowedDiceList;
         this.tileSpecialAction = tileSpecialAction;
     }
