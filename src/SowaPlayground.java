@@ -1,8 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.Color;
-import java.util.Map;
-import java.util.Random;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class SowaPlayground {
@@ -39,7 +39,27 @@ public class SowaPlayground {
 
     public static void main(String[] args) throws InterruptedException {
         Player a = Player.createNewPlayer(12, "nick");
+//        DiceRoll ab = DiceRoll.rollDice();
+//        List<Dice> sellist =ab.getDices();
+//        sellist.remove(0);
+//        sellist.remove(1);
+//        sellist.remove(2);
+//        a.setDiceRoll(new DiceRoll(sellist));
+        a.setDiceRoll(DiceRoll.rollDice());
+
+        List<Dice> used = new ArrayList<>();
+        used.add(new Dice(Color.WHITE, 5));
+        used.add(new Dice(Color.BLUE, 3));
+        used.add(new Dice(Color.YELLOW, 1));
+        a.setUsedSlot(new UsedSlot(used));
+        Tray tray = new Tray();
+        tray.putDice(new Dice(Color.PURPLE, 1));
+        tray.putDice(new Dice(Color.GREEN, 4));
+        a.setTray(tray);
         ClientGUI abc = new ClientGUI(a);
+
+
+
 //        JButton diceWhite = new JButton();  way to change icons into active ones
 //        diceWhite.setIcon(new ImageIcon("src/Images/Dice_Five.png"));
 //        ImageIcon temp = (ImageIcon) diceWhite.getIcon();

@@ -11,19 +11,21 @@ public class ClientGUI {
 
     //Zmienna przechowujaca gracza - w celu wykonywania operacji - przekazywana na etapie tworzenia
     private Player player;
+
     /**
      * Metoda tworząca przycisk o odpowiednich parametrach, wypełniony odpowiednią wartością
+     *
      * @param button obiekt przycisku - pusty, domyślny
-     * @param label tekst do wyświetlenia w przycisku
-     * @param x współrzędna x przycisku
-     * @param y współrzędna y przycisku
-     * @param lp obiekt JLayeredPane do którego ma należeć przycisk
+     * @param label  tekst do wyświetlenia w przycisku
+     * @param x      współrzędna x przycisku
+     * @param y      współrzędna y przycisku
+     * @param lp     obiekt JLayeredPane do którego ma należeć przycisk
      * @return gotowy przycisk
      */
-    JButton createFiled(JButton button, String label, int x, int y, JLayeredPane lp){
+    JButton createFiled(JButton button, String label, int x, int y, JLayeredPane lp) {
         button = new JButton(label);
         button.setBackground(Color.white);
-        button.setBounds(x,y,41, 41);//x-axis, y-axis, width, height
+        button.setBounds(x, y, 41, 41);//x-axis, y-axis, width, height
         button.setForeground(Color.black);
         lp.add(button, JLayeredPane.POPUP_LAYER);//adding button in JFrame
         button.setVisible(true);
@@ -32,17 +34,18 @@ public class ClientGUI {
 
     /**
      * Metoda tworząca przycisk z obrazem jako tłem
-     * @param button  obiekt przycisku - pusty, domyślny
-     * @param path ścieżka do pliku obrazka
-     * @param x współrzędna x przycisku
-     * @param y współrzędna y przycisku
-     * @param lp obiekt JLayeredPane do którego ma należeć przycisk
+     *
+     * @param button obiekt przycisku - pusty, domyślny
+     * @param path   ścieżka do pliku obrazka
+     * @param x      współrzędna x przycisku
+     * @param y      współrzędna y przycisku
+     * @param lp     obiekt JLayeredPane do którego ma należeć przycisk
      * @return gotowy przycisk
      */
-    JButton createImaged(JButton button, String path, int x, int y, JLayeredPane lp){
+    JButton createImaged(JButton button, String path, int x, int y, JLayeredPane lp) {
         button.setIcon(new ImageIcon(Objects.requireNonNull(this.getClass().getResource(path))));
-        button.setBounds(x,y,41,41);
-        button.setMargin(new Insets(0,0,0,0));
+        button.setBounds(x, y, 41, 41);
+        button.setMargin(new Insets(0, 0, 0, 0));
         lp.add(button, JLayeredPane.POPUP_LAYER);
         button.setVisible(true);
         return button;
@@ -50,15 +53,13 @@ public class ClientGUI {
 
     /**
      * Metoda tworząca "pustą" kość - nie nadając jej wartości
+     *
      * @param button pusty obiekt przycisku
-     * @param x współrzędna x przycisku
-     * @param y współrzędna y przycisku
-     * @param lp obiekt JLayeredPane do którego ma należeć przycisk
+     * @param lp     obiekt JLayeredPane do którego ma należeć przycisk
      * @return gotowy przycisk
      */
-    JButton createDice(JButton button, int x, int y, JLayeredPane lp){
-        button.setBounds(x,y,41,41);
-        button.setMargin(new Insets(0,0,0,0));
+    JButton createDice(JButton button, JLayeredPane lp) {
+        button.setMargin(new Insets(0, 0, 0, 0));
         lp.add(button, JLayeredPane.POPUP_LAYER);
         button.setVisible(true);
         return button;
@@ -66,13 +67,14 @@ public class ClientGUI {
 
     /**
      * Metoda tworzaca label z tekstem "<"
+     *
      * @param more obiekt jlabel
-     * @param x koordynat x
-     * @param lp obiekt JLayeredPane do którego ma należeć przycisk
+     * @param x    koordynat x
+     * @param lp   obiekt JLayeredPane do którego ma należeć przycisk
      * @return gotowy przycisk
      */
-    JLabel createMore(JLabel more, int x, JLayeredPane lp){
-        more.setBounds(x,660,40,40);
+    JLabel createMore(JLabel more, int x, JLayeredPane lp) {
+        more.setBounds(x, 660, 40, 40);
         more.setFont(new Font("Serif", Font.PLAIN, 40));
         more.setForeground(Color.white);
         more.setVisible(true);
@@ -80,10 +82,11 @@ public class ClientGUI {
 
         return more;
     }
+
     //Inicjalizacja wszystkich przycisków - konieczna w tym miejscu z powodu odnoszenia się do nich z różnych metod
-    JFrame f=new JFrame(); // Ramka "zerowa" - podstawa gui
+    JFrame f = new JFrame(); // Ramka "zerowa" - podstawa gui
     JLayeredPane lp = new JLayeredPane(); // Jedyny element JFrame, zawierający wszystkie przyciski
-    JButton y00 =new JButton(); //Przycisk żółty - kolumna 0 rząd 0
+    JButton y00 = new JButton(); //Przycisk żółty - kolumna 0 rząd 0
     JButton y01 = new JButton(); // Przycisk żółty - kolumna 0 rząd 1
     JButton y02 = new JButton();
     JButton y10 = new JButton();
@@ -162,8 +165,10 @@ public class ClientGUI {
     JButton diceFour = new JButton();
     JButton diceFive = new JButton();
     JButton diceSix = new JButton();
+    JButton temp = new JButton();
 
     private int diceSel = 0; //Zmienna uzywana do ustalenia ilosci kosci juz ustawionych
+    private Dice selectedDice; //Do przechowywania wybranej kosci
 
     public ClientGUI(Player player) {
 
@@ -183,6 +188,16 @@ public class ClientGUI {
         y31 = createFiled(y31, "5", 305, 165, lp);
         y32 = createFiled(y32, "5", 305, 215, lp);
         y33 = createFiled(y33, "6", 305, 265, lp);
+
+        y00.addActionListener(e ->{
+            PossibleMove possibleMove = new PossibleMove(player.getBoardYellow(), selectedDice, 0);
+        });
+        y10.addActionListener(e ->{
+            PossibleMove possibleMove = new PossibleMove(player.getBoardYellow(), selectedDice, 1);
+        });
+        y20.addActionListener(e ->{
+            PossibleMove possibleMove = new PossibleMove(player.getBoardYellow(), selectedDice, 1);
+        });
 
         y30 = createImaged(y30, "Images/X_Button.png", 305, 115, lp);
         y03 = createImaged(y03, "Images/X_Button.png", 110, 265, lp);
@@ -213,31 +228,35 @@ public class ClientGUI {
         g10 = createImaged(g10, "Images/More_Five_Button.png", 717, 410, lp);
         g11 = createImaged(g11, "Images/More_Six_Button.png", 785, 410, lp);
 
-        o1 = createFiled(o1, "", 105,535,lp);
-        o2 = createFiled(o2, "", 173,535,lp);
-        o3 = createFiled(o3, "", 241,535,lp);
-        o4 = createFiled(o4, "", 309,535,lp);
-        o5 = createFiled(o5, "", 377,535,lp);
-        o6 = createFiled(o6, "", 445,535,lp);
-        o7 = createFiled(o7, "", 513,535,lp);
-        o8 = createFiled(o8, "", 581,535,lp);
-        o9 = createFiled(o9, "", 649,535,lp);
-        o10 = createFiled(o10, "", 717,535,lp);
-        o11 = createFiled(o11, "", 785,535,lp);
+        {
+            o1 = createFiled(o1, "", 105, 535, lp);
+            o2 = createFiled(o2, "", 173, 535, lp);
+            o3 = createFiled(o3, "", 241, 535, lp);
+            o4 = createFiled(o4, "", 309, 535, lp);
+            o5 = createFiled(o5, "", 377, 535, lp);
+            o6 = createFiled(o6, "", 445, 535, lp);
+            o7 = createFiled(o7, "", 513, 535, lp);
+            o8 = createFiled(o8, "", 581, 535, lp);
+            o9 = createFiled(o9, "", 649, 535, lp);
+            o10 = createFiled(o10, "", 717, 535, lp);
+            o11 = createFiled(o11, "", 785, 535, lp);
+        }//Inicjalizacja pol pomaranczowych
 
-        p1 = createFiled(p1, "", 105,660,lp);
-        p2 = createFiled(p2, "", 173,660,lp);
-        p3 = createFiled(p3, "", 241,660,lp);
-        p4 = createFiled(p4, "", 309,660,lp);
-        p5 = createFiled(p5, "", 377,660,lp);
-        p6 = createFiled(p6, "", 445,660,lp);
-        p7 = createFiled(p7, "", 513,660,lp);
-        p8 = createFiled(p8, "", 581,660,lp);
-        p9 = createFiled(p9, "", 649,660,lp);
-        p10 = createFiled(p10, "", 717,660,lp);
-        p11 = createFiled(p11, "", 785,660,lp);
+        {
+            p1 = createFiled(p1, "", 105, 660, lp);
+            p2 = createFiled(p2, "", 173, 660, lp);
+            p3 = createFiled(p3, "", 241, 660, lp);
+            p4 = createFiled(p4, "", 309, 660, lp);
+            p5 = createFiled(p5, "", 377, 660, lp);
+            p6 = createFiled(p6, "", 445, 660, lp);
+            p7 = createFiled(p7, "", 513, 660, lp);
+            p8 = createFiled(p8, "", 581, 660, lp);
+            p9 = createFiled(p9, "", 649, 660, lp);
+            p10 = createFiled(p10, "", 717, 660, lp);
+            p11 = createFiled(p11, "", 785, 660, lp);
+        }//Inicjalizacja pol fioletowych
 
-        more1 = createMore(more1, 145,  lp);
+        more1 = createMore(more1, 145, lp);
         more2 = createMore(more2, 213, lp);
         more3 = createMore(more3, 281, lp);
         more4 = createMore(more4, 349, lp);
@@ -248,14 +267,9 @@ public class ClientGUI {
         more9 = createMore(more9, 689, lp);
         more10 = createMore(more10, 757, lp);
 
-        diceOne.addActionListener(e -> diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Selected.png")));
 
-        y00.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                y00.setText("");
-                y00.setIcon(new ImageIcon("src/Images/X_Button.png"));
-            }
+        y00.addActionListener(e -> {
+
         });
 
 
@@ -264,286 +278,2635 @@ public class ClientGUI {
         background.setVisible(true);
         lp.add(background, JLayeredPane.DEFAULT_LAYER);
 
-//        more.setBounds(200,200,100,100);
-//        more.setFont(new Font("Serif", Font.PLAIN, 40));
-//        more.setVisible(true);
-//        lp.add(more, JLayeredPane.DRAG_LAYER);
-
         f.add(lp);
         lp.setVisible(true);
         f.setLocationRelativeTo(null);
         f.setVisible(true);//making the frame visible
+        diceOne = createDice(diceOne, lp);
+        diceTwo = createDice(diceTwo, lp);
+        diceThree = createDice(diceThree, lp);
+        diceFour = createDice(diceFour, lp);
+        diceFive = createDice(diceFive, lp);
+        diceSix = createDice(diceSix, lp);
         initialiseActive();
 
     }
 
-    public void initialiseActive(){
-        List<Dice> rolledDice;
-        rolledDice = player.getRolledDiceList();
+    public void updateAll(){
+        diceSel = 0;
+        updateTray();
+        updateUsed();
+        updateActive();
 
-        for(Dice d: rolledDice){
-            switch (diceSel){
-                case 0:{
-                    diceOne = createDice(diceOne, 900, 400, lp);
-                    switch (d.getColor()){
+    }
+    public void updateTray(){
+        List<Dice> trayList;
+        trayList = player.getTrayDiceList();
+        for(Dice d: trayList){
+            switch (diceSel) {
+                case 0: {
+                    diceOne.setBounds(950,550,41,41);
+                    diceOne.addActionListener(e -> selectedDice = d);
+                    switch (d.getColor()) {
                         case GREEN -> {
-                            switch (d.getValue()){
-                                case 1 ->{
+                            switch (d.getValue()) {
+                                case 1 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
                                 }
-                                case 2 ->{
+                                case 2 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
                                 }
-                                case 3 ->{
+                                case 3 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
                                 }
-                                case 4 ->{
+                                case 4 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
                                 }
-                                case 5 ->{
+                                case 5 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
                                 }
-                                case 6 ->{
+                                case 6 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
                                 }
                             }
                         }
                         case BLUE -> {
-                            switch (d.getValue()){
-                                case 1 ->{
+                            switch (d.getValue()) {
+                                case 1 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
                                 }
-                                case 2 ->{
+                                case 2 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Blue.png"));
                                 }
-                                case 3 ->{
+                                case 3 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Blue.png"));
                                 }
-                                case 4 ->{
+                                case 4 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Blue.png"));
                                 }
-                                case 5 ->{
+                                case 5 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Blue.png"));
                                 }
-                                case 6 ->{
+                                case 6 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Blue.png"));
                                 }
                             }
                         }
                         case ORANGE -> {
-                            switch (d.getValue()){
-                                case 1 ->{
+                            switch (d.getValue()) {
+                                case 1 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
                                 }
-                                case 2 ->{
+                                case 2 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
                                 }
-                                case 3 ->{
+                                case 3 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
                                 }
-                                case 4 ->{
+                                case 4 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
                                 }
-                                case 5 ->{
+                                case 5 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
                                 }
-                                case 6 ->{
+                                case 6 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
                                 }
                             }
                         }
                         case YELLOW -> {
-                            switch (d.getValue()){
-                                case 1 ->{
+                            switch (d.getValue()) {
+                                case 1 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
                                 }
-                                case 2 ->{
+                                case 2 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Yellow.png"));
                                 }
-                                case 3 ->{
+                                case 3 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Yellow.png"));
                                 }
-                                case 4 ->{
+                                case 4 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Yellow.png"));
                                 }
-                                case 5 ->{
+                                case 5 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Yellow.png"));
                                 }
-                                case 6 ->{
+                                case 6 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Yellow.png"));
                                 }
                             }
                         }
                         case PURPLE -> {
-                            switch (d.getValue()){
-                                case 1 ->{
+                            switch (d.getValue()) {
+                                case 1 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
                                 }
-                                case 2 ->{
+                                case 2 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
                                 }
-                                case 3 ->{
+                                case 3 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
                                 }
-                                case 4 ->{
+                                case 4 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
                                 }
-                                case 5 ->{
+                                case 5 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
                                 }
-                                case 6 ->{
+                                case 6 -> {
                                     diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
                                 }
                             }
                         }
                         case WHITE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One.png"));
+                                }
+                                case 2 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two.png"));
+                                }
+                                case 3 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three.png"));
+                                }
+                                case 4 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four.png"));
+                                }
+                                case 5 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five.png"));
+                                }
+                                case 6 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six.png"));
+                                }
+                            }
                         }
                     }
+                    diceSel++;
+                    break;
                 }
+                case 1: {
+                    diceTwo.setBounds(1000,550,41,41);
+                    diceTwo.addActionListener(e -> selectedDice = d);
+                    switch (d.getColor()) {
+                        case GREEN -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
+                                }
+                                case 2 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
+                                }
+                                case 3 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
+                                }
+                                case 4 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
+                                }
+                                case 5 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
+                                }
+                                case 6 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
+                                }
+                            }
+                        }
+                        case BLUE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
+                                }
+                                case 2 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Blue.png"));
+                                }
+                                case 3 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Blue.png"));
+                                }
+                                case 4 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Blue.png"));
+                                }
+                                case 5 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Blue.png"));
+                                }
+                                case 6 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Blue.png"));
+                                }
+                            }
+                        }
+                        case ORANGE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
+                                }
+                                case 2 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
+                                }
+                                case 3 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
+                                }
+                                case 4 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
+                                }
+                                case 5 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
+                                }
+                                case 6 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
+                                }
+                            }
+                        }
+                        case YELLOW -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
+                                }
+                                case 2 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Yellow.png"));
+                                }
+                                case 3 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Yellow.png"));
+                                }
+                                case 4 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Yellow.png"));
+                                }
+                                case 5 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Yellow.png"));
+                                }
+                                case 6 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Yellow.png"));
+                                }
+                            }
+                        }
+                        case PURPLE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
+                                }
+                                case 2 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
+                                }
+                                case 3 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
+                                }
+                                case 4 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
+                                }
+                                case 5 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
+                                }
+                                case 6 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
+                                }
+                            }
+                        }
+                        case WHITE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_One.png"));
+                                }
+                                case 2 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Two.png"));
+                                }
+                                case 3 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Three.png"));
+                                }
+                                case 4 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Four.png"));
+                                }
+                                case 5 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Five.png"));
+                                }
+                                case 6 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Six.png"));
+                                }
+                            }
+                        }
+                    }
+
+                    diceSel++;
+                    break;
                 }
+                case 2: {
+                    diceThree.setBounds(1050,550,41,41);
+                    diceThree.addActionListener(e -> selectedDice = d);
+                    switch (d.getColor()) {
+                        case GREEN -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
+                                }
+                                case 2 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
+                                }
+                                case 3 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
+                                }
+                                case 4 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
+                                }
+                                case 5 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
+                                }
+                                case 6 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
+                                }
+                            }
+                        }
+                        case BLUE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
+                                }
+                                case 2 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Blue.png"));
+                                }
+                                case 3 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Blue.png"));
+                                }
+                                case 4 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Blue.png"));
+                                }
+                                case 5 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Blue.png"));
+                                }
+                                case 6 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Blue.png"));
+                                }
+                            }
+                        }
+                        case ORANGE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
+                                }
+                                case 2 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
+                                }
+                                case 3 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
+                                }
+                                case 4 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
+                                }
+                                case 5 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
+                                }
+                                case 6 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
+                                }
+                            }
+                        }
+                        case YELLOW -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
+                                }
+                                case 2 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Yellow.png"));
+                                }
+                                case 3 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Yellow.png"));
+                                }
+                                case 4 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Yellow.png"));
+                                }
+                                case 5 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Yellow.png"));
+                                }
+                                case 6 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Yellow.png"));
+                                }
+                            }
+                        }
+                        case PURPLE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
+                                }
+                                case 2 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
+                                }
+                                case 3 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
+                                }
+                                case 4 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
+                                }
+                                case 5 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
+                                }
+                                case 6 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
+                                }
+                            }
+                        }
+                        case WHITE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_One.png"));
+                                }
+                                case 2 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Two.png"));
+                                }
+                                case 3 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Three.png"));
+                                }
+                                case 4 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Four.png"));
+                                }
+                                case 5 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Five.png"));
+                                }
+                                case 6 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Six.png"));
+                                }
+                            }
+                        }
+                    }
 
+                    diceSel++;
+                    break;
+                }
+                case 3: {
+                    diceFour.setBounds(940,600,41,41);
+                    diceFour.addActionListener(e -> selectedDice = d);
+                    switch (d.getColor()) {
+                        case GREEN -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
+                                }
+                                case 2 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
+                                }
+                                case 3 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
+                                }
+                                case 4 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
+                                }
+                                case 5 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
+                                }
+                                case 6 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
+                                }
+                            }
+                        }
+                        case BLUE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
+                                }
+                                case 2 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Blue.png"));
+                                }
+                                case 3 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Blue.png"));
+                                }
+                                case 4 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Blue.png"));
+                                }
+                                case 5 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Blue.png"));
+                                }
+                                case 6 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Blue.png"));
+                                }
+                            }
+                        }
+                        case ORANGE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
+                                }
+                                case 2 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
+                                }
+                                case 3 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
+                                }
+                                case 4 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
+                                }
+                                case 5 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
+                                }
+                                case 6 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
+                                }
+                            }
+                        }
+                        case YELLOW -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
+                                }
+                                case 2 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Yellow.png"));
+                                }
+                                case 3 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Yellow.png"));
+                                }
+                                case 4 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Yellow.png"));
+                                }
+                                case 5 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Yellow.png"));
+                                }
+                                case 6 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Yellow.png"));
+                                }
+                            }
+                        }
+                        case PURPLE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
+                                }
+                                case 2 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
+                                }
+                                case 3 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
+                                }
+                                case 4 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
+                                }
+                                case 5 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
+                                }
+                                case 6 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
+                                }
+                            }
+                        }
+                        case WHITE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_One.png"));
+                                }
+                                case 2 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Two.png"));
+                                }
+                                case 3 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Three.png"));
+                                }
+                                case 4 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Four.png"));
+                                }
+                                case 5 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Five.png"));
+                                }
+                                case 6 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Six.png"));
+                                }
+                            }
+                        }
+                    }
 
-        }
-        Random random=new Random();
-        int startingDiceValue = random.nextInt(1,7);
-        switch (startingDiceValue){
-            case 1:
-                diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One.png"));
-                break;
-            case 2:
-                diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two.png"));
-                break;
-            case 3:
-                diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three.png"));
-                break;
-            case 4:
-                diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four.png"));
-                break;
-            case 5:
-                diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five.png"));
-                break;
-            case 6:
-                diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six.png"));
-                break;
-        }
+                    diceSel++;
+                    break;
+                }
+                case 4: {
+                    diceFive.setBounds(990,600,41,41);
+                    diceFive.addActionListener(e -> selectedDice = d);
+                    switch (d.getColor()) {
+                        case GREEN -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
+                                }
+                                case 2 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
+                                }
+                                case 3 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
+                                }
+                                case 4 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
+                                }
+                                case 5 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
+                                }
+                                case 6 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
+                                }
+                            }
+                        }
+                        case BLUE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
+                                }
+                                case 2 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Blue.png"));
+                                }
+                                case 3 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Blue.png"));
+                                }
+                                case 4 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Blue.png"));
+                                }
+                                case 5 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Blue.png"));
+                                }
+                                case 6 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Blue.png"));
+                                }
+                            }
+                        }
+                        case ORANGE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
+                                }
+                                case 2 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
+                                }
+                                case 3 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
+                                }
+                                case 4 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
+                                }
+                                case 5 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
+                                }
+                                case 6 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
+                                }
+                            }
+                        }
+                        case YELLOW -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
+                                }
+                                case 2 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Yellow.png"));
+                                }
+                                case 3 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Yellow.png"));
+                                }
+                                case 4 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Yellow.png"));
+                                }
+                                case 5 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Yellow.png"));
+                                }
+                                case 6 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Yellow.png"));
+                                }
+                            }
+                        }
+                        case PURPLE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
+                                }
+                                case 2 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
+                                }
+                                case 3 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
+                                }
+                                case 4 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
+                                }
+                                case 5 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
+                                }
+                                case 6 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
+                                }
+                            }
+                        }
+                        case WHITE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_One.png"));
+                                }
+                                case 2 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Two.png"));
+                                }
+                                case 3 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Three.png"));
+                                }
+                                case 4 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Four.png"));
+                                }
+                                case 5 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Five.png"));
+                                }
+                                case 6 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Six.png"));
+                                }
+                            }
+                        }
+                    }
 
-        startingDiceValue = random.nextInt(1,7);
-        diceThree = createDice(diceThree, 1000, 400, lp);
-        switch (startingDiceValue){
-            case 1:
-                diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
-                break;
-            case 2:
-                diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Blue.png"));
-                break;
-            case 3:
-                diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Blue.png"));
-                break;
-            case 4:
-                diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Blue.png"));
-                break;
-            case 5:
-                diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Blue.png"));
-                break;
-            case 6:
-                diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Blue.png"));
-                break;
-        }
+                    diceSel++;
+                    break;
+                }
+                case 5: {
+                    diceSix.setBounds(1040,600,41,41);
+                    diceSix.addActionListener(e -> selectedDice = d);
+                    switch (d.getColor()) {
+                        case GREEN -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
+                                }
+                                case 2 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
+                                }
+                                case 3 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
+                                }
+                                case 4 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
+                                }
+                                case 5 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
+                                }
+                                case 6 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
+                                }
+                            }
+                        }
+                        case BLUE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
+                                }
+                                case 2 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Blue.png"));
+                                }
+                                case 3 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Blue.png"));
+                                }
+                                case 4 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Blue.png"));
+                                }
+                                case 5 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Blue.png"));
+                                }
+                                case 6 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Blue.png"));
+                                }
+                            }
+                        }
+                        case ORANGE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
+                                }
+                                case 2 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
+                                }
+                                case 3 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
+                                }
+                                case 4 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
+                                }
+                                case 5 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
+                                }
+                                case 6 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
+                                }
+                            }
+                        }
+                        case YELLOW -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
+                                }
+                                case 2 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Yellow.png"));
+                                }
+                                case 3 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Yellow.png"));
+                                }
+                                case 4 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Yellow.png"));
+                                }
+                                case 5 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Yellow.png"));
+                                }
+                                case 6 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Yellow.png"));
+                                }
+                            }
+                        }
+                        case PURPLE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
+                                }
+                                case 2 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
+                                }
+                                case 3 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
+                                }
+                                case 4 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
+                                }
+                                case 5 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
+                                }
+                                case 6 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
+                                }
+                            }
+                        }
+                        case WHITE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_One.png"));
+                                }
+                                case 2 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Two.png"));
+                                }
+                                case 3 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Three.png"));
+                                }
+                                case 4 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Four.png"));
+                                }
+                                case 5 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Five.png"));
+                                }
+                                case 6 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Six.png"));
+                                }
+                            }
+                        }
+                    }
 
-        startingDiceValue = random.nextInt(1,7);
-        diceTwo = createDice(diceTwo, 1050, 450, lp);
-        switch (startingDiceValue){
-            case 1:
-                diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
-                break;
-            case 2:
-                diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Yellow.png"));
-                break;
-            case 3:
-                diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Yellow.png"));
-                break;
-            case 4:
-                diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Yellow.png"));
-                break;
-            case 5:
-                diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Yellow.png"));
-                break;
-            case 6:
-                diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Yellow.png"));
-                break;
-        }
-
-        startingDiceValue = random.nextInt(1,7);
-        diceFive = createDice(diceFive, 1100, 400, lp);
-        switch (startingDiceValue){
-            case 1:
-                diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
-                break;
-            case 2:
-                diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
-                break;
-            case 3:
-                diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
-                break;
-            case 4:
-                diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
-                break;
-            case 5:
-                diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
-                break;
-            case 6:
-                diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
-                break;
-        }
-
-        startingDiceValue = random.nextInt(1,7);
-        diceSix = createDice(diceSix, 950, 450, lp);
-        switch (startingDiceValue){
-            case 1:
-                diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
-                break;
-            case 2:
-                diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
-                break;
-            case 3:
-                diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
-                break;
-            case 4:
-                diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
-                break;
-            case 5:
-                diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
-                break;
-            case 6:
-                diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
-                break;
-        }
-
-        startingDiceValue = random.nextInt(1,7);
-        diceFour = createDice(diceFour, 1150, 450, lp);
-        switch (startingDiceValue){
-            case 1:
-                diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
-                break;
-            case 2:
-                diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
-                break;
-            case 3:
-                diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
-                break;
-            case 4:
-                diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
-                break;
-            case 5:
-                diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
-                break;
-            case 6:
-                diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
-                break;
+                    diceSel++;
+                    break;
+                }
+            }
         }
 
     }
-    public void testing(){
+    public void updateUsed(){
+        List<Dice> usedDice;
+        usedDice = player.getUsedSlot().getDices();
+        int howmanyDice = 0;
+        for(Dice d: usedDice){
+            switch (diceSel){
+                case 0: {
+                    diceOne.setBounds(1205,530,41,41);
+                    howmanyDice++;
+                    diceOne.addActionListener(e -> selectedDice = d);
+                    switch (d.getColor()) {
+                        case GREEN -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
+                                }
+                                case 2 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
+                                }
+                                case 3 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
+                                }
+                                case 4 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
+                                }
+                                case 5 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
+                                }
+                                case 6 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
+                                }
+                            }
+                        }
+                        case BLUE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
+                                }
+                                case 2 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Blue.png"));
+                                }
+                                case 3 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Blue.png"));
+                                }
+                                case 4 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Blue.png"));
+                                }
+                                case 5 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Blue.png"));
+                                }
+                                case 6 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Blue.png"));
+                                }
+                            }
+                        }
+                        case ORANGE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
+                                }
+                                case 2 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
+                                }
+                                case 3 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
+                                }
+                                case 4 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
+                                }
+                                case 5 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
+                                }
+                                case 6 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
+                                }
+                            }
+                        }
+                        case YELLOW -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
+                                }
+                                case 2 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Yellow.png"));
+                                }
+                                case 3 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Yellow.png"));
+                                }
+                                case 4 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Yellow.png"));
+                                }
+                                case 5 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Yellow.png"));
+                                }
+                                case 6 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Yellow.png"));
+                                }
+                            }
+                        }
+                        case PURPLE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
+                                }
+                                case 2 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
+                                }
+                                case 3 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
+                                }
+                                case 4 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
+                                }
+                                case 5 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
+                                }
+                                case 6 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
+                                }
+                            }
+                        }
+                        case WHITE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One.png"));
+                                }
+                                case 2 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two.png"));
+                                }
+                                case 3 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three.png"));
+                                }
+                                case 4 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four.png"));
+                                }
+                                case 5 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five.png"));
+                                }
+                                case 6 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six.png"));
+                                }
+                            }
+                        }
+                    }
+                    diceSel++;
+                    break;
+                }
+                case 1: {
+                    if(howmanyDice == 0)
+                        diceTwo.setBounds(1205,530,41,41);
+                    else
+                        diceTwo.setBounds(1205,605,41,41);
+                    howmanyDice++;
+                    diceTwo.addActionListener(e -> selectedDice = d);
+                    switch (d.getColor()) {
+                        case GREEN -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
+                                }
+                                case 2 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
+                                }
+                                case 3 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
+                                }
+                                case 4 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
+                                }
+                                case 5 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
+                                }
+                                case 6 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
+                                }
+                            }
+                        }
+                        case BLUE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
+                                }
+                                case 2 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Blue.png"));
+                                }
+                                case 3 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Blue.png"));
+                                }
+                                case 4 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Blue.png"));
+                                }
+                                case 5 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Blue.png"));
+                                }
+                                case 6 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Blue.png"));
+                                }
+                            }
+                        }
+                        case ORANGE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
+                                }
+                                case 2 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
+                                }
+                                case 3 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
+                                }
+                                case 4 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
+                                }
+                                case 5 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
+                                }
+                                case 6 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
+                                }
+                            }
+                        }
+                        case YELLOW -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
+                                }
+                                case 2 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Yellow.png"));
+                                }
+                                case 3 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Yellow.png"));
+                                }
+                                case 4 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Yellow.png"));
+                                }
+                                case 5 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Yellow.png"));
+                                }
+                                case 6 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Yellow.png"));
+                                }
+                            }
+                        }
+                        case PURPLE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
+                                }
+                                case 2 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
+                                }
+                                case 3 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
+                                }
+                                case 4 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
+                                }
+                                case 5 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
+                                }
+                                case 6 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
+                                }
+                            }
+                        }
+                        case WHITE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_One.png"));
+                                }
+                                case 2 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Two.png"));
+                                }
+                                case 3 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Three.png"));
+                                }
+                                case 4 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Four.png"));
+                                }
+                                case 5 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Five.png"));
+                                }
+                                case 6 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Six.png"));
+                                }
+                            }
+                        }
+                    }
+
+                    diceSel++;
+                    break;
+                }
+                case 2: {
+                    if(howmanyDice == 0)
+                        diceThree.setBounds(1205,530,41,41);
+                    else{
+                        if(howmanyDice == 1)
+                            diceThree.setBounds(1205,605,41,41);
+                        else
+                            diceThree.setBounds(1205,680,41,41);
+                    }
+                    howmanyDice++;
+                    diceThree.addActionListener(e -> selectedDice = d);
+                    switch (d.getColor()) {
+                        case GREEN -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
+                                }
+                                case 2 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
+                                }
+                                case 3 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
+                                }
+                                case 4 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
+                                }
+                                case 5 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
+                                }
+                                case 6 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
+                                }
+                            }
+                        }
+                        case BLUE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
+                                }
+                                case 2 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Blue.png"));
+                                }
+                                case 3 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Blue.png"));
+                                }
+                                case 4 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Blue.png"));
+                                }
+                                case 5 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Blue.png"));
+                                }
+                                case 6 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Blue.png"));
+                                }
+                            }
+                        }
+                        case ORANGE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
+                                }
+                                case 2 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
+                                }
+                                case 3 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
+                                }
+                                case 4 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
+                                }
+                                case 5 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
+                                }
+                                case 6 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
+                                }
+                            }
+                        }
+                        case YELLOW -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
+                                }
+                                case 2 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Yellow.png"));
+                                }
+                                case 3 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Yellow.png"));
+                                }
+                                case 4 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Yellow.png"));
+                                }
+                                case 5 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Yellow.png"));
+                                }
+                                case 6 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Yellow.png"));
+                                }
+                            }
+                        }
+                        case PURPLE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
+                                }
+                                case 2 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
+                                }
+                                case 3 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
+                                }
+                                case 4 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
+                                }
+                                case 5 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
+                                }
+                                case 6 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
+                                }
+                            }
+                        }
+                        case WHITE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_One.png"));
+                                }
+                                case 2 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Two.png"));
+                                }
+                                case 3 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Three.png"));
+                                }
+                                case 4 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Four.png"));
+                                }
+                                case 5 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Five.png"));
+                                }
+                                case 6 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Six.png"));
+                                }
+                            }
+                        }
+                    }
+                    diceSel++;
+                    break;
+                }
+                case 3: {
+                    if(howmanyDice == 0)
+                        diceFour.setBounds(1205,530,41,41);
+                    else{
+                        if(howmanyDice == 1)
+                            diceFour.setBounds(1205,605,41,41);
+                        else
+                            diceFour.setBounds(1205,680,41,41);
+                    }
+                    howmanyDice++;
+                    diceFour.addActionListener(e -> selectedDice = d);
+                    switch (d.getColor()) {
+                        case GREEN -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
+                                }
+                                case 2 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
+                                }
+                                case 3 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
+                                }
+                                case 4 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
+                                }
+                                case 5 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
+                                }
+                                case 6 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
+                                }
+                            }
+                        }
+                        case BLUE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
+                                }
+                                case 2 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Blue.png"));
+                                }
+                                case 3 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Blue.png"));
+                                }
+                                case 4 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Blue.png"));
+                                }
+                                case 5 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Blue.png"));
+                                }
+                                case 6 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Blue.png"));
+                                }
+                            }
+                        }
+                        case ORANGE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
+                                }
+                                case 2 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
+                                }
+                                case 3 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
+                                }
+                                case 4 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
+                                }
+                                case 5 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
+                                }
+                                case 6 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
+                                }
+                            }
+                        }
+                        case YELLOW -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
+                                }
+                                case 2 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Yellow.png"));
+                                }
+                                case 3 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Yellow.png"));
+                                }
+                                case 4 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Yellow.png"));
+                                }
+                                case 5 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Yellow.png"));
+                                }
+                                case 6 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Yellow.png"));
+                                }
+                            }
+                        }
+                        case PURPLE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
+                                }
+                                case 2 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
+                                }
+                                case 3 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
+                                }
+                                case 4 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
+                                }
+                                case 5 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
+                                }
+                                case 6 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
+                                }
+                            }
+                        }
+                        case WHITE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_One.png"));
+                                }
+                                case 2 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Two.png"));
+                                }
+                                case 3 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Three.png"));
+                                }
+                                case 4 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Four.png"));
+                                }
+                                case 5 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Five.png"));
+                                }
+                                case 6 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Six.png"));
+                                }
+                            }
+                        }
+                    }
+
+                    diceSel++;
+                    break;
+                }
+                case 4: {
+                    if(howmanyDice == 0)
+                        diceFive.setBounds(1205,530,41,41);
+                    else{
+                        if(howmanyDice == 1)
+                            diceFive.setBounds(1205,605,41,41);
+                        else
+                            diceFive.setBounds(1205,680,41,41);
+                    }
+                    howmanyDice++;
+                    diceFive.addActionListener(e -> selectedDice = d);
+                    switch (d.getColor()) {
+                        case GREEN -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
+                                }
+                                case 2 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
+                                }
+                                case 3 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
+                                }
+                                case 4 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
+                                }
+                                case 5 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
+                                }
+                                case 6 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
+                                }
+                            }
+                        }
+                        case BLUE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
+                                }
+                                case 2 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Blue.png"));
+                                }
+                                case 3 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Blue.png"));
+                                }
+                                case 4 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Blue.png"));
+                                }
+                                case 5 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Blue.png"));
+                                }
+                                case 6 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Blue.png"));
+                                }
+                            }
+                        }
+                        case ORANGE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
+                                }
+                                case 2 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
+                                }
+                                case 3 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
+                                }
+                                case 4 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
+                                }
+                                case 5 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
+                                }
+                                case 6 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
+                                }
+                            }
+                        }
+                        case YELLOW -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
+                                }
+                                case 2 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Yellow.png"));
+                                }
+                                case 3 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Yellow.png"));
+                                }
+                                case 4 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Yellow.png"));
+                                }
+                                case 5 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Yellow.png"));
+                                }
+                                case 6 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Yellow.png"));
+                                }
+                            }
+                        }
+                        case PURPLE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
+                                }
+                                case 2 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
+                                }
+                                case 3 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
+                                }
+                                case 4 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
+                                }
+                                case 5 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
+                                }
+                                case 6 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
+                                }
+                            }
+                        }
+                        case WHITE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_One.png"));
+                                }
+                                case 2 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Two.png"));
+                                }
+                                case 3 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Three.png"));
+                                }
+                                case 4 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Four.png"));
+                                }
+                                case 5 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Five.png"));
+                                }
+                                case 6 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Six.png"));
+                                }
+                            }
+                        }
+                    }
+
+                    diceSel++;
+                    break;
+                }
+                case 5: {
+                    if(howmanyDice == 0)
+                        diceSix.setBounds(1205,530,41,41);
+                    else{
+                        if(howmanyDice == 1)
+                            diceSix.setBounds(1205,605,41,41);
+                        else
+                            diceSix.setBounds(1205,680,41,41);
+                    }
+                    howmanyDice++;
+                    diceSix.addActionListener(e -> selectedDice = d);
+                    switch (d.getColor()) {
+                        case GREEN -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
+                                }
+                                case 2 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
+                                }
+                                case 3 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
+                                }
+                                case 4 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
+                                }
+                                case 5 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
+                                }
+                                case 6 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
+                                }
+                            }
+                        }
+                        case BLUE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
+                                }
+                                case 2 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Blue.png"));
+                                }
+                                case 3 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Blue.png"));
+                                }
+                                case 4 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Blue.png"));
+                                }
+                                case 5 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Blue.png"));
+                                }
+                                case 6 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Blue.png"));
+                                }
+                            }
+                        }
+                        case ORANGE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
+                                }
+                                case 2 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
+                                }
+                                case 3 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
+                                }
+                                case 4 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
+                                }
+                                case 5 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
+                                }
+                                case 6 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
+                                }
+                            }
+                        }
+                        case YELLOW -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
+                                }
+                                case 2 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Yellow.png"));
+                                }
+                                case 3 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Yellow.png"));
+                                }
+                                case 4 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Yellow.png"));
+                                }
+                                case 5 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Yellow.png"));
+                                }
+                                case 6 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Yellow.png"));
+                                }
+                            }
+                        }
+                        case PURPLE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
+                                }
+                                case 2 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
+                                }
+                                case 3 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
+                                }
+                                case 4 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
+                                }
+                                case 5 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
+                                }
+                                case 6 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
+                                }
+                            }
+                        }
+                        case WHITE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_One.png"));
+                                }
+                                case 2 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Two.png"));
+                                }
+                                case 3 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Three.png"));
+                                }
+                                case 4 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Four.png"));
+                                }
+                                case 5 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Five.png"));
+                                }
+                                case 6 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Six.png"));
+                                }
+                            }
+                        }
+                    }
+
+                    diceSel++;
+                    break;
+                }
+            }
+        }
+    }
+
+    public void updateActive() {
+        List<Dice> rolledDice;
+        rolledDice = player.getRolledDiceList();
+        for (Dice d : rolledDice) {
+            switch (diceSel) {
+                case 0: {
+                    diceOne.setBounds(900,400, 41,41);
+                    diceOne.addActionListener(e -> selectedDice = d);
+                    switch (d.getColor()) {
+                        case GREEN -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
+                                }
+                                case 2 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
+                                }
+                                case 3 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
+                                }
+                                case 4 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
+                                }
+                                case 5 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
+                                }
+                                case 6 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
+                                }
+                            }
+                        }
+                        case BLUE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
+                                }
+                                case 2 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Blue.png"));
+                                }
+                                case 3 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Blue.png"));
+                                }
+                                case 4 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Blue.png"));
+                                }
+                                case 5 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Blue.png"));
+                                }
+                                case 6 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Blue.png"));
+                                }
+                            }
+                        }
+                        case ORANGE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
+                                }
+                                case 2 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
+                                }
+                                case 3 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
+                                }
+                                case 4 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
+                                }
+                                case 5 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
+                                }
+                                case 6 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
+                                }
+                            }
+                        }
+                        case YELLOW -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
+                                }
+                                case 2 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Yellow.png"));
+                                }
+                                case 3 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Yellow.png"));
+                                }
+                                case 4 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Yellow.png"));
+                                }
+                                case 5 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Yellow.png"));
+                                }
+                                case 6 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Yellow.png"));
+                                }
+                            }
+                        }
+                        case PURPLE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
+                                }
+                                case 2 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
+                                }
+                                case 3 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
+                                }
+                                case 4 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
+                                }
+                                case 5 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
+                                }
+                                case 6 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
+                                }
+                            }
+                        }
+                        case WHITE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_One.png"));
+                                }
+                                case 2 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Two.png"));
+                                }
+                                case 3 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Three.png"));
+                                }
+                                case 4 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Four.png"));
+                                }
+                                case 5 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Five.png"));
+                                }
+                                case 6 -> {
+                                    diceOne.setIcon(new ImageIcon("src/Images/Dices/Dice_Six.png"));
+                                }
+                            }
+                        }
+                    }
+                    diceSel++;
+                    break;
+                }
+                case 1: {
+                    diceTwo.setBounds(950,400,41,41);
+                    diceTwo.addActionListener(e -> selectedDice = d);
+                    switch (d.getColor()) {
+                        case GREEN -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
+                                }
+                                case 2 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
+                                }
+                                case 3 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
+                                }
+                                case 4 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
+                                }
+                                case 5 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
+                                }
+                                case 6 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
+                                }
+                            }
+                        }
+                        case BLUE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
+                                }
+                                case 2 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Blue.png"));
+                                }
+                                case 3 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Blue.png"));
+                                }
+                                case 4 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Blue.png"));
+                                }
+                                case 5 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Blue.png"));
+                                }
+                                case 6 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Blue.png"));
+                                }
+                            }
+                        }
+                        case ORANGE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
+                                }
+                                case 2 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
+                                }
+                                case 3 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
+                                }
+                                case 4 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
+                                }
+                                case 5 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
+                                }
+                                case 6 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
+                                }
+                            }
+                        }
+                        case YELLOW -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
+                                }
+                                case 2 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Yellow.png"));
+                                }
+                                case 3 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Yellow.png"));
+                                }
+                                case 4 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Yellow.png"));
+                                }
+                                case 5 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Yellow.png"));
+                                }
+                                case 6 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Yellow.png"));
+                                }
+                            }
+                        }
+                        case PURPLE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
+                                }
+                                case 2 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
+                                }
+                                case 3 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
+                                }
+                                case 4 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
+                                }
+                                case 5 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
+                                }
+                                case 6 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
+                                }
+                            }
+                        }
+                        case WHITE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_One.png"));
+                                }
+                                case 2 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Two.png"));
+                                }
+                                case 3 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Three.png"));
+                                }
+                                case 4 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Four.png"));
+                                }
+                                case 5 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Five.png"));
+                                }
+                                case 6 -> {
+                                    diceTwo.setIcon(new ImageIcon("src/Images/Dices/Dice_Six.png"));
+                                }
+                            }
+                        }
+                    }
+                    diceSel++;
+                    break;
+                }
+                case 2: {
+                    diceThree.setBounds(1000,400,41,41);
+                    diceThree.addActionListener(e -> selectedDice = d);
+                    switch (d.getColor()) {
+                        case GREEN -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
+                                }
+                                case 2 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
+                                }
+                                case 3 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
+                                }
+                                case 4 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
+                                }
+                                case 5 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
+                                }
+                                case 6 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
+                                }
+                            }
+                        }
+                        case BLUE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
+                                }
+                                case 2 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Blue.png"));
+                                }
+                                case 3 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Blue.png"));
+                                }
+                                case 4 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Blue.png"));
+                                }
+                                case 5 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Blue.png"));
+                                }
+                                case 6 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Blue.png"));
+                                }
+                            }
+                        }
+                        case ORANGE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
+                                }
+                                case 2 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
+                                }
+                                case 3 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
+                                }
+                                case 4 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
+                                }
+                                case 5 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
+                                }
+                                case 6 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
+                                }
+                            }
+                        }
+                        case YELLOW -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
+                                }
+                                case 2 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Yellow.png"));
+                                }
+                                case 3 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Yellow.png"));
+                                }
+                                case 4 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Yellow.png"));
+                                }
+                                case 5 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Yellow.png"));
+                                }
+                                case 6 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Yellow.png"));
+                                }
+                            }
+                        }
+                        case PURPLE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
+                                }
+                                case 2 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
+                                }
+                                case 3 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
+                                }
+                                case 4 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
+                                }
+                                case 5 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
+                                }
+                                case 6 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
+                                }
+                            }
+                        }
+                        case WHITE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_One.png"));
+                                }
+                                case 2 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Two.png"));
+                                }
+                                case 3 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Three.png"));
+                                }
+                                case 4 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Four.png"));
+                                }
+                                case 5 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Five.png"));
+                                }
+                                case 6 -> {
+                                    diceThree.setIcon(new ImageIcon("src/Images/Dices/Dice_Six.png"));
+                                }
+                            }
+                        }
+                    }
+
+                    diceSel++;
+                    break;
+                }
+                case 3: {
+                    diceFour.setBounds(1050,400,41,41);
+                    diceFour.addActionListener(e -> selectedDice = d);
+                    switch (d.getColor()) {
+                        case GREEN -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
+                                }
+                                case 2 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
+                                }
+                                case 3 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
+                                }
+                                case 4 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
+                                }
+                                case 5 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
+                                }
+                                case 6 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
+                                }
+                            }
+                        }
+                        case BLUE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
+                                }
+                                case 2 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Blue.png"));
+                                }
+                                case 3 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Blue.png"));
+                                }
+                                case 4 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Blue.png"));
+                                }
+                                case 5 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Blue.png"));
+                                }
+                                case 6 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Blue.png"));
+                                }
+                            }
+                        }
+                        case ORANGE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
+                                }
+                                case 2 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
+                                }
+                                case 3 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
+                                }
+                                case 4 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
+                                }
+                                case 5 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
+                                }
+                                case 6 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
+                                }
+                            }
+                        }
+                        case YELLOW -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
+                                }
+                                case 2 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Yellow.png"));
+                                }
+                                case 3 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Yellow.png"));
+                                }
+                                case 4 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Yellow.png"));
+                                }
+                                case 5 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Yellow.png"));
+                                }
+                                case 6 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Yellow.png"));
+                                }
+                            }
+                        }
+                        case PURPLE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
+                                }
+                                case 2 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
+                                }
+                                case 3 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
+                                }
+                                case 4 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
+                                }
+                                case 5 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
+                                }
+                                case 6 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
+                                }
+                            }
+                        }
+                        case WHITE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_One.png"));
+                                }
+                                case 2 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Two.png"));
+                                }
+                                case 3 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Three.png"));
+                                }
+                                case 4 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Four.png"));
+                                }
+                                case 5 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Five.png"));
+                                }
+                                case 6 -> {
+                                    diceFour.setIcon(new ImageIcon("src/Images/Dices/Dice_Six.png"));
+                                }
+                            }
+                        }
+                    }
+
+                    diceSel++;
+                    break;
+                }
+                case 4: {
+                    diceFive.setBounds(1100,400,41,41);
+                    diceFive.addActionListener(e -> selectedDice = d);
+                    switch (d.getColor()) {
+                        case GREEN -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
+                                }
+                                case 2 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
+                                }
+                                case 3 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
+                                }
+                                case 4 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
+                                }
+                                case 5 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
+                                }
+                                case 6 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
+                                }
+                            }
+                        }
+                        case BLUE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
+                                }
+                                case 2 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Blue.png"));
+                                }
+                                case 3 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Blue.png"));
+                                }
+                                case 4 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Blue.png"));
+                                }
+                                case 5 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Blue.png"));
+                                }
+                                case 6 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Blue.png"));
+                                }
+                            }
+                        }
+                        case ORANGE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
+                                }
+                                case 2 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
+                                }
+                                case 3 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
+                                }
+                                case 4 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
+                                }
+                                case 5 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
+                                }
+                                case 6 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
+                                }
+                            }
+                        }
+                        case YELLOW -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
+                                }
+                                case 2 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Yellow.png"));
+                                }
+                                case 3 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Yellow.png"));
+                                }
+                                case 4 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Yellow.png"));
+                                }
+                                case 5 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Yellow.png"));
+                                }
+                                case 6 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Yellow.png"));
+                                }
+                            }
+                        }
+                        case PURPLE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
+                                }
+                                case 2 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
+                                }
+                                case 3 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
+                                }
+                                case 4 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
+                                }
+                                case 5 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
+                                }
+                                case 6 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
+                                }
+                            }
+                        }
+                        case WHITE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_One.png"));
+                                }
+                                case 2 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Two.png"));
+                                }
+                                case 3 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Three.png"));
+                                }
+                                case 4 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Four.png"));
+                                }
+                                case 5 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Five.png"));
+                                }
+                                case 6 -> {
+                                    diceFive.setIcon(new ImageIcon("src/Images/Dices/Dice_Six.png"));
+                                }
+                            }
+                        }
+                    }
+
+                    diceSel++;
+                    break;
+                }
+                case 5: {
+                    diceSix.setBounds(1150,400,41,41);
+                    diceSix.addActionListener(e -> selectedDice = d);
+                    switch (d.getColor()) {
+                        case GREEN -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
+                                }
+                                case 2 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
+                                }
+                                case 3 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
+                                }
+                                case 4 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
+                                }
+                                case 5 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
+                                }
+                                case 6 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
+                                }
+                            }
+                        }
+                        case BLUE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Blue.png"));
+                                }
+                                case 2 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Blue.png"));
+                                }
+                                case 3 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Blue.png"));
+                                }
+                                case 4 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Blue.png"));
+                                }
+                                case 5 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Blue.png"));
+                                }
+                                case 6 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Blue.png"));
+                                }
+                            }
+                        }
+                        case ORANGE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
+                                }
+                                case 2 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
+                                }
+                                case 3 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
+                                }
+                                case 4 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
+                                }
+                                case 5 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
+                                }
+                                case 6 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
+                                }
+                            }
+                        }
+                        case YELLOW -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Yellow.png"));
+                                }
+                                case 2 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Yellow.png"));
+                                }
+                                case 3 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Yellow.png"));
+                                }
+                                case 4 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Yellow.png"));
+                                }
+                                case 5 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Yellow.png"));
+                                }
+                                case 6 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Yellow.png"));
+                                }
+                            }
+                        }
+                        case PURPLE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
+                                }
+                                case 2 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
+                                }
+                                case 3 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
+                                }
+                                case 4 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
+                                }
+                                case 5 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
+                                }
+                                case 6 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
+                                }
+                            }
+                        }
+                        case WHITE -> {
+                            switch (d.getValue()) {
+                                case 1 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_One.png"));
+                                }
+                                case 2 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Two.png"));
+                                }
+                                case 3 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Three.png"));
+                                }
+                                case 4 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Four.png"));
+                                }
+                                case 5 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Five.png"));
+                                }
+                                case 6 -> {
+                                    diceSix.setIcon(new ImageIcon("src/Images/Dices/Dice_Six.png"));
+                                }
+                            }
+                        }
+                    }
+
+                    diceSel++;
+                    break;
+                }
+            }
+        }
+    }
+
+    public void initialiseActive() {
+
+        diceSel = 0;
+        updateTray();
+        updateUsed();
+        updateActive();
+        }
+
+    public void testing() {
     }
 }
+
 
