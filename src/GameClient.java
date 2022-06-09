@@ -197,6 +197,12 @@ public class GameClient extends Game {
         TileSpecialAction tileSpecialAction= possibleMove.doMove();
         currentPlayer.getDiceRoll().removeDice(dice.getPrimaryDice());
         currentPlayer.getUsedSlot().putDice(dice.getPrimaryDice());
+        for(Dice dice1: getDiceRoll().getDices()){
+            if(dice1.getValue()<dice.getPrimaryDice().getValue()){
+                currentPlayer.getTray().putDice(dice1);
+                currentPlayer.getDiceRoll().removeDice(dice1);
+            }
+        }
         return tileSpecialAction;
     }
 }
