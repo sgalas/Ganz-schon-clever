@@ -13,7 +13,8 @@ import java.util.Set;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class GameServer extends Game{
+public class GameServer{
+    private ArrayList<Player> playerList;
     public static ByteBuffer str_to_bb(String msg){
         return ByteBuffer.wrap(msg.getBytes(StandardCharsets.UTF_8));
     }
@@ -99,12 +100,10 @@ public class GameServer extends Game{
 
     }
 
-    @Override
     protected void activePlayerTurn(Player player) {
 
     }
 
-    @Override
     protected void passivePlayerTurn(Player player) {
 
     }
