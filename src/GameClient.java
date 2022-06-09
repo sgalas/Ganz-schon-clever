@@ -12,9 +12,11 @@ public class GameClient extends Game {
     private PrintWriter out;
     private BufferedReader in;
     private Player currentPlayer;
+    private ClientGUI clientGUI;
     public GameClient(String hostname,int port,String nick) throws FailedToConnectException {
         connect(hostname,port);
         currentPlayer=Player.createNewPlayer(retrieveID(),nick);
+        clientGUI=new ClientGUI(currentPlayer);
     }
     private void getID(){
     }
@@ -67,10 +69,6 @@ public class GameClient extends Game {
         UsedSlot usedSlotrecv=new UsedSlot();
         currentPlayer.setTray(trayrecv);
         currentPlayer.setUsedSlot(usedSlotrecv);
-        List<PossibleMove> possibleMoves= currentPlayer.getPossibleMovesForDices(getTray().getDices());
-        if(possibleMoves.size()==0){
-            possibleMoves=currentPlayer.getPossibleMovesForDices(getUsed().getDices());
-        }
         boolean moveIsFine;
         do{
             try {
@@ -86,7 +84,7 @@ public class GameClient extends Game {
                 e.printStackTrace();//replace with showing error in gui
                 moveIsFine=false;
             }
-        } while (!moveIsFine);
+        } while (!moveIsFine);//repeat until valid move
         //if fine add sending it to server
     }
 
@@ -121,7 +119,7 @@ public class GameClient extends Game {
 
     }
     private void updateGUI(){
-
+        clientGUI.updateAll();
     }
     private void setPlayerState(PlayerState playerState){
         currentPlayer.setPlayerState(playerState);
@@ -131,8 +129,9 @@ public class GameClient extends Game {
 
         }
     }
-    private PossibleMove getMove(){
-        return currentPlayer.getMoveQueue().poll();
+    private PossibleMove getMove() {
+        PossibleMove possibleMove=currentPlayer.getMoveQueue().poll();
+        return possibleMove;
     }
     public void doSpecialAction(TileSpecialAction tileSpecialAction) throws ImpossibleFill {
         PossibleMove possibleMove;
