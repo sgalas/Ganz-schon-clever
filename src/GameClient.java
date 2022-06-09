@@ -12,9 +12,11 @@ public class GameClient extends Game {
     private PrintWriter out;
     private BufferedReader in;
     private Player currentPlayer;
+    private ClientGUI clientGUI;
     public GameClient(String hostname,int port,String nick) throws FailedToConnectException {
         connect(hostname,port);
         currentPlayer=Player.createNewPlayer(retrieveID(),nick);
+        clientGUI=new ClientGUI(currentPlayer);
     }
     private void getID(){
     }
@@ -121,7 +123,7 @@ public class GameClient extends Game {
 
     }
     private void updateGUI(){
-
+        clientGUI.updateAll();
     }
     private void setPlayerState(PlayerState playerState){
         currentPlayer.setPlayerState(playerState);
