@@ -4,16 +4,17 @@ import java.util.List;
 
 public class BoardOrange implements Board{
     private final ArrayList<Tile> tiles;
-    private final List<Dice> dices;
+    private final List<DiceCombination> dices;
 
     public BoardOrange() {
         tiles = new ArrayList<>();
         dices = new LinkedList<>();
 
         for(int i = 1; i < 7; i++){
-            dices.add(new Dice(Color.ORANGE,i));
-            dices.add(new Dice(Color.WHITE,i));
+            dices.add(new DiceCombination(new Dice(Color.ORANGE,i)));
+            dices.add(new DiceCombination(new Dice(Color.WHITE,i)));
         }
+
         tiles.add(0, new Tile(dices,null));
         tiles.add(1, new Tile(dices,null));
         tiles.add(2, new Tile(dices,TileSpecialAction.ADDROLL));
@@ -29,13 +30,13 @@ public class BoardOrange implements Board{
 
 
     @Override
-    public TileSpecialAction fillTile(Dice dice, int index) throws ImpossibleFill {
+    public TileSpecialAction fillTile(DiceCombination dice, int index) throws ImpossibleFill {
 
-        if( !(tiles.get(index).getAllowedDiceList().contains(dice))){
+        if( !(tiles.get(index).getAllowedDiceCombinationList().contains(dice))){
             throw new ImpossibleFill("Nie można umieścić tej kostki w planszy pomarańczowej!");
         }
         tiles.get(index).updateAllowedDiceList(null);
-        return tiles.get(index).fillWithDice(dice);
+        return tiles.get(index).fillWithDice(dice.getPrimaryDice());
     }
 
     @Override
@@ -61,9 +62,10 @@ public class BoardOrange implements Board{
     public List<PossibleMove> possibleMoves() {
         LinkedList<PossibleMove> moves = new LinkedList<>();
         for(int i = 0; i < tiles.size(); i++) {
-            for(Dice dice: dices)
-            if((tiles.get(i).getAllowedDiceList().contains(dice))) {
-                moves.add(new PossibleMove(this, dice, i));
+            for(DiceCombination singleDiceCombo: dices){
+                if((tiles.get(i).getAllowedDiceCombinationList().contains(singleDiceCombo.getPrimaryDice()))) {
+                    moves.add(new PossibleMove(this, singleDiceCombo.getPrimaryDice(), i));
+                }
             }
         }
 
@@ -71,12 +73,12 @@ public class BoardOrange implements Board{
     }
 
     @Override
-    public List<PossibleMove> possibleMovesWithDice(Dice dice) {
+    public List<PossibleMove> possibleMovesWithDice(DiceCombination dice) {
         LinkedList<PossibleMove> moveWithDice = new LinkedList<>();
 
         if(dices.contains(dice)){
             for(int i = 0; i < tiles.size(); i++) {
-                if((tiles.get(i).getAllowedDiceList().contains(dice))) {
+                if((tiles.get(i).getAllowedDiceCombinationList().contains(dice))) {
                     moveWithDice.add(new PossibleMove(this, dice, i));
                     return moveWithDice;
                 }

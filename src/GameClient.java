@@ -150,19 +150,19 @@ public class GameClient extends Game {
                 updateGUI();
                 break;
             case ADDORANGE4:
-                possibleMove= currentPlayer.getBoardOrange().possibleMovesWithDice(new Dice(Color.ORANGE,4)).get(0);
+                possibleMove= currentPlayer.getBoardOrange().possibleMovesWithDice(new DiceCombination(new Dice(Color.ORANGE,4))).get(0);
                 nextTileSpecialAction =possibleMove.doMove();
                 updateGUI();
                 doSpecialAction(nextTileSpecialAction);
                 break;
             case ADDORANGE5:
-                possibleMove= currentPlayer.getBoardOrange().possibleMovesWithDice(new Dice(Color.ORANGE,5)).get(0);
+                possibleMove= currentPlayer.getBoardOrange().possibleMovesWithDice(new DiceCombination(new Dice(Color.ORANGE,5))).get(0);
                 nextTileSpecialAction =possibleMove.doMove();
                 updateGUI();
                 doSpecialAction(nextTileSpecialAction);
                 break;
             case ADDORANGE6:
-                possibleMove= currentPlayer.getBoardOrange().possibleMovesWithDice(new Dice(Color.ORANGE,6)).get(0);
+                possibleMove= currentPlayer.getBoardOrange().possibleMovesWithDice(new DiceCombination(new Dice(Color.ORANGE,6))).get(0);
                 nextTileSpecialAction =possibleMove.doMove();
                 updateGUI();
                 doSpecialAction(nextTileSpecialAction);
@@ -175,7 +175,7 @@ public class GameClient extends Game {
                 doSpecialAction(nextTileSpecialAction);
                 break;
             case ADDPURPLE6:
-                possibleMove= currentPlayer.getBoardPurple().possibleMovesWithDice(new Dice(Color.PURPLE,6)).get(0);
+                possibleMove= currentPlayer.getBoardPurple().possibleMovesWithDice(new DiceCombination(new Dice(Color.PURPLE,6))).get(0);
                 nextTileSpecialAction =possibleMove.doMove();
                 updateGUI();
                 doSpecialAction(nextTileSpecialAction);
@@ -193,10 +193,10 @@ public class GameClient extends Game {
         }
     }
     private TileSpecialAction performMove(PossibleMove possibleMove) throws ImpossibleFill {
-        Dice dice=possibleMove.getDice();
+        DiceCombination dice=possibleMove.getDiceCombination();
         TileSpecialAction tileSpecialAction= possibleMove.doMove();
-        currentPlayer.getDiceRoll().removeDice(dice);
-        currentPlayer.getUsedSlot().putDice(dice);
+        currentPlayer.getDiceRoll().removeDice(dice.getPrimaryDice());
+        currentPlayer.getUsedSlot().putDice(dice.getPrimaryDice());
         return tileSpecialAction;
     }
 }

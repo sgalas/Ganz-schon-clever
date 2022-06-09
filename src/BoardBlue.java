@@ -4,8 +4,7 @@ import java.util.List;
 
 public class BoardBlue implements Board{
     private ArrayList<Tile> tiles;
-    private final List<Dice> dices;
-
+    private final List<DiceCombination> dices;
     public BoardBlue() {
         tiles = new ArrayList<>();
         dices = new LinkedList<>();
@@ -75,8 +74,8 @@ public class BoardBlue implements Board{
     }
 
     @Override
-    public TileSpecialAction fillTile(Dice dice, int index) throws ImpossibleFill {
-        if( !(tiles.get(index).getAllowedDiceList().contains(dice)))
+    public TileSpecialAction fillTile(List<Dice> dice, int index) throws ImpossibleFill {
+        if( !(tiles.get(index).getAllowedDiceCombinationList().contains(dice)))
             throw new ImpossibleFill("Nie można umieścić tej kostki w planszy niebieskiej!");
         tiles.get(index).updateAllowedDiceList(null);
         return getSpecialAction(); // change method so that it takes 2 vaules of dices (white and blue)
@@ -127,7 +126,7 @@ public class BoardBlue implements Board{
 
         if (dice.getColor().equals(Color.BLUE) || dice.getColor().equals(Color.WHITE)) {
             for (int i = 0; i < tiles.size(); i++) {
-                if ((tiles.get(i).getAllowedDiceList().contains(dice))) {
+                if ((tiles.get(i).getAllowedDiceCombinationList().contains(dice))) {
                     moveWithDice.add(new PossibleMove(this, dice, i));
                 }
             }

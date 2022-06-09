@@ -4,39 +4,39 @@ import java.util.List;
 
 public class BoardYellow implements Board{
     private final ArrayList<Tile> tiles;
-    private final List<Dice> dices;
+    private final List<DiceCombination> dices;
 
     public BoardYellow() {
         tiles = new ArrayList<>();
         dices = new LinkedList<>();
 
-        LinkedList<Dice> value1 = new LinkedList<>();
-        value1.add(new Dice((Color.YELLOW),1));
-        value1.add(new Dice((Color.WHITE),1));
+        LinkedList<DiceCombination> value1 = new LinkedList<>();
+        value1.add(new DiceCombination( new Dice((Color.YELLOW),1)));
+        value1.add(new DiceCombination( new Dice((Color.WHITE),1)));
 
-        LinkedList<Dice> value2 = new LinkedList<>();
-        value2.add(new Dice((Color.YELLOW),2));
-        value2.add(new Dice((Color.WHITE),2));
+        LinkedList<DiceCombination> value2 = new LinkedList<>();
+        value2.add(new DiceCombination( new Dice((Color.YELLOW),2)));
+        value2.add(new DiceCombination( new Dice((Color.WHITE),2)));
 
-        LinkedList<Dice> value3 = new LinkedList<>();
-        value3.add(new Dice((Color.YELLOW),3));
-        value3.add(new Dice((Color.WHITE),3));
+        LinkedList<DiceCombination> value3 = new LinkedList<>();
+        value3.add(new DiceCombination( new Dice((Color.YELLOW),3)));
+        value3.add(new DiceCombination( new Dice((Color.WHITE),3)));
 
-        LinkedList<Dice> value4 = new LinkedList<>();
-        value4.add(new Dice((Color.YELLOW),4));
-        value4.add(new Dice((Color.WHITE),4));
+        LinkedList<DiceCombination> value4 = new LinkedList<>();
+        value4.add(new DiceCombination( new Dice((Color.YELLOW),4)));
+        value4.add(new DiceCombination( new Dice((Color.WHITE),4)));
 
-        LinkedList<Dice> value5 = new LinkedList<>();
-        value5.add(new Dice((Color.YELLOW),5));
-        value5.add(new Dice((Color.WHITE),5));
+        LinkedList<DiceCombination> value5 = new LinkedList<>();
+        value5.add(new DiceCombination( new Dice((Color.YELLOW),5)));
+        value5.add(new DiceCombination( new Dice((Color.WHITE),5)));
 
-        LinkedList<Dice> value6 = new LinkedList<>();
-        value6.add(new Dice((Color.YELLOW),6));
-        value6.add(new Dice((Color.WHITE),6));
+        LinkedList<DiceCombination> value6 = new LinkedList<>();
+        value6.add(new DiceCombination( new Dice((Color.YELLOW),6)));
+        value6.add(new DiceCombination( new Dice((Color.WHITE),6)));
 
         for(int i = 1; i < 7; i++){
-            dices.add(new Dice(Color.YELLOW,i));
-            dices.add(new Dice(Color.WHITE,i));
+            dices.add(new DiceCombination(new Dice(Color.YELLOW,i)));
+            dices.add(new DiceCombination(new Dice(Color.WHITE,i)));
         }
         tiles.add(0, new Tile(value3, null));
         tiles.add(1, new Tile(value6,null));
@@ -56,8 +56,8 @@ public class BoardYellow implements Board{
     }
 
     @Override
-    public TileSpecialAction fillTile(Dice dice, int index) throws ImpossibleFill {
-        if( !(tiles.get(index).getAllowedDiceList().contains(dice)))
+    public TileSpecialAction fillTile(DiceCombination dice, int index) throws ImpossibleFill {
+        if( !(tiles.get(index).getAllowedDiceCombinationList().contains(dice)))
             throw new ImpossibleFill("Nie można umieścić tej kostki w planszy żółtej!");
         tiles.get(index).updateAllowedDiceList(null);
         return getSpecialAction();
@@ -98,8 +98,8 @@ public class BoardYellow implements Board{
     public List<PossibleMove> possibleMoves() {
         LinkedList<PossibleMove> moves = new LinkedList<>();
         for(int i = 0; i < tiles.size(); i++) {
-            for(Dice dice: dices)
-                if((tiles.get(i).getAllowedDiceList().contains(dice))) {
+            for(DiceCombination dice: dices)
+                if((tiles.get(i).getAllowedDiceCombinationList().contains(dice))) {
                     moves.add(new PossibleMove(this, dice, i));
                 }
         }
@@ -108,12 +108,12 @@ public class BoardYellow implements Board{
     }
 
     @Override
-    public List<PossibleMove> possibleMovesWithDice(Dice dice) {
+    public List<PossibleMove> possibleMovesWithDice(DiceCombination dice) {
         LinkedList<PossibleMove> moveWithDice = new LinkedList<>();
 
         if(dices.contains(dice)){
             for(int i = 0; i < tiles.size(); i++) {
-                if((tiles.get(i).getAllowedDiceList().contains(dice))){
+                if((tiles.get(i).getAllowedDiceCombinationList().contains(dice))){
                     moveWithDice.add(new PossibleMove(this, dice, i));
                 }
             }

@@ -1,20 +1,20 @@
 import java.util.List;
 
 public class Tile {
-    private List<Dice> allowedDiceList;
+    private List<DiceCombination> allowedDiceList;
     private Dice filledWith;
     private final TileSpecialAction tileSpecialAction;
-    public Tile(List<Dice> allowedDiceList, TileSpecialAction tileSpecialAction){
+    public Tile(List<DiceCombination> allowedDiceList, TileSpecialAction tileSpecialAction){
         this.allowedDiceList=allowedDiceList;
         this.tileSpecialAction = tileSpecialAction;
     }
-    public List<Dice> getAllowedDiceList() {
+    public List<DiceCombination> getAllowedDiceCombinationList() {
         return allowedDiceList;
     }
     public TileSpecialAction getSpecialAction(){
         return tileSpecialAction;
     }
-    public void updateAllowedDiceList(List<Dice> dices){
+    public void updateAllowedDiceList(List<DiceCombination> dices){
         allowedDiceList=dices;
     }
     public TileSpecialAction fillWithDice(Dice dice){

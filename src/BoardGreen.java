@@ -4,15 +4,15 @@ import java.util.List;
 
 public class BoardGreen implements Board{
     private final ArrayList<Tile> tiles;
-    private final List<Dice> dices;
+    private final List<DiceCombination> dices;
 
     public BoardGreen() {
         tiles = new ArrayList<>();
         dices = new LinkedList<>();
 
         for(int i = 1; i < 7; i++){
-            dices.add(new Dice(Color.GREEN,i));
-            dices.add(new Dice(Color.WHITE,i));
+            dices.add(new DiceCombination(new Dice(Color.GREEN,i)));
+            dices.add(new DiceCombination(new Dice(Color.WHITE,i)));
         }
         tiles.add(0, new Tile(dices,null));
         tiles.add(1, new Tile(null,null));
@@ -28,31 +28,32 @@ public class BoardGreen implements Board{
     }
 
     @Override
-    public TileSpecialAction fillTile(Dice dice, int index) throws ImpossibleFill {
-        if( !(tiles.get(index).getAllowedDiceList().contains(dice)))
+    public TileSpecialAction fillTile(DiceCombination dice, int index) throws ImpossibleFill {
+        if( !(tiles.get(index).getAllowedDiceCombinationList().contains(dice)))
             throw new ImpossibleFill("Nie można umieścić tej kostki w planszy zielonej!");
 
-        List<Dice> condition;
+        List<DiceCombination> condition;
         condition = dices;
-        for (Dice dice1: dices){
-        if((index == 0 | index == 5) & dice1.getValue() == 1) {
-           condition.remove(dice1);
-        } else if((index == 1 | index == 6) & (dice1.getValue() == 1 | dice1.getValue() == 2)){
-           condition.remove(dice1);
-        } else if((index == 2 | index == 7) & (dice1.getValue() == 1 | dice1.getValue() == 2 | dice1.getValue() == 3)){
-           condition.remove(dice1);
-        } else if((index == 3 | index == 8) & (dice1.getValue() == 1 | dice1.getValue() == 2 | dice1.getValue() == 3 | dice1.getValue() == 4)){
-           condition.remove(dice1);
-        } else if(index == 4){
-           condition.addAll(dices);
-        } else if(index == 9 & dice1.getValue() == 6){
-           condition.removeAll(dices);
-           condition.add(dice1);
-        }
+        for (DiceCombination diceCombo: dices){
+            Dice dice1=diceCombo.getPrimaryDice();
+            if((index == 0 | index == 5) & dice1.getValue() == 1) {
+                condition.remove(dice1);
+            } else if((index == 1 | index == 6) & (dice1.getValue() == 1 | dice1.getValue() == 2)){
+                condition.remove(dice1);
+            } else if((index == 2 | index == 7) & (dice1.getValue() == 1 | dice1.getValue() == 2 | dice1.getValue() == 3)){
+                condition.remove(dice1);
+            } else if((index == 3 | index == 8) & (dice1.getValue() == 1 | dice1.getValue() == 2 | dice1.getValue() == 3 | dice1.getValue() == 4)){
+                condition.remove(dice1);
+            } else if(index == 4){
+                condition.addAll(dices);
+            } else if(index == 9 & dice1.getValue() == 6){
+                condition.removeAll(dices);
+                condition.add(diceCombo);
+            }
        }
         tiles.get(index).updateAllowedDiceList(null);
         tiles.get(index + 1).updateAllowedDiceList(condition);
-        return tiles.get(index).fillWithDice(dice);
+        return tiles.get(index).fillWithDice(dice.getPrimaryDice());
     }
 
     @Override
@@ -61,7 +62,7 @@ public class BoardGreen implements Board{
         int counter = 0;
 
         for (int i = 0; i < tiles.size() + 1; i++){
-            if(tiles.get(i).getAllowedDiceList() == null){
+            if(tiles.get(i).getAllowedDiceCombinationList() == null){
                 counter = counter + 1;
             }
         }
@@ -108,8 +109,8 @@ public class BoardGreen implements Board{
     public List<PossibleMove> possibleMoves() {
         LinkedList<PossibleMove> moves = new LinkedList<>();
         for(int i = 0; i < tiles.size(); i++) {
-            for(Dice dice: dices)
-                if((tiles.get(i).getAllowedDiceList().contains(dice))) {
+            for(DiceCombination dice: dices)
+                if((tiles.get(i).getAllowedDiceCombinationList().contains(dice))) {
                     moves.add(new PossibleMove(this, dice, i));
                 }
         }
@@ -118,12 +119,12 @@ public class BoardGreen implements Board{
     }
 
     @Override
-    public List<PossibleMove> possibleMovesWithDice(Dice dice) {
+    public List<PossibleMove> possibleMovesWithDice(DiceCombination dice) {
         LinkedList<PossibleMove> moveWithDice = new LinkedList<>();
 
         if(dices.contains(dice)){
             for(int i = 0; i < tiles.size(); i++) {
-                if((tiles.get(i).getAllowedDiceList().contains(dice))){
+                if((tiles.get(i).getAllowedDiceCombinationList().contains(dice))){
                     moveWithDice.add(new PossibleMove(this, dice, i));
                     return moveWithDice;
                 }
