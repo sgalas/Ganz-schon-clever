@@ -61,11 +61,6 @@ public class SowaPlayground {
 
 
 
-//        JButton diceWhite = new JButton();  way to change icons into active ones
-//        diceWhite.setIcon(new ImageIcon("src/Images/Dice_Five.png"));
-//        ImageIcon temp = (ImageIcon) diceWhite.getIcon();
-//        System.out.println(temp.getDescription());
-        //testgui();
 
     }
 
