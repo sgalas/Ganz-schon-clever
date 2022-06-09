@@ -56,6 +56,7 @@ public class SowaPlayground {
         tray.putDice(new Dice(Color.PURPLE, 1));
         tray.putDice(new Dice(Color.GREEN, 4));
         a.setTray(tray);
+
         ClientGUI abc = new ClientGUI(a);
 
 
