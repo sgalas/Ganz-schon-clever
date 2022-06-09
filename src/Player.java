@@ -18,8 +18,8 @@ public class Player {
     private Tray tray;
     private Queue<PossibleMove> moveQueue;
     private PlayerState playerState;
-
-    public Player(int id, String nick, int rerollCount, int additionalDiceCount, int foxCount, BoardGreen boardGreen, BoardPurple boardPurple, BoardOrange boardOrange, BoardBlue boardBlue, BoardYellow boardYellow, Queue<PossibleMove> moveQueue, PlayerState playerState) {
+    private int round;
+    public Player(int id, String nick, int rerollCount, int additionalDiceCount, int foxCount, BoardGreen boardGreen, BoardPurple boardPurple, BoardOrange boardOrange, BoardBlue boardBlue, BoardYellow boardYellow, Queue<PossibleMove> moveQueue, PlayerState playerState,int round) {
         this.id = id;
         this.nick = nick;
         this.rerollCount = rerollCount;
@@ -32,6 +32,7 @@ public class Player {
         this.boardYellow = boardYellow;
         this.moveQueue = moveQueue;
         this.playerState = playerState;
+        this.round=round;
     }
     public static Player createNewPlayer(int id, String nick) {
         BoardGreen boardGreen=new BoardGreen();
@@ -41,7 +42,7 @@ public class Player {
         BoardYellow boardYellow=new BoardYellow();
         Queue<PossibleMove> moveQueue=new LinkedList<>();
         PlayerState playerState=PlayerState.FINISHED_TURN;
-        Player player =new Player(id,nick,0,0,0,boardGreen, boardPurple,boardOrange,boardBlue,boardYellow,moveQueue,playerState);
+        Player player =new Player(id,nick,0,0,0,boardGreen, boardPurple,boardOrange,boardBlue,boardYellow,moveQueue,playerState,0);
         return player;
     }
 
@@ -61,6 +62,10 @@ public class Player {
         retList.addAll(boardBlue.possibleMovesWithDice(dice));
         retList.addAll(boardYellow.possibleMovesWithDice(dice));
         return retList;
+    }
+
+    public int getRound() {
+        return round;
     }
 
     public String getNick() {
@@ -178,5 +183,8 @@ public class Player {
         if(moveQueue.size()>0||playerState.equals(PlayerState.FINISHED_TURN)){
             throw new NotReadyException();
         }
+    }
+    public void incrementRound(){
+        ++round;
     }
 }
