@@ -80,7 +80,7 @@ public class GameClient extends Game {
                 TileSpecialAction tileSpecialAction = selectedMove.doMove();
                 doSpecialAction(tileSpecialAction);
 
-            } catch (ImpossibleFill|InvalidMoveException e) {
+            } catch (ImpossibleFill e) {
                 e.printStackTrace();//replace with showing error in gui
                 moveIsFine=false;
             }
@@ -129,9 +129,8 @@ public class GameClient extends Game {
 
         }
     }
-    private PossibleMove getMove() throws InvalidMoveException {
+    private PossibleMove getMove() {
         PossibleMove possibleMove=currentPlayer.getMoveQueue().poll();
-        verifyMove(possibleMove);
         return possibleMove;
     }
     public void doSpecialAction(TileSpecialAction tileSpecialAction) throws ImpossibleFill {
@@ -191,11 +190,6 @@ public class GameClient extends Game {
                 updateGUI();
                 waitOnGUI();
                 break;
-        }
-    }
-    private void verifyMove(PossibleMove possibleMove) throws InvalidMoveException {
-        if(!currentPlayer.getPossibleMoves().contains(possibleMove)){
-            throw new InvalidMoveException();
         }
     }
 }

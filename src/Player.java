@@ -162,7 +162,8 @@ public class Player {
     public void addAdditionalDice(){
         ++additionalDiceCount;
     }
-    public void executeMove(PossibleMove possibleMove){
+    public void executeMove(PossibleMove possibleMove) throws InvalidMoveException {
+        verifyMove(possibleMove);
         moveQueue.add(possibleMove);
     }
 
@@ -176,5 +177,10 @@ public class Player {
 
     public void setPlayerState(PlayerState playerState) {
         this.playerState = playerState;
+    }
+    private void verifyMove(PossibleMove possibleMove) throws InvalidMoveException {
+        if(!getPossibleMoves().contains(possibleMove)){
+            throw new InvalidMoveException();
+        }
     }
 }
