@@ -17,6 +17,7 @@ public class ClientStarter {
                 System.out.println("Enter nick:");
                 String nick=scanner.nextLine();
                 GameClient gameClient=new GameClient(hostname,port,nick);
+                gameClient.run();
                 System.out.println("Stop game?:");
                 boolean correctOption=false;
                 while(!correctOption) {

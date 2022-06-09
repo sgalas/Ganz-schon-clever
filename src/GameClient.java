@@ -62,7 +62,7 @@ public class GameClient {
         out.write(builder.toString());
     }
 
-    protected void passivePlayerTurn() {
+    private void passivePlayerTurn() {
 
         //somehow get Tray and UsedSlot from server
         Tray trayrecv=new Tray();
@@ -88,35 +88,15 @@ public class GameClient {
         //if fine add sending it to server
     }
 
-    public void createGUI(){
-        ClientGUI clientGUI = new ClientGUI(currentPlayer);
+    private DiceRoll getDiceRoll(){
+        return currentPlayer.getDiceRoll();
     }
 
-    public DiceRoll getDiceRoll(){
-        return null;
-    }
-
-    public Tray getTray(){
+    private Tray getTray(){
         return currentPlayer.getTray();
     }
-    public UsedSlot getUsed(){
+    private UsedSlot getUsed(){
         return currentPlayer.getUsedSlot();
-    }
-
-    public int getFoxCount(){
-        return currentPlayer.getFoxCount();
-    }
-    public int getAdditionalDiceCount(){
-        return currentPlayer.getAdditionalDiceCount();
-    }
-    public int getRerollCount(){
-        return currentPlayer.getRerollCount();
-    }
-    public void useAdditionalDice(){
-
-    }
-    public void useReroll(){
-
     }
     private void updateGUI(){
         clientGUI.updateAll();
@@ -133,7 +113,7 @@ public class GameClient {
         PossibleMove possibleMove=currentPlayer.getMoveQueue().poll();
         return possibleMove;
     }
-    public void doSpecialAction(TileSpecialAction tileSpecialAction) throws ImpossibleFill {
+    private void doSpecialAction(TileSpecialAction tileSpecialAction) throws ImpossibleFill {
         PossibleMove possibleMove;
         TileSpecialAction nextTileSpecialAction;
         switch (tileSpecialAction){
@@ -195,17 +175,17 @@ public class GameClient {
     private TileSpecialAction performMove(PossibleMove possibleMove) throws ImpossibleFill {
         DiceCombination dice=possibleMove.getDiceCombination();
         TileSpecialAction tileSpecialAction= possibleMove.doMove();
-        currentPlayer.getDiceRoll().removeDice(dice.getPrimaryDice());
-        currentPlayer.getUsedSlot().putDice(dice.getPrimaryDice());
+        getDiceRoll().removeDice(dice.getPrimaryDice());
+        getUsed().putDice(dice.getPrimaryDice());
         for(Dice dice1: getDiceRoll().getDices()){
             if(dice1.getValue()<dice.getPrimaryDice().getValue()){
-                currentPlayer.getTray().putDice(dice1);
-                currentPlayer.getDiceRoll().removeDice(dice1);
+                getTray().putDice(dice1);
+                getDiceRoll().removeDice(dice1);
             }
         }
         return tileSpecialAction;
     }
-    public void nextRound() throws IOException {
+    private void nextRound() throws IOException {
         boolean isActivePlayer=true;//get from server
         if(isActivePlayer){
             activePlayerTurn();
@@ -231,5 +211,7 @@ public class GameClient {
                 break;
         }
     }
+    public void run(){
 
+    }
 }
