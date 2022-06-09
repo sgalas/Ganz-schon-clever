@@ -69,10 +69,6 @@ public class GameClient extends Game {
         UsedSlot usedSlotrecv=new UsedSlot();
         currentPlayer.setTray(trayrecv);
         currentPlayer.setUsedSlot(usedSlotrecv);
-        List<PossibleMove> possibleMoves= currentPlayer.getPossibleMovesForDices(getTray().getDices());
-        if(possibleMoves.size()==0){
-            possibleMoves=currentPlayer.getPossibleMovesForDices(getUsed().getDices());
-        }
         boolean moveIsFine;
         do{
             try {
@@ -84,11 +80,11 @@ public class GameClient extends Game {
                 TileSpecialAction tileSpecialAction = selectedMove.doMove();
                 doSpecialAction(tileSpecialAction);
 
-            } catch (ImpossibleFill e) {
+            } catch (ImpossibleFill|InvalidMoveException e) {
                 e.printStackTrace();//replace with showing error in gui
                 moveIsFine=false;
             }
-        } while (!moveIsFine);
+        } while (!moveIsFine);//repeat until valid move
         //if fine add sending it to server
     }
 
@@ -133,8 +129,10 @@ public class GameClient extends Game {
 
         }
     }
-    private PossibleMove getMove(){
-        return currentPlayer.getMoveQueue().poll();
+    private PossibleMove getMove() throws InvalidMoveException {
+        PossibleMove possibleMove=currentPlayer.getMoveQueue().poll();
+        verifyMove(possibleMove);
+        return possibleMove;
     }
     public void doSpecialAction(TileSpecialAction tileSpecialAction) throws ImpossibleFill {
         PossibleMove possibleMove;
@@ -193,6 +191,11 @@ public class GameClient extends Game {
                 updateGUI();
                 waitOnGUI();
                 break;
+        }
+    }
+    private void verifyMove(PossibleMove possibleMove) throws InvalidMoveException {
+        if(!currentPlayer.getPossibleMoves().contains(possibleMove)){
+            throw new InvalidMoveException();
         }
     }
 }
