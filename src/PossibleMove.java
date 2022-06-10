@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.Objects;
 
-public class PossibleMove {
+public class PossibleMove implements Serializable {
     private final Board board;
     private final DiceCombination diceCombination;
     private final int index;

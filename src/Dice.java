@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.Random;
 
-public class Dice {
+public class Dice implements Serializable {
     private final DiceColor diceColor;
     private final int value;
     public Dice(DiceColor diceColor, int value){

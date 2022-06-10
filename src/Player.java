@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class Player {
+public class Player implements Serializable {
     private final int id;
     private String nick;
     private int rerollCount;

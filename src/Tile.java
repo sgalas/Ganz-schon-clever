@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-public class Tile {
+public class Tile implements Serializable {
     private List<DiceCombination> allowedDiceList;
     private Dice filledWith;
     private final TileSpecialAction tileSpecialAction;

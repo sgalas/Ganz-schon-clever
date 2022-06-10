@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DiceRoll {
+public class DiceRoll implements Serializable {
     private List<Dice> dices;
     private int dicesRetrievedCount;
 

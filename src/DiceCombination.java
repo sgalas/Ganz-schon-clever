@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-public class DiceCombination {
+public class DiceCombination implements Serializable {
     private Dice primaryDice;
     private List<Dice> dices;
 

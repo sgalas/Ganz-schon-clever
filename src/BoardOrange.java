@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class BoardOrange implements Board{
+public class BoardOrange implements Board, Serializable {
     private final ArrayList<Tile> tiles;
     private final List<DiceCombination> dices;
 
