@@ -11,8 +11,8 @@ public class BoardPurple implements Board{
         dices = new LinkedList<>();
 
         for(int i = 1; i < 7; i++){
-            dices.add(new DiceCombination(new Dice(Color.PURPLE,i)));
-            dices.add(new DiceCombination(new Dice(Color.WHITE,i)));
+            dices.add(new DiceCombination(new Dice(DiceColor.PURPLE,i)));
+            dices.add(new DiceCombination(new Dice(DiceColor.WHITE,i)));
         }
         tiles.add(0, new Tile(dices,null));
         tiles.add(1, new Tile(null,null));

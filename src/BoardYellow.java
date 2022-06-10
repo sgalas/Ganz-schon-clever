@@ -11,32 +11,32 @@ public class BoardYellow implements Board{
         dices = new LinkedList<>();
 
         LinkedList<DiceCombination> value1 = new LinkedList<>();
-        value1.add(new DiceCombination( new Dice((Color.YELLOW),1)));
-        value1.add(new DiceCombination( new Dice((Color.WHITE),1)));
+        value1.add(new DiceCombination( new Dice((DiceColor.YELLOW),1)));
+        value1.add(new DiceCombination( new Dice((DiceColor.WHITE),1)));
 
         LinkedList<DiceCombination> value2 = new LinkedList<>();
-        value2.add(new DiceCombination( new Dice((Color.YELLOW),2)));
-        value2.add(new DiceCombination( new Dice((Color.WHITE),2)));
+        value2.add(new DiceCombination( new Dice((DiceColor.YELLOW),2)));
+        value2.add(new DiceCombination( new Dice((DiceColor.WHITE),2)));
 
         LinkedList<DiceCombination> value3 = new LinkedList<>();
-        value3.add(new DiceCombination( new Dice((Color.YELLOW),3)));
-        value3.add(new DiceCombination( new Dice((Color.WHITE),3)));
+        value3.add(new DiceCombination( new Dice((DiceColor.YELLOW),3)));
+        value3.add(new DiceCombination( new Dice((DiceColor.WHITE),3)));
 
         LinkedList<DiceCombination> value4 = new LinkedList<>();
-        value4.add(new DiceCombination( new Dice((Color.YELLOW),4)));
-        value4.add(new DiceCombination( new Dice((Color.WHITE),4)));
+        value4.add(new DiceCombination( new Dice((DiceColor.YELLOW),4)));
+        value4.add(new DiceCombination( new Dice((DiceColor.WHITE),4)));
 
         LinkedList<DiceCombination> value5 = new LinkedList<>();
-        value5.add(new DiceCombination( new Dice((Color.YELLOW),5)));
-        value5.add(new DiceCombination( new Dice((Color.WHITE),5)));
+        value5.add(new DiceCombination( new Dice((DiceColor.YELLOW),5)));
+        value5.add(new DiceCombination( new Dice((DiceColor.WHITE),5)));
 
         LinkedList<DiceCombination> value6 = new LinkedList<>();
-        value6.add(new DiceCombination( new Dice((Color.YELLOW),6)));
-        value6.add(new DiceCombination( new Dice((Color.WHITE),6)));
+        value6.add(new DiceCombination( new Dice((DiceColor.YELLOW),6)));
+        value6.add(new DiceCombination( new Dice((DiceColor.WHITE),6)));
 
         for(int i = 1; i < 7; i++){
-            dices.add(new DiceCombination(new Dice(Color.YELLOW,i)));
-            dices.add(new DiceCombination(new Dice(Color.WHITE,i)));
+            dices.add(new DiceCombination(new Dice(DiceColor.YELLOW,i)));
+            dices.add(new DiceCombination(new Dice(DiceColor.WHITE,i)));
         }
         tiles.add(0, new Tile(value3, null));
         tiles.add(1, new Tile(value6,null));

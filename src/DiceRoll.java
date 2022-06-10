@@ -14,17 +14,17 @@ public class DiceRoll {
         int blueind = 0;
         int whiteind = 0;
         List<Dice> dices = new ArrayList<>();
-        for (Color color :Color.values()){
-            dices.add(Dice.getRandomDice(color));
-            if(color == Color.BLUE){
+        for (DiceColor diceColor : DiceColor.values()){
+            dices.add(Dice.getRandomDice(diceColor));
+            if(diceColor == DiceColor.BLUE){
                 blueind = counter;
             }
-            if(color == Color.WHITE){
+            if(diceColor == DiceColor.WHITE){
                 whiteind = counter;
             }
             counter++;
         }
-        dices.add(new Dice(Color.BLUE, dices.get(blueind).getValue() + dices.get(whiteind).getValue()));
+        dices.add(new Dice(DiceColor.BLUE, dices.get(blueind).getValue() + dices.get(whiteind).getValue()));
         dices.remove(dices.get(blueind));
         return new DiceRoll(dices);
     }

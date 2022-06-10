@@ -42,7 +42,7 @@ public class GameClient {
         List<Dice> kosci=new ArrayList<>();
         while((odpowiedz=in.readLine())!=null) {
             String buffor[]=odpowiedz.split(",");
-            kosci.add(new Dice( Color.values()[ Integer.valueOf(buffor[0]) ], Integer.valueOf(buffor[1]) ));
+            kosci.add(new Dice( DiceColor.values()[ Integer.valueOf(buffor[0]) ], Integer.valueOf(buffor[1]) ));
         }
         currentPlayer.setDiceRoll(new DiceRoll(kosci));
         //get tray and used from gui
@@ -130,19 +130,19 @@ public class GameClient {
                 updateGUI();
                 break;
             case ADDORANGE4:
-                possibleMove= currentPlayer.getBoardOrange().possibleMovesWithDice(new DiceCombination(new Dice(Color.ORANGE,4))).get(0);
+                possibleMove= currentPlayer.getBoardOrange().possibleMovesWithDice(new DiceCombination(new Dice(DiceColor.ORANGE,4))).get(0);
                 nextTileSpecialAction =possibleMove.doMove();
                 updateGUI();
                 doSpecialAction(nextTileSpecialAction);
                 break;
             case ADDORANGE5:
-                possibleMove= currentPlayer.getBoardOrange().possibleMovesWithDice(new DiceCombination(new Dice(Color.ORANGE,5))).get(0);
+                possibleMove= currentPlayer.getBoardOrange().possibleMovesWithDice(new DiceCombination(new Dice(DiceColor.ORANGE,5))).get(0);
                 nextTileSpecialAction =possibleMove.doMove();
                 updateGUI();
                 doSpecialAction(nextTileSpecialAction);
                 break;
             case ADDORANGE6:
-                possibleMove= currentPlayer.getBoardOrange().possibleMovesWithDice(new DiceCombination(new Dice(Color.ORANGE,6))).get(0);
+                possibleMove= currentPlayer.getBoardOrange().possibleMovesWithDice(new DiceCombination(new Dice(DiceColor.ORANGE,6))).get(0);
                 nextTileSpecialAction =possibleMove.doMove();
                 updateGUI();
                 doSpecialAction(nextTileSpecialAction);
@@ -155,7 +155,7 @@ public class GameClient {
                 doSpecialAction(nextTileSpecialAction);
                 break;
             case ADDPURPLE6:
-                possibleMove= currentPlayer.getBoardPurple().possibleMovesWithDice(new DiceCombination(new Dice(Color.PURPLE,6))).get(0);
+                possibleMove= currentPlayer.getBoardPurple().possibleMovesWithDice(new DiceCombination(new Dice(DiceColor.PURPLE,6))).get(0);
                 nextTileSpecialAction =possibleMove.doMove();
                 updateGUI();
                 doSpecialAction(nextTileSpecialAction);

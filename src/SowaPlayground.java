@@ -3,7 +3,6 @@ import java.awt.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class SowaPlayground {
 
@@ -48,13 +47,13 @@ public class SowaPlayground {
         a.setDiceRoll(DiceRoll.rollDice());
 
         List<Dice> used = new ArrayList<>();
-        used.add(new Dice(Color.WHITE, 5));
-        used.add(new Dice(Color.BLUE, 3));
-        used.add(new Dice(Color.YELLOW, 1));
+        used.add(new Dice(DiceColor.WHITE, 5));
+        used.add(new Dice(DiceColor.BLUE, 3));
+        used.add(new Dice(DiceColor.YELLOW, 1));
         a.setUsedSlot(new UsedSlot(used));
         Tray tray = new Tray();
-        tray.putDice(new Dice(Color.PURPLE, 1));
-        tray.putDice(new Dice(Color.GREEN, 4));
+        tray.putDice(new Dice(DiceColor.PURPLE, 1));
+        tray.putDice(new Dice(DiceColor.GREEN, 4));
         a.setTray(tray);
 
         ClientGUI abc = new ClientGUI(a);
