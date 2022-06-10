@@ -11,22 +11,10 @@ public class DiceRoll implements Serializable {
     }
 
     public static DiceRoll rollDice(){
-        int counter = 0;
-        int blueind = 0;
-        int whiteind = 0;
         List<Dice> dices = new ArrayList<>();
         for (DiceColor diceColor : DiceColor.values()){
             dices.add(Dice.getRandomDice(diceColor));
-            if(diceColor == DiceColor.BLUE){
-                blueind = counter;
-            }
-            if(diceColor == DiceColor.WHITE){
-                whiteind = counter;
-            }
-            counter++;
         }
-        dices.add(new Dice(DiceColor.BLUE, dices.get(blueind).getValue() + dices.get(whiteind).getValue()));
-        dices.remove(dices.get(blueind));
         return new DiceRoll(dices);
     }
 
