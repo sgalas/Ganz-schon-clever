@@ -196,4 +196,22 @@ public class Player implements Serializable {
         points+=boardPurple.getPoints();
         return points;
     }
+    public Dice getDice(DiceColor diceColor){
+        for(Dice dice:diceRoll.getDices()){
+            if(diceColor.equals(dice.getColor())){
+                return dice;
+            }
+        }
+        for(Dice dice:usedSlot.getDices()){
+            if(diceColor.equals(dice.getColor())){
+                return dice;
+            }
+        }
+        for(Dice dice:tray.getDices()){
+            if(diceColor.equals(dice.getColor())){
+                return dice;
+            }
+        }
+        return null;
+    }
 }
