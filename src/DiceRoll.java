@@ -4,12 +4,15 @@ import java.util.List;
 
 public class DiceRoll implements Serializable {
     private List<Dice> dices;
-    private int dicesRetrievedCount;
 
     public DiceRoll(List<Dice> dices){
         this.dices=dices;
     }
 
+    /**
+     * Zwraca obiekt DiceRoll wypełniony losowymi koścmi każdego koloru
+     * @return obiekt DiceRoll wypełniony losowymi koścmi każdego koloru
+     */
     public static DiceRoll rollDice(){
         List<Dice> dices = new ArrayList<>();
         for (DiceColor diceColor : DiceColor.values()){
@@ -18,15 +21,25 @@ public class DiceRoll implements Serializable {
         return new DiceRoll(dices);
     }
 
+    /**
+     * Zwraca listę kośći
+     * @return lista kości
+     */
     public List<Dice> getDices() {
         return dices;
     }
+
+    /**
+     * Zwraca liczbę kości
+     * @return liczba kości
+     */
     public int getDiceCount(){
         return dices.size();
     }
-    public int getDicesRetrievedCount(){
-        return dicesRetrievedCount;
-    }
+
+    /**
+     * Losuje kości
+     */
     public void rollDices(){
         ArrayList<Dice> newDices=new ArrayList<>();
         for (Dice dice:dices){
@@ -34,9 +47,13 @@ public class DiceRoll implements Serializable {
         }
         dices=newDices;
     }
+
+    /**
+     * Usuwa wybraną kość
+     * @param dice kość do usunięcia
+     */
     public void removeDice(Dice dice){
         dices.remove(dice);
-        --dicesRetrievedCount;
     }
 
 }

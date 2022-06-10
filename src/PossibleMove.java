@@ -14,6 +14,11 @@ public class PossibleMove implements Serializable {
     public PossibleMove(Board board, Dice dice, int index){
         this(board,new DiceCombination(dice),index);
     }
+
+    /**
+     * Zwraca planszę na której może być wykonany ruch
+     * @return plansza na której może być wykonany ruch
+     */
     public Board getBoard() {
         return board;
     }
