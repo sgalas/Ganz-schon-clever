@@ -94,7 +94,8 @@ public class ClientGUI {
      * @param color
      * @param index
      */
-    private void addTileAction(JButton button, String color, int index){
+
+    private void addTileAction(JButton button, String color, int index) {
         button.addActionListener(e -> {
             if (selectedDice == null) {
                 showEmptyError();
@@ -106,10 +107,16 @@ public class ClientGUI {
                     case "orange" -> possibleMove = new PossibleMove(player.getBoardOrange(), selectedDice, index);
                     case "purple" -> possibleMove = new PossibleMove(player.getBoardPurple(), selectedDice, index);
                     case "blue" -> {
-                        Color abc = Color.BLUE;
-                        if(selectedDice.getColor().equals(abc))
+                        if(!(selectedDice.getColor().equals(DiceColor.BLUE) || selectedDice.getColor().equals(DiceColor.WHITE))){
+                            showFillError();
+                            selectedDice = null;
+                            return;
+                        }
+                        if(selectedDice.getColor().equals(DiceColor.BLUE))
+                            possibleMove = new PossibleMove(player.getBoardBlue(), DiceCombination.createTwoDiceCombo(selectedDice, player.getDice(DiceColor.WHITE)), index);
+                        else
+                            possibleMove = new PossibleMove(player.getBoardBlue(), DiceCombination.createTwoDiceCombo(selectedDice, player.getDice(DiceColor.BLUE)), index);
 
-                        possibleMove = new PossibleMove(player.getBoardBlue(), DiceCombination.createTwoDiceCombo(selectedDice))
                     }
                 }
                     try {
@@ -146,6 +153,7 @@ public class ClientGUI {
                                     case 6 -> p1.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
                                 }
                             }
+                            case "blue" -> button.setIcon(new ImageIcon("src/Images/X_Button.png"));
 
                         }
                     } catch (InvalidMoveException exception) {
@@ -313,6 +321,18 @@ public class ClientGUI {
         b21 = createImaged(b21, "Images/10_Button.png", 600, 260, lp);
         b22 = createImaged(b22, "Images/11_Button.png", 670, 260, lp);
         b23 = createImaged(b23, "Images/12_Button.png", 740, 260, lp);
+
+        addTileAction(b01, "blue", 0);
+        addTileAction(b02, "blue", 1);
+        addTileAction(b03, "blue", 2);
+        addTileAction(b10, "blue", 3);
+        addTileAction(b11, "blue", 4);
+        addTileAction(b12, "blue", 5);
+        addTileAction(b13, "blue", 6);
+        addTileAction(b20, "blue", 7);
+        addTileAction(b21, "blue", 8);
+        addTileAction(b22, "blue", 9);
+        addTileAction(b23, "blue", 10);
 
 
 
@@ -588,6 +608,110 @@ public class ClientGUI {
                 case 4 -> setDice(diceFive, d, 1100, 400);
                 case 5 -> setDice(diceSix, d, 1150, 400);
             }
+        }
+    }
+
+    public void repaintBoards(){
+        int index = 0;
+        for(Tile tile:player.getBoardYellow().getTiles()){
+            if(!tile.isEmpty()){
+                selectedDice = tile.getFilledWith();
+                switch(index){
+                    case 0 -> y00.doClick();
+                    case 1 -> y10.doClick();
+                    case 2 -> y20.doClick();
+                    case 3 -> y01.doClick();
+                    case 4 -> y11.doClick();
+                    case 5 -> y31.doClick();
+                    case 6 -> y02.doClick();
+                    case 7 -> y22.doClick();
+                    case 8 -> y32.doClick();
+                    case 9 -> y13.doClick();
+                    case 10 -> y23.doClick();
+                    case 11 -> y33.doClick();
+                }
+            }
+            index++;
+        }
+        for(Tile tile:player.getBoardBlue().getTiles()){
+            if(!tile.isEmpty()){
+                selectedDice = tile.getFilledWith();
+                switch(index){
+                    case 0 -> y00.doClick();
+                    case 1 -> y10.doClick();
+                    case 2 -> y20.doClick();
+                    case 3 -> y01.doClick();
+                    case 4 -> y11.doClick();
+                    case 5 -> y31.doClick();
+                    case 6 -> y02.doClick();
+                    case 7 -> y22.doClick();
+                    case 8 -> y32.doClick();
+                    case 9 -> y13.doClick();
+                    case 10 -> y23.doClick();
+                    case 11 -> y33.doClick();
+                }
+            }
+            index++;
+        }
+        index = 0;
+        for (Tile tile:player.getBoardOrange().getTiles()){
+            if(!tile.isEmpty()){
+                selectedDice = tile.getFilledWith();
+                switch(index){
+                    case 0 -> o1.doClick();
+                    case 1 -> o2.doClick();
+                    case 2 -> o3.doClick();
+                    case 3 -> o4.doClick();
+                    case 4 -> o5.doClick();
+                    case 5 -> o6.doClick();
+                    case 6 -> o7.doClick();
+                    case 7 -> o8.doClick();
+                    case 8 -> o9.doClick();
+                    case 9 -> o10.doClick();
+                    case 10 -> o11.doClick();
+                }
+            }
+            index++;
+        }
+        index = 0;
+        for(Tile tile: player.getBoardPurple().getTiles()){
+            if(!tile.isEmpty()){
+                selectedDice = tile.getFilledWith();
+                switch(index){
+                    case 0 -> p1.doClick();
+                    case 1 -> p2.doClick();
+                    case 2 -> p3.doClick();
+                    case 3 -> p4.doClick();
+                    case 4 -> p5.doClick();
+                    case 5 -> p6.doClick();
+                    case 6 -> p7.doClick();
+                    case 7 -> p8.doClick();
+                    case 8 -> p9.doClick();
+                    case 9 -> p10.doClick();
+                    case 10 -> p11.doClick();
+                }
+            }
+            index++;
+        }
+        index = 0;
+        for(Tile tile: player.getBoardGreen().getTiles()){
+            if(!tile.isEmpty()){
+                selectedDice = tile.getFilledWith();
+                switch(index){
+                    case 0 -> g1.doClick();
+                    case 1 -> g2.doClick();
+                    case 2 -> g3.doClick();
+                    case 3 -> g4.doClick();
+                    case 4 -> g5.doClick();
+                    case 5 -> g6.doClick();
+                    case 6 -> g7.doClick();
+                    case 7 -> g8.doClick();
+                    case 8 -> g9.doClick();
+                    case 9 -> g10.doClick();
+                    case 10 -> g11.doClick();
+                }
+            }
+            index++;
         }
     }
 
