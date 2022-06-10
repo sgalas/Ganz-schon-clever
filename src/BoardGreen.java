@@ -37,17 +37,17 @@ public class BoardGreen implements Board, Serializable {
         condition = dices;
         for (DiceCombination diceCombo: dices){
             Dice dice1=diceCombo.getPrimaryDice();
-            if((index == 0 | index == 5) & dice1.getValue() == 1) {
+            if((index == 0 || index == 5) && dice1.getValue() == 1) {
                 condition.remove(diceCombo);
-            } else if((index == 1 | index == 6) & (dice1.getValue() == 1 | dice1.getValue() == 2)){
+            } else if((index == 1 || index == 6) && (dice1.getValue() == 1 || dice1.getValue() == 2)){
                 condition.remove(diceCombo);
-            } else if((index == 2 | index == 7) & (dice1.getValue() == 1 | dice1.getValue() == 2 | dice1.getValue() == 3)){
+            } else if((index == 2 || index == 7) && (dice1.getValue() == 1 || dice1.getValue() == 2 || dice1.getValue() == 3)){
                 condition.remove(diceCombo);
-            } else if((index == 3 | index == 8) & (dice1.getValue() == 1 | dice1.getValue() == 2 | dice1.getValue() == 3 | dice1.getValue() == 4)){
+            } else if((index == 3 || index == 8) && (dice1.getValue() == 1 || dice1.getValue() == 2 || dice1.getValue() == 3 || dice1.getValue() == 4)){
                 condition.remove(diceCombo);
             } else if(index == 4){
                 condition.addAll(dices);
-            } else if(index == 9 & dice1.getValue() == 6){
+            } else if(index == 9 && dice1.getValue() == 6){
                 condition.removeAll(dices);
                 condition.add(diceCombo);
             }
