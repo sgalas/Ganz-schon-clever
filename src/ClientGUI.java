@@ -8,6 +8,10 @@ public class ClientGUI {
 
     //Zmienna przechowujaca gracza - w celu wykonywania operacji - przekazywana na etapie tworzenia
     private Player player;
+    private List<Dice> reusedDice;
+    private List<Dice> usedDice;
+    private List<Dice> trayDice;
+    private boolean canReuse;
 
     /**
      * Metoda tworząca przycisk o odpowiednich parametrach, wypełniony odpowiednią wartością
@@ -99,7 +103,17 @@ public class ClientGUI {
         button.addActionListener(e -> {
             if (selectedDice == null) {
                 showEmptyError();
-            } else {
+            }
+            else {
+                if((trayDice.contains(selectedDice) || usedDice.contains(selectedDice) || reusedDice.contains(selectedDice)) && !canReuse){
+                    showBadDiceError();
+                    selectedDice = null;
+                }
+                else{
+                    if(canReuse){
+                        reusedDice.add(selectedDice);
+                        canReuse = false;
+                    }
                 PossibleMove possibleMove = null;
                 switch (color){
                     case "green" ->  possibleMove = new PossibleMove(player.getBoardGreen(), selectedDice, index);
@@ -164,6 +178,7 @@ public class ClientGUI {
                     }
                     selectedDice = null;
                 }
+            }
         });
     }
 
@@ -270,8 +285,15 @@ public class ClientGUI {
         additionalCount = createCount(additionalCount, 910, 300, lp);
         reroll = createImaged(reroll, "Images/reroll.png", 960,260, lp);
         rerollCount = createCount(rerollCount, 970, 300, lp);
-        reroll.addActionListener(e -> player.useReroll());
-        additional.addActionListener(e -> player.useAdditionalDice());
+        reroll.addActionListener(e -> {
+            if(player.getRerollCount() > 0)
+                player.useReroll();
+        });
+        additional.addActionListener(e -> {
+            if(player.getAdditionalDiceCount() > 0)
+                player.useAdditionalDice();
+                canReuse = true;
+        });
         roundCount.setText("Obecna runda: ");
         roundCount = createCount(roundCount,910, 100, lp);
         roundCount.setBounds(910, 100, 100, 100);
@@ -449,8 +471,16 @@ public class ClientGUI {
         updateAll();
     }
 
+    public void resetReused(){
+        reusedDice = null;
+    }
     private void showFillError(){
         JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),"Nie można wypełnic tego pola wybraną kostką!", "Błąd",
+                JOptionPane.WARNING_MESSAGE);
+    }
+
+    private void showBadDiceError(){
+        JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),"Nie można użyć tej kostki!", "Błąd",
                 JOptionPane.WARNING_MESSAGE);
     }
 
@@ -551,6 +581,7 @@ public class ClientGUI {
     public void updateTray(){
         List<Dice> trayList;
         trayList = player.getTrayDiceList();
+        trayDice = trayList;
         for(Dice d: trayList){
             switch (diceSel){
                 case 0 -> setDice(diceOne, d, 950, 550);
@@ -563,11 +594,13 @@ public class ClientGUI {
         }
 
     }
+
     public void updateUsed(){
-        List<Dice> usedDice;
-        usedDice = player.getUsedSlot().getDices();
+        List<Dice> usedUserDice;
+        usedUserDice = player.getUsedSlot().getDices();
+        usedDice = usedUserDice;
         int howManyDice = 0;
-        for(Dice d: usedDice){
+        for(Dice d: usedUserDice){
             switch (diceSel){
                 case 0 ->{
                     setDice(diceOne, d, 1205, 530);
@@ -637,18 +670,17 @@ public class ClientGUI {
             if(!tile.isEmpty()){
                 selectedDice = tile.getFilledWith();
                 switch(index){
-                    case 0 -> y00.doClick();
-                    case 1 -> y10.doClick();
-                    case 2 -> y20.doClick();
-                    case 3 -> y01.doClick();
-                    case 4 -> y11.doClick();
-                    case 5 -> y31.doClick();
-                    case 6 -> y02.doClick();
-                    case 7 -> y22.doClick();
-                    case 8 -> y32.doClick();
-                    case 9 -> y13.doClick();
-                    case 10 -> y23.doClick();
-                    case 11 -> y33.doClick();
+                    case 0 -> b01.doClick();
+                    case 1 -> b02.doClick();
+                    case 2 -> b03.doClick();
+                    case 3 -> b10.doClick();
+                    case 4 -> b11.doClick();
+                    case 5 -> b12.doClick();
+                    case 6 -> b13.doClick();
+                    case 7 -> b20.doClick();
+                    case 8 -> b21.doClick();
+                    case 9 -> b22.doClick();
+                    case 10 -> b23.doClick();
                 }
             }
             index++;
