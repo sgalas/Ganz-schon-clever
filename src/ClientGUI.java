@@ -105,6 +105,12 @@ public class ClientGUI {
                     case "yellow" -> possibleMove = new PossibleMove(player.getBoardYellow(), selectedDice, index);
                     case "orange" -> possibleMove = new PossibleMove(player.getBoardOrange(), selectedDice, index);
                     case "purple" -> possibleMove = new PossibleMove(player.getBoardPurple(), selectedDice, index);
+                    case "blue" -> {
+                        Color abc = Color.BLUE;
+                        if(selectedDice.getColor().equals(abc))
+
+                        possibleMove = new PossibleMove(player.getBoardBlue(), DiceCombination.createTwoDiceCombo(selectedDice))
+                    }
                 }
                     try {
                         player.executeMove(possibleMove);
