@@ -591,6 +591,110 @@ public class ClientGUI {
         }
     }
 
+    public void repaintBoards(){
+        int index = 0;
+        for(Tile tile:player.getBoardYellow().getTiles()){
+            if(!tile.isEmpty()){
+                selectedDice = tile.getFilledWith();
+                switch(index){
+                    case 0 -> y00.doClick();
+                    case 1 -> y10.doClick();
+                    case 2 -> y20.doClick();
+                    case 3 -> y01.doClick();
+                    case 4 -> y11.doClick();
+                    case 5 -> y31.doClick();
+                    case 6 -> y02.doClick();
+                    case 7 -> y22.doClick();
+                    case 8 -> y32.doClick();
+                    case 9 -> y13.doClick();
+                    case 10 -> y23.doClick();
+                    case 11 -> y33.doClick();
+                }
+            }
+            index++;
+        }
+        for(Tile tile:player.getBoardBlue().getTiles()){
+            if(!tile.isEmpty()){
+                selectedDice = tile.getFilledWith();
+                switch(index){
+                    case 0 -> y00.doClick();
+                    case 1 -> y10.doClick();
+                    case 2 -> y20.doClick();
+                    case 3 -> y01.doClick();
+                    case 4 -> y11.doClick();
+                    case 5 -> y31.doClick();
+                    case 6 -> y02.doClick();
+                    case 7 -> y22.doClick();
+                    case 8 -> y32.doClick();
+                    case 9 -> y13.doClick();
+                    case 10 -> y23.doClick();
+                    case 11 -> y33.doClick();
+                }
+            }
+            index++;
+        }
+        index = 0;
+        for (Tile tile:player.getBoardOrange().getTiles()){
+            if(!tile.isEmpty()){
+                selectedDice = tile.getFilledWith();
+                switch(index){
+                    case 0 -> o1.doClick();
+                    case 1 -> o2.doClick();
+                    case 2 -> o3.doClick();
+                    case 3 -> o4.doClick();
+                    case 4 -> o5.doClick();
+                    case 5 -> o6.doClick();
+                    case 6 -> o7.doClick();
+                    case 7 -> o8.doClick();
+                    case 8 -> o9.doClick();
+                    case 9 -> o10.doClick();
+                    case 10 -> o11.doClick();
+                }
+            }
+            index++;
+        }
+        index = 0;
+        for(Tile tile: player.getBoardPurple().getTiles()){
+            if(!tile.isEmpty()){
+                selectedDice = tile.getFilledWith();
+                switch(index){
+                    case 0 -> p1.doClick();
+                    case 1 -> p2.doClick();
+                    case 2 -> p3.doClick();
+                    case 3 -> p4.doClick();
+                    case 4 -> p5.doClick();
+                    case 5 -> p6.doClick();
+                    case 6 -> p7.doClick();
+                    case 7 -> p8.doClick();
+                    case 8 -> p9.doClick();
+                    case 9 -> p10.doClick();
+                    case 10 -> p11.doClick();
+                }
+            }
+            index++;
+        }
+        index = 0;
+        for(Tile tile: player.getBoardGreen().getTiles()){
+            if(!tile.isEmpty()){
+                selectedDice = tile.getFilledWith();
+                switch(index){
+                    case 0 -> g1.doClick();
+                    case 1 -> g2.doClick();
+                    case 2 -> g3.doClick();
+                    case 3 -> g4.doClick();
+                    case 4 -> g5.doClick();
+                    case 5 -> g6.doClick();
+                    case 6 -> g7.doClick();
+                    case 7 -> g8.doClick();
+                    case 8 -> g9.doClick();
+                    case 9 -> g10.doClick();
+                    case 10 -> g11.doClick();
+                }
+            }
+            index++;
+        }
+    }
+
 }
 
 

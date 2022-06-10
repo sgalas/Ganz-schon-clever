@@ -3,21 +3,24 @@ import java.util.Objects;
 import java.util.Random;
 
 public class Dice implements Serializable {
-    private final Color color;
+    private final DiceColor diceColor;
     private final int value;
-    public Dice(Color color,int value){
-        this.color=color;
+    public Dice(DiceColor diceColor, int value){
+        this.diceColor = diceColor;
         this.value=value;
     }
     public int getValue() {
         return value;
     }
-    public Color getColor() {
-        return color;
+    public DiceColor getColor() {
+        return diceColor;
     }
-    public static Dice getRandomDice(Color color){
+    public static Dice getRandomDice(DiceColor diceColor){
+        return getRandomDice(diceColor,1,7);
+    }
+    public static Dice getRandomDice(DiceColor diceColor, int origin, int bound){
         Random random=new Random();
-        Dice dice=new Dice(color,random.nextInt(1,7));
+        Dice dice=new Dice(diceColor,random.nextInt(origin,bound));
         return dice;
     }
 

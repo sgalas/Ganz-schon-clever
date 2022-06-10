@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public interface Board {
@@ -7,4 +8,5 @@ public interface Board {
 
     List<PossibleMove> possibleMoves();
     List<PossibleMove> possibleMovesWithDice(DiceCombination dice);
+    ArrayList<Tile> getTiles();
 }

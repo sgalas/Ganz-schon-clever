@@ -150,6 +150,10 @@ public class BoardBlue implements Board, Serializable {
         } else {return null;
         }
     }
+    @Override
+    public ArrayList<Tile> getTiles() {
+        return tiles;
+    }
 
     @Override
     public int getPoints() {

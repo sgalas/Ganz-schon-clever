@@ -12,8 +12,8 @@ public class DiceRoll implements Serializable {
 
     public static DiceRoll rollDice(){
         List<Dice> dices = new ArrayList<>();
-        for (Color color :Color.values()){
-            dices.add(Dice.getRandomDice(color));
+        for (DiceColor diceColor : DiceColor.values()){
+            dices.add(Dice.getRandomDice(diceColor));
         }
         return new DiceRoll(dices);
     }

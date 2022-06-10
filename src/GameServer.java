@@ -16,7 +16,8 @@ import java.util.Set;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class GameServer extends Game{
+public class GameServer{
+    private ArrayList<Player> playerList;
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
@@ -99,14 +100,4 @@ public class GameServer extends Game{
             }
         }
 
-
-    @Override
-    protected void activePlayerTurn() {
-
-    }
-
-    @Override
-    protected void passivePlayerTurn() {
-
-    }
 }
