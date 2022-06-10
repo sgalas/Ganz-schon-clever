@@ -34,7 +34,7 @@ public class BoardGreen implements Board, Serializable {
             throw new ImpossibleFillException("Nie można umieścić tej kostki w planszy zielonej!");
 
         List<DiceCombination> condition;
-        condition = dices;
+        condition =new LinkedList<>(dices);
         for (DiceCombination diceCombo: dices){
             Dice dice1=diceCombo.getPrimaryDice();
             if((index == 0 | index == 5) & dice1.getValue() == 1) {

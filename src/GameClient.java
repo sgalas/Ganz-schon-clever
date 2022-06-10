@@ -1,8 +1,6 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.net.*;
 import java.util.Random;
@@ -11,6 +9,8 @@ public class GameClient {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
+    private ObjectOutputStream oos;
+    private ObjectInputStream ois;
     private final Player currentPlayer;
     private final ClientGUI clientGUI;
     public GameClient(String hostname,int port,String nick) throws FailedToConnectException {
@@ -18,6 +18,12 @@ public class GameClient {
         //add logic to either start new game or retrieve game state from server
         currentPlayer=Player.createNewPlayer(retrieveID(),nick);
         clientGUI=new ClientGUI(currentPlayer);
+        try {
+            oos=new ObjectOutputStream(clientSocket.getOutputStream());
+            ois=new ObjectInputStream(clientSocket.getInputStream());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     private void getID(){
     }
@@ -33,42 +39,85 @@ public class GameClient {
             throw new FailedToConnectException();
         }
     }
+    public int checkStatus() throws IOException {
+        String odpowiedz=in.readLine();
+        if(odpowiedz.contains("A")) {
+            return 1;
+        }
+        else
+            return 0;
+
+    }
     private int retrieveID(){//retrieve id from server
         return 0;
     }
 
-    private void activePlayerTurn() throws IOException {
+    protected void activePlayerTurn() throws IOException {
         String odpowiedz;
-        List<Dice> kosci=new ArrayList<>();
-        while((odpowiedz=in.readLine())!=null) {
+        List<Dice> kosci = new ArrayList<>();
+        /*while((odpowiedz=in.readLine())!=null) {
+            System.out.println(odpowiedz);
             String buffor[]=odpowiedz.split(",");
-            kosci.add(new Dice( DiceColor.values()[ Integer.valueOf(buffor[0]) ], Integer.valueOf(buffor[1]) ));
+            kosci.add(new Dice( Color.values()[ Integer.valueOf(buffor[0]) ], Integer.valueOf(buffor[1]) ));
+        }*/
+        try {
+            DiceRoll rol = (DiceRoll) ois.readObject();
+            System.out.println("chociaz");
+            currentPlayer.setDiceRoll(rol);
+            System.out.println(currentPlayer.getDiceRoll());
+
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
-        currentPlayer.setDiceRoll(new DiceRoll(kosci));
-        //get tray and used from gui
-        Tray tray=new Tray();
-        UsedSlot used =new UsedSlot();
-        StringBuilder builder=new StringBuilder();
-        for(Dice tr:tray.getDices())
+
+        //TUTAJ MOJE LOSOWANIE TRZEBA ZASTAPIC ZWROCONYMI KOSCMI Z GUI
+        UsedSlot used = new UsedSlot();
+        Tray tray = new Tray();
+        StringBuilder builder = new StringBuilder();
+        for(int i=0;i<3;i++){
+            boolean moveIsFine;
+            do{
+                try {
+                    moveIsFine=true;
+                    setPlayerState(PlayerState.ACTIVE_TURN);
+                    updateGUI();
+                    waitOnGUI();
+                    PossibleMove selectedMove=getMove();
+                    TileSpecialAction tileSpecialAction = performMove(selectedMove);
+                    doSpecialAction(tileSpecialAction);
+
+                } catch (ImpossibleFillException e) {
+                    e.printStackTrace();//replace with showing error in gui
+                    moveIsFine=false;
+                }
+            } while (!moveIsFine);//repeat until valid move
+        }
+
+       /* for(Dice tr:tray.getDices())
         {
             builder.append(Integer.toString( tr.getColor().ordinal() )+","+Integer.toString(tr.getValue()) );
-        }
-        out.write(builder.toString());
-        builder=new StringBuilder();
-        for(Dice us:used.getDices())
-        {
-            builder.append("Z,"+Integer.toString( us.getColor().ordinal() )+","+Integer.toString(us.getValue()) );
-        }
-        out.write(builder.toString());
+            System.out.print(builder.toString());
+        }*/
+        oos.writeObject(tray);
+        System.out.println(tray);
+        oos.writeObject(used);
+        System.out.println(used);
     }
 
-    private void passivePlayerTurn() {
-
+    protected void passivePlayerTurn() {
         //somehow get Tray and UsedSlot from server
-        Tray trayrecv=new Tray();
-        UsedSlot usedSlotrecv=new UsedSlot();
-        currentPlayer.setTray(trayrecv);
-        currentPlayer.setUsedSlot(usedSlotrecv);
+        try {
+            Tray trayrecv = (Tray)ois.readObject() ;
+            UsedSlot usedSlotrecv=(UsedSlot)ois.readObject();
+            //Tray i used Slot dla gui
+            currentPlayer.setTray(trayrecv);
+            currentPlayer.setUsedSlot(usedSlotrecv);
+            out.write("dupa");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         boolean moveIsFine;
         do{
             try {
@@ -85,8 +134,9 @@ public class GameClient {
                 moveIsFine=false;
             }
         } while (!moveIsFine);//repeat until valid move
-        //if fine add sending it to server
+        //add sending it to server
     }
+
 
     private DiceRoll getDiceRoll(){
         return currentPlayer.getDiceRoll();
@@ -116,6 +166,9 @@ public class GameClient {
     private void doSpecialAction(TileSpecialAction tileSpecialAction) throws ImpossibleFillException {
         PossibleMove possibleMove;
         TileSpecialAction nextTileSpecialAction;
+        if(tileSpecialAction==null){
+            return;
+        }
         switch (tileSpecialAction){
             case ADDFOX:
                 currentPlayer.addFox();
@@ -177,12 +230,14 @@ public class GameClient {
         TileSpecialAction tileSpecialAction= possibleMove.doMove();
         getDiceRoll().removeDice(dice.getPrimaryDice());
         getUsed().putDice(dice.getPrimaryDice());
-        for(Dice dice1: getDiceRoll().getDices()){
+        List<Dice> newDiceRoll= new LinkedList<>( getDiceRoll().getDices());
+        for(Dice dice1: newDiceRoll){
             if(dice1.getValue()<dice.getPrimaryDice().getValue()){
                 getTray().putDice(dice1);
                 getDiceRoll().removeDice(dice1);
             }
         }
+
         return tileSpecialAction;
     }
     private void nextRound() throws IOException {
