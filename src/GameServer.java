@@ -1,5 +1,8 @@
-import java.io.IOException;
+import java.io.*;
 import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.SocketAddress;
 import java.nio.*;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
@@ -13,73 +16,71 @@ import java.util.Set;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class GameServer{
-    private ArrayList<Player> playerList;
-    public static ByteBuffer str_to_bb(String msg){
-        return ByteBuffer.wrap(msg.getBytes(StandardCharsets.UTF_8));
-    }
-    public static String bb_to_str(ByteBuffer buffer){
-        byte[] bytes;
-        if(buffer.hasArray()) {
-            bytes = buffer.array();
-        } else {
-            bytes = new byte[buffer.remaining()];
-            buffer.get(bytes);
-        }
-        return new String(bytes, StandardCharsets.UTF_8);
-    }
+public class GameServer extends Game{
+
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        ByteBuffer wiadomosc=ByteBuffer.allocate(256);
-        Selector selector = Selector.open();
-        ServerSocketChannel serverSocket = ServerSocketChannel.open();
-        serverSocket.bind(new InetSocketAddress("localhost", 5454));
-        serverSocket.configureBlocking(false);
-        serverSocket.register(selector, SelectionKey.OP_ACCEPT);
-        ByteBuffer buffer = ByteBuffer.allocate(256);
-        ArrayList<SocketChannel> gracze=new ArrayList<>();
+        ServerSocket server= new ServerSocket(5454);
+        server.setReuseAddress(true);
+        ArrayList<Communication> gracze=new ArrayList<>();
         while(gracze.size()!=4)
-        {   selector.select();
-            Set<SelectionKey> selectedKeys = selector.selectedKeys();
-            if(!selectedKeys.isEmpty()) {
-                SocketChannel client = serverSocket.accept();
-                gracze.add(client);
-            }
+        {
+            Socket client = server.accept();
+            gracze.add(new Communication(client));
+            System.out.println(gracze.size());
         }
-        while(true) {
+        for(int z=0;z<4;z++){
             for(int i=0;i<4;i++)
             {
-                SocketChannel aktyw=gracze.get(i);
-                wiadomosc.clear();
-                List<Dice> kostki=DiceRoll.rollDice().getDices();
-                StringBuilder kosciB=new StringBuilder();
-                for(Dice kos:kostki)
+                gracze.get(i).getPrintWriter().println("A");
+                //pasywi
+                for(int j=0;j<4;j++)
                 {
-                    aktyw.write(str_to_bb(Integer.toString(kos.getColor().ordinal())+","+Integer.toString(kos.getValue())));
-                    aktyw.write(str_to_bb("\n"));
-                }
-                TimeUnit.SECONDS.sleep(1);
-                Set<SelectionKey> selectedKeys;
-                do {
-                    selector.select();
-                    selectedKeys = selector.selectedKeys();
-                } while(selectedKeys.isEmpty());
-                wiadomosc.clear();
-                aktyw.read(wiadomosc);
-                for (int j = 0; j < 4; j++) {
-                    if (i != j) {
-                        SocketChannel pasyw=gracze.get(i);
-                        pasyw.write(wiadomosc);
+                    if(i!=j)
+                    {
+                        gracze.get(j).getPrintWriter().println("P");
                     }
                 }
-                int ileOdeslalo=0;
-                while(ileOdeslalo!=3)
-                {
-                    selector.select();
-                    selectedKeys = selector.selectedKeys();
-                    Iterator<SelectionKey> iter = selectedKeys.iterator();
-                    ileOdeslalo+=selectedKeys.size();
-                    while(iter.hasNext()) {
+                //Dice roll
+                List<Dice> kostki=DiceRoll.rollDice().getDices();
+                DiceRoll roll=new DiceRoll(kostki);
+                gracze.get(i).getOos().writeObject(roll);
+
+
+                try {
+                  Tray tray=(Tray)gracze.get(i).getOis().readObject();
+                  System.out.println(tray);
+                    UsedSlot used =(UsedSlot) gracze.get(i).getOis().readObject();
+                    System.out.println(used);
+                    for (int j = 0; j < 4; j++) {
+                        if (i != j) {
+                            gracze.get(j).getOos().writeObject(tray);
+                            gracze.get(j).getOos().writeObject(used);
+                        }
+                    }
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+
+                for (int thread_num = 0; thread_num < 3; thread_num++) {
+                    Thread t =new Thread(new RunnableJob(gracze.get(thread_num).getSocket()));
+                    t.setName("gierka");
+                }
+                Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
+                int ileOdeslanych=0;
+                while(ileOdeslanych!=3) {
+                    ileOdeslanych=0;
+                    for(Thread thread:threadSet) {
+                        //System.out.println(ileOdeslanych);
+                        if(thread.toString().contains("gierka")) {
+                            System.out.println(thread);
+                            if(!thread.isAlive()) {
+                                ileOdeslanych++;
+                            }
+                        }
+                    }
+                }
+                    /*while(iter.hasNext()) {
                         SelectionKey key = iter.next();
                         SocketChannel client = (SocketChannel) key.channel();
                         try {
@@ -93,18 +94,19 @@ public class GameServer{
                             client.close();
                             key.cancel();
                         }
-                    }
+                    }*/
                 }
             }
         }
 
+
+    @Override
+    protected void activePlayerTurn() {
+
     }
 
-    protected void activePlayerTurn(Player player) {
-
-    }
-
-    protected void passivePlayerTurn(Player player) {
+    @Override
+    protected void passivePlayerTurn() {
 
     }
 }
