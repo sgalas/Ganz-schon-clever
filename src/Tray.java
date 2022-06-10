@@ -11,12 +11,19 @@ public class Tray implements Serializable {
     public Tray(){
         this(null);
     }
+
+    /**
+     * Umieszcza kość w Tacy
+     * @param dice
+     */
     public void putDice(Dice dice){
         tray.add(dice);
     }
-    public void reset(){
-        tray.clear();
-    }
+
+    /**
+     * Zwraca listę kości w tacy
+     * @return Lista kości w tacy
+     */
     public List<Dice> getDices(){
         return tray;
     }

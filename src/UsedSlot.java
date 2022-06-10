@@ -11,12 +11,19 @@ public class UsedSlot implements Serializable {
     public UsedSlot(){
         this(null);
     }
+
+    /**
+     * Umieszcza kośći w Used Slot
+     * @param dice kość do umieszczenia w Used Slot
+     */
     public void putDice(Dice dice){
         usedSlot.add(dice);
     }
-    public void reset(){
-        usedSlot.clear();
-    }
+
+    /**
+     * Zwraca listę zużytych kości
+     * @return listę zużytych kości
+     */
     public List<Dice> getDices(){
         return usedSlot;
     }

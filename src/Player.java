@@ -35,6 +35,13 @@ public class Player implements Serializable {
         this.playerState = playerState;
         this.round=round;
     }
+
+    /**
+     * Funkcja tworząca nowego gracza
+     * @param id id gracza
+     * @param nick nick gracza
+     * @return funkcja zwraca nowo utworzonego gracza
+     */
     public static Player createNewPlayer(int id, String nick) {
         BoardGreen boardGreen=new BoardGreen();
         BoardPurple boardPurple =new BoardPurple();
@@ -47,6 +54,10 @@ public class Player implements Serializable {
         return player;
     }
 
+    /**
+     * Funkcja zwraca wszystkie możliwe ruchy
+     * @return lista wszystkich możliwych ruchów
+     */
     public List<PossibleMove> getPossibleMoves() {
         List<PossibleMove> retList = boardGreen.possibleMoves();
         retList.addAll(boardPurple.possibleMoves());
@@ -56,6 +67,11 @@ public class Player implements Serializable {
         return retList;
     }
 
+    /**
+     * Funkcja zwraca wszystkie możliwe ruchy
+     * @param dice lista wszystkich możliwych ruchów dla danej kostki
+     * @return lista wszystkich możliwych ruchów dla danej kostki
+     */
     public List<PossibleMove> getPossibleMovesForDice(DiceCombination dice) {
         List<PossibleMove> retList = boardGreen.possibleMovesWithDice(dice);
         retList.addAll(boardPurple.possibleMovesWithDice(dice));
@@ -65,117 +81,243 @@ public class Player implements Serializable {
         return retList;
     }
 
+    /**
+     * Zwraca numer rundy
+     * @return numer rundy
+     */
     public int getRound() {
         return round;
     }
 
+    /**
+     * Zwraca nick gracza
+     * @return nick gracza
+     */
     public String getNick() {
         return nick;
     }
 
+    /**
+     * Zwraca id gracza
+     * @return id gracza
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Zwraca Liczbe lisków
+     * @return liczba lisków
+     */
     public int getFoxCount() {
         return foxCount;
     }
 
+    /**
+     * Zwraca Zieloną planszę
+     * @return zielona plansza
+     */
     public BoardGreen getBoardGreen() {
         return boardGreen;
     }
 
+    /**
+     * Zwraca filoetową planszę
+     * @return filotowa plansza
+     */
     public BoardPurple getBoardPurple() {
         return boardPurple;
     }
 
+    /**
+     * Zwraca pomarańczową planszę
+     * @return pomarańczowa plansza
+     */
     public BoardOrange getBoardOrange() {
         return boardOrange;
     }
 
+    /**
+     * Zwraca Niebieską planszę
+     * @return niebieska plansza
+     */
     public BoardBlue getBoardBlue() {
         return boardBlue;
     }
 
+    /**
+     * Zwraca żółtą plansze
+     * @return żółta plansza
+     */
     public BoardYellow getBoardYellow() {
         return boardYellow;
     }
 
+    /**
+     * Zwraca Zwraca obiekt UsedSlot który przechowuję i zarządza zurzytymi kośćmi
+     * @return obiekt UsedSlot który przechowuję i zarządza zurzytymi kośćmi
+     */
     public UsedSlot getUsedSlot() {
         return usedSlot;
     }
 
+    /**
+     * Zwraca Zwraca obiekt DiceRoll który przechowuję i zarządza nowo wylosowanymi kośćmi
+     * @return obiekt DiceRoll który przechowuję i zarządza nowo wylosowanymi kośćmi
+     */
     public DiceRoll getDiceRoll() {
         return diceRoll;
     }
 
+    /**
+     * Zwraca obiekt Tray czyli Tacę przechowującą kości które spadły na tace
+     * @return obiekt Tray czyli Tacę przechowującą kości które spadły na tace
+     */
     public Tray getTray() {
         return tray;
     }
+
+    /**
+     * Zwraca listę zużytych kości
+     * @return lista zużytych kości
+     */
     public List<Dice> getUsedDiceList() {
         return usedSlot.getDices();
     }
-
+    /**
+     * Zwraca listę kości na tacy
+     * @return lista kości na tacy
+     */
     public List<Dice> getTrayDiceList() {
         return tray.getDices();
     }
+    /**
+     * Zwraca listę nowo wylosowanych kości
+     * @return lista nowo wylosowanych kości
+     */
     public List<Dice> getRolledDiceList() {
         return diceRoll.getDices();
     }
 
+    /**
+     * Ustawienie zużytych kości na te w przekazane w UsedSlot jako argument
+     * @param usedSlot obiekt UsedSlot przechowujący zużyte kości
+     */
     public void setUsedSlot(UsedSlot usedSlot) {
         this.usedSlot = usedSlot;
     }
 
+    /**
+     * Ustawienie nowo wylosowanych kości na te przekazane w UsedSlot jako argument
+     * @param diceRoll  obiekt UsedSlot przechowujący zużyte kości
+     */
     public void setDiceRoll(DiceRoll diceRoll) {
         this.diceRoll = diceRoll;
     }
 
+    /**
+     * Ustawienie kości na tacy na te przekazane w Tray jako argument
+     * @param tray taca z kośćmi
+     */
     public void setTray(Tray tray) {
         this.tray = tray;
     }
 
+    /**
+     * Zwiększenie ilości lisków
+     */
     public void addFox() {
         ++foxCount;
     }
 
+    /**
+     * Zwraca ilość dodatkowych ponownych rzutów kośćmi
+     * @return ilość dodatkowych ponownych rzutów kośćmi
+     */
     public int getRerollCount() {
         return rerollCount;
     }
+
+    /**
+     * Wykorzystuje ponowne losowanie kości
+     */
     public void useReroll(){
         if(rerollCount>0){
             --rerollCount;
             diceRoll.rollDices();
         }
     }
+
+    /**
+     * Dodaje 1 dodatkowy ponowny rzut kośćmi
+     */
     public void addReroll(){
         ++rerollCount;
     }
+
+    /**
+     * Zwraca liczbę możliwych wykonań otrzymania dodatkowej kości
+     * @return liczba możliwych wykonań otrzymania dodatkowej kości
+     */
     public int getAdditionalDiceCount(){
         return additionalDiceCount;
     }
+
+    /**
+     * Używa dodatkowej kości
+     */
     public void useAdditionalDice(){
         --additionalDiceCount;
     }
+
+    /**
+     * Dodaje dodatkową możwliość ponownego użycia kości
+     */
     public void addAdditionalDice(){
         ++additionalDiceCount;
     }
+
+    /**
+     * Dodaje ruch do listy ruchów do wykonania
+     * @param possibleMove ruch do wykonania
+     * @throws InvalidMoveException wyjątek wynikający z niepoprawnego ruchu
+     * @throws NotReadyException wyjątek wynikający z niegotowości na kolejny ruch
+     */
     public void executeMove(PossibleMove possibleMove) throws InvalidMoveException, NotReadyException {
         verifyMove(possibleMove);
         moveQueue.add(possibleMove);
     }
 
+    /**
+     * Zwraca kolejkę ruchów do wykonania
+     * @return kolejka ruchów do wykonania
+     */
     public Queue<PossibleMove> getMoveQueue() {
         return moveQueue;
     }
 
+    /**
+     * Zwraca enumerator stanu gracza
+     * @return enumerator stanu gracza
+     */
     public PlayerState getPlayerState() {
         return playerState;
     }
 
+    /**
+     * Zwraca Stan gracza
+     * @param playerState stan gracza
+     */
     public void setPlayerState(PlayerState playerState) {
         this.playerState = playerState;
     }
+
+    /**
+     * Weryfikuje czy ruch jest poprawny i jeżeli nie jest to wyrzuca wyjątek
+     * @param possibleMove możliwy ruch do wykonania
+     * @throws InvalidMoveException wyjątek wynikający z tego, że ruch jest niemożliwy do wykonania
+     * @throws NotReadyException wyjątek wynikający z tego, że nie jesteśmy gotowu na ruch
+     */
     private void verifyMove(PossibleMove possibleMove) throws InvalidMoveException, NotReadyException {
         if(!getPossibleMoves().contains(possibleMove)){
             throw new InvalidMoveException();
@@ -184,9 +326,18 @@ public class Player implements Serializable {
             throw new NotReadyException();
         }
     }
+
+    /**
+     * Zwiększamy rundę o 1
+     */
     public void incrementRound(){
         ++round;
     }
+
+    /**
+     * Obliczamy liczbę punktów
+     * @return zwracamy liczbę punktów
+     */
     public int calculatePoints(){
         int points=0;
         points+=boardBlue.getPoints();
@@ -196,6 +347,12 @@ public class Player implements Serializable {
         points+=boardPurple.getPoints();
         return points;
     }
+
+    /**
+     * Zwraca kość o danym kolorze jeżeli istnieje w tacy, zużyych lub nowych
+     * @param diceColor kolor kości
+     * @return znaleziona kość
+     */
     public Dice getDice(DiceColor diceColor){
         for(Dice dice:diceRoll.getDices()){
             if(diceColor.equals(dice.getColor())){

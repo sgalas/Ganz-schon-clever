@@ -1,3 +1,6 @@
+/**
+ * Przechowuje specjalne akcje powiązane z niektórymi polami
+ */
 public enum TileSpecialAction {
     ADDFOX,
     ADDROLL,

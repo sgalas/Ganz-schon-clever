@@ -18,13 +18,27 @@ public class PossibleMove implements Serializable {
         return board;
     }
 
+    /**
+     * Zwraca kobinacje kości potrzebną do wykonania ruchu
+     * @return kobinacja kości potrzebną do wykonania ruchu
+     */
     public DiceCombination getDiceCombination() {
         return diceCombination;
     }
+
+    /**
+     * Zwraca numer ineksu pola do którego kość zostanie wsadzona
+     * @return numer ineksu pola do którego kość zostanie wsadzona
+     */
     public int getIndex() {
         return index;
     }
 
+    /**
+     * Wykonuje ruch na planszy
+     * @return specjalna akcja powiązana z polem na któym wykonywana jest akcja
+     * @throws ImpossibleFill wyjątek z powodu niemożliwej operacji
+     */
     public TileSpecialAction doMove() throws ImpossibleFill {
         Board activeBoard = getBoard();
         return activeBoard.fillTile(getDiceCombination(), getIndex());
