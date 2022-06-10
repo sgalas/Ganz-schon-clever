@@ -1,3 +1,6 @@
+/**
+ * Enumerator kolorów kości
+ */
 public enum DiceColor {
     GREEN,
     BLUE,

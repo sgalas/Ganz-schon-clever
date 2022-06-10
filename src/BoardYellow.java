@@ -57,9 +57,9 @@ public class BoardYellow implements Board, Serializable {
     }
 
     @Override
-    public TileSpecialAction fillTile(DiceCombination dice, int index) throws ImpossibleFill {
+    public TileSpecialAction fillTile(DiceCombination dice, int index) throws ImpossibleFillException {
         if( !(tiles.get(index).getAllowedDiceCombinationList().contains(dice)))
-            throw new ImpossibleFill("Nie można umieścić tej kostki w planszy żółtej!");
+            throw new ImpossibleFillException("Nie można umieścić tej kostki w planszy żółtej!");
         tiles.get(index).updateAllowedDiceList(null);
         return getSpecialAction();
     }
@@ -119,5 +119,10 @@ public class BoardYellow implements Board, Serializable {
                 }
             }
         }  return moveWithDice;
+    }
+
+    @Override
+    public ArrayList<Tile> getTiles() {
+        return tiles;
     }
 }

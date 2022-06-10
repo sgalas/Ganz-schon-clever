@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface Board {
-    TileSpecialAction fillTile(DiceCombination dices, int index) throws ImpossibleFill;
+    TileSpecialAction fillTile(DiceCombination dices, int index) throws ImpossibleFillException;
 
     int getPoints();
 

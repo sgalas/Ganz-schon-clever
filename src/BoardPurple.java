@@ -29,9 +29,9 @@ public class BoardPurple implements Board, Serializable {
     }
 
     @Override
-    public TileSpecialAction fillTile(DiceCombination dice, int index) throws ImpossibleFill {
+    public TileSpecialAction fillTile(DiceCombination dice, int index) throws ImpossibleFillException {
         if( !(tiles.get(index).getAllowedDiceCombinationList().contains(dice)))
-            throw new ImpossibleFill("Nie można umieścić tej kostki w planszy fioletowej!");
+            throw new ImpossibleFillException("Nie można umieścić tej kostki w planszy fioletowej!");
 
         List<DiceCombination> filled;
         filled = dices;
@@ -83,5 +83,10 @@ public class BoardPurple implements Board, Serializable {
             }
         }
         return null;
+    }
+
+    @Override
+    public ArrayList<Tile> getTiles() {
+        return tiles;
     }
 }

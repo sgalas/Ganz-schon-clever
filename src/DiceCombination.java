@@ -15,20 +15,39 @@ public class DiceCombination implements Serializable {
         this.primaryDice = primaryDice;
         this.dices = null;
     }
+
+    /**
+     * Funkcja zwracająca kombinacje dwóch kości
+     * @param primaryDice kość główna która jest umieszczana w pole
+     * @param secondaryDice kośc poboczna
+     * @return Kombinacja dwóch kości
+     */
     public static DiceCombination createTwoDiceCombo(Dice primaryDice, Dice secondaryDice) {
         List<Dice> dices=new LinkedList<>();
         dices.add(secondaryDice);
         return new DiceCombination(primaryDice,dices);
     }
 
+    /**
+     * Zwraca główną kość
+     * @return główna kość
+     */
     public Dice getPrimaryDice() {
         return primaryDice;
     }
 
+    /**
+     * Zwraca listę pobocznych kości
+     * @return lista pobocznych kości
+     */
     public List<Dice> getHelperDices() {
         return dices;
     }
 
+    /**
+     * Sprawdzenie czy ma poboczną kość
+     * @return zwraca true jeżeli ma
+     */
     boolean hasAdditionalDices(){
         return dices.size()>0;
     }

@@ -31,10 +31,10 @@ public class BoardOrange implements Board, Serializable {
 
 
     @Override
-    public TileSpecialAction fillTile(DiceCombination dice, int index) throws ImpossibleFill {
+    public TileSpecialAction fillTile(DiceCombination dice, int index) throws ImpossibleFillException {
 
         if( !(tiles.get(index).getAllowedDiceCombinationList().contains(dice))){
-            throw new ImpossibleFill("Nie można umieścić tej kostki w planszy pomarańczowej!");
+            throw new ImpossibleFillException("Nie można umieścić tej kostki w planszy pomarańczowej!");
         }
         tiles.get(index).updateAllowedDiceList(null);
         return tiles.get(index).fillWithDice(dice.getPrimaryDice());
@@ -86,5 +86,10 @@ public class BoardOrange implements Board, Serializable {
             }
         }
       return null;
+    }
+
+    @Override
+    public ArrayList<Tile> getTiles() {
+        return tiles;
     }
 }

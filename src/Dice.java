@@ -9,15 +9,38 @@ public class Dice implements Serializable {
         this.diceColor = diceColor;
         this.value=value;
     }
+
+    /**
+     * Zwraca wartość kości
+     * @return wartość kości
+     */
     public int getValue() {
         return value;
     }
+
+    /**
+     * Zwraca kolor kości
+     * @return kolor Kości
+     */
     public DiceColor getColor() {
         return diceColor;
     }
+    /**
+     * Zwraca nową lowową kość od 1 do 6
+     * @param diceColor kolor kości
+     * @return nowa losowa kość o podanym kolorze i wartości od 1 do 6
+     */
     public static Dice getRandomDice(DiceColor diceColor){
         return getRandomDice(diceColor,1,7);
     }
+
+    /**
+     * Zwraca nową lowową kość o wielkości zależą od argumentów
+     * @param diceColor kolor kości
+     * @param origin wartość minimalna włącznie
+     * @param bound wartość maksymalna nie włącznie
+     * @return nowa losowa kość o podanym kolorze i wartości
+     */
     public static Dice getRandomDice(DiceColor diceColor, int origin, int bound){
         Random random=new Random();
         Dice dice=new Dice(diceColor,random.nextInt(origin,bound));

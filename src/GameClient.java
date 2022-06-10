@@ -80,7 +80,7 @@ public class GameClient {
                 TileSpecialAction tileSpecialAction = performMove(selectedMove);
                 doSpecialAction(tileSpecialAction);
 
-            } catch (ImpossibleFill e) {
+            } catch (ImpossibleFillException e) {
                 e.printStackTrace();//replace with showing error in gui
                 moveIsFine=false;
             }
@@ -113,7 +113,7 @@ public class GameClient {
         PossibleMove possibleMove=currentPlayer.getMoveQueue().poll();
         return possibleMove;
     }
-    private void doSpecialAction(TileSpecialAction tileSpecialAction) throws ImpossibleFill {
+    private void doSpecialAction(TileSpecialAction tileSpecialAction) throws ImpossibleFillException {
         PossibleMove possibleMove;
         TileSpecialAction nextTileSpecialAction;
         switch (tileSpecialAction){
@@ -172,7 +172,7 @@ public class GameClient {
                 break;
         }
     }
-    private TileSpecialAction performMove(PossibleMove possibleMove) throws ImpossibleFill {
+    private TileSpecialAction performMove(PossibleMove possibleMove) throws ImpossibleFillException {
         DiceCombination dice=possibleMove.getDiceCombination();
         TileSpecialAction tileSpecialAction= possibleMove.doMove();
         getDiceRoll().removeDice(dice.getPrimaryDice());

@@ -37,9 +37,9 @@ public class PossibleMove implements Serializable {
     /**
      * Wykonuje ruch na planszy
      * @return specjalna akcja powiązana z polem na któym wykonywana jest akcja
-     * @throws ImpossibleFill wyjątek z powodu niemożliwej operacji
+     * @throws ImpossibleFillException wyjątek z powodu niemożliwej operacji
      */
-    public TileSpecialAction doMove() throws ImpossibleFill {
+    public TileSpecialAction doMove() throws ImpossibleFillException {
         Board activeBoard = getBoard();
         return activeBoard.fillTile(getDiceCombination(), getIndex());
     }
