@@ -98,9 +98,9 @@ public class GameClient {
             builder.append(Integer.toString( tr.getColor().ordinal() )+","+Integer.toString(tr.getValue()) );
             System.out.print(builder.toString());
         }*/
-        oos.writeObject(tray);
+        oos.writeObject(getTray());
         System.out.println(tray);
-        oos.writeObject(used);
+        oos.writeObject(getUsed());
         System.out.println(used);
     }
 
@@ -154,8 +154,12 @@ public class GameClient {
     private void setPlayerState(PlayerState playerState){
         currentPlayer.setPlayerState(playerState);
     }
-    private void waitOnGUI(){
-        while (currentPlayer.getPlayerState()!=PlayerState.FINISHED_TURN){
+    private void waitOnGUI() {
+        try {
+            do {
+                Thread.sleep(100);
+            } while (currentPlayer.getPlayerState()!=PlayerState.FINISHED_TURN);
+        } catch (InterruptedException e) {
 
         }
     }
