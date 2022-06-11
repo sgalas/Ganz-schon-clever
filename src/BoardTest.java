@@ -24,7 +24,7 @@ public class BoardTest {
         BoardOrange boardOrange = new BoardOrange();
         List<PossibleMove> moves=boardOrange.possibleMoves();
         List<PossibleMove> testmoves=new ArrayList<>();
-        for (int i=0;i<7;i++){
+        for (int i=1;i<7;i++){
             testmoves.add(new PossibleMove(boardOrange,new Dice(DiceColor.ORANGE,i),0));
         }
         for (PossibleMove possibleMove : testmoves){
@@ -37,7 +37,7 @@ public class BoardTest {
         BoardPurple boardPurple = new BoardPurple();
         List<PossibleMove> moves=boardPurple.possibleMoves();
         List<PossibleMove> testmoves=new ArrayList<>();
-        for (int i=0;i<7;i++){
+        for (int i=1;i<7;i++){
             testmoves.add(new PossibleMove(boardPurple,new Dice(DiceColor.PURPLE,i),0));
         }
         for (PossibleMove possibleMove : testmoves){
