@@ -74,7 +74,8 @@ public class GameClient {
         UsedSlot used = new UsedSlot();
         Tray tray = new Tray();
         StringBuilder builder = new StringBuilder();
-        for(int i=0;i<3;i++){
+        boolean hasmoves=currentPlayer.getPossibleMovesForDices(getDiceRoll().getDices()).size()>0;
+        for(int i=0;i<3||hasmoves;i++){
             boolean moveIsFine;
             do{
                 try {
@@ -85,7 +86,8 @@ public class GameClient {
                     TileSpecialAction tileSpecialAction = performMove(selectedMove);
                     doSpecialAction(tileSpecialAction);
                     getDiceRoll().rollDices();//replace with getting data from server
-                    moveIsFine=currentPlayer.getPossibleMoves().size()>0;
+                    moveIsFine=true;
+                    hasmoves=currentPlayer.getPossibleMovesForDices(getDiceRoll().getDices()).size()>0;
                 } catch (ImpossibleFillException e) {
                     e.printStackTrace();//replace with showing error in gui
                     moveIsFine=false;
@@ -121,14 +123,14 @@ public class GameClient {
         boolean moveIsFine;
         do{
             try {
-                setPlayerState(PlayerState.PLAYER_STATE);
+                setPlayerState(PlayerState.PASSIVE_TURN);
                 updateGUI();
                 waitOnGUI();
                 PossibleMove selectedMove=getMove();
                 TileSpecialAction tileSpecialAction = performMove(selectedMove);
                 doSpecialAction(tileSpecialAction);
                 getDiceRoll().rollDices();//replace with getting data from server
-                moveIsFine=currentPlayer.getPossibleMoves().size()>0;
+                moveIsFine=true;
 
             } catch (ImpossibleFillException e) {
                 e.printStackTrace();//replace with showing error in gui

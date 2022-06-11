@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -84,6 +85,34 @@ public class Player implements Serializable {
         retList.addAll(boardOrange.possibleMovesWithDice(dice));
         retList.addAll(boardBlue.possibleMovesWithDice(dice));
         retList.addAll(boardYellow.possibleMovesWithDice(dice));
+        return retList;
+    }
+    public List<PossibleMove> getPossibleMovesForDicesCombinations(List<DiceCombination>dices){
+        List<PossibleMove> retList = new ArrayList<>();
+        for (DiceCombination diceCombination:dices){
+            retList.addAll(getPossibleMovesForDice(diceCombination));
+        }
+        return retList;
+    }
+    public List<PossibleMove> getPossibleMovesForDices(List<Dice>dices){
+        List<PossibleMove> retList = getPossibleMoves();
+        for (PossibleMove possibleMove:new ArrayList<>(retList)){
+            DiceCombination diceCombination=possibleMove.getDiceCombination();
+            if(!dices.contains(diceCombination.getPrimaryDice()))
+            {
+                retList.remove(possibleMove);
+                continue;
+            }
+            if(diceCombination.getHelperDices()!=null){
+                for (Dice dicehelper:diceCombination.getHelperDices()){
+                    if(!dices.contains(dicehelper))
+                    {
+                        retList.remove(possibleMove);
+                        break;
+                    }
+                }
+            }
+        }
         return retList;
     }
 
