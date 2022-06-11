@@ -11,8 +11,10 @@ public class BoardBlue implements Board, Serializable {
         dices = new LinkedList<>();
 
         for (int i = 1; i < 7; i++) {
-            dices.add(new DiceCombination(new Dice (DiceColor.BLUE, i)));
-            dices.add(new DiceCombination(new Dice (DiceColor.WHITE, i)));
+            for (int j = 1; j < 7; j++) {
+                dices.add(DiceCombination.createTwoDiceCombo(new Dice(DiceColor.WHITE,i),new Dice(DiceColor.BLUE,j)));
+                dices.add(DiceCombination.createTwoDiceCombo(new Dice(DiceColor.BLUE,j),new Dice(DiceColor.WHITE,i)));
+            }
         }
 
         LinkedList<DiceCombination> sum2 = new LinkedList<>();// prawdopodobnie lepiej byłoby upadateować AllowedDiceList w possibleMoveWithDice (w celu dodania kostek), a później w FillTile(zmienionym pod dwie kostki; w celu usunięcia)
@@ -176,9 +178,7 @@ public class BoardBlue implements Board, Serializable {
         for(int i = 0; i < tiles.size(); i++) {
             for(DiceCombination dice: dices)
                 if((tiles.get(i).getAllowedDiceCombinationList().contains(dice))) {
-                    if(dice.getPrimaryDice().getValue() + dice.getHelperDices().get(0).getValue() == i + 2) {
-                        moves.add(new PossibleMove(this, dice, i));
-                    }
+                    moves.add(new PossibleMove(this, dice, i));
                 }
         }
 

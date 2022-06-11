@@ -64,7 +64,7 @@ public class BoardOrange implements Board, Serializable {
         LinkedList<PossibleMove> moves = new LinkedList<>();
         for(int i = 0; i < tiles.size(); i++) {
             for(DiceCombination singleDiceCombo: dices){
-                if((tiles.get(i).getAllowedDiceCombinationList().contains(singleDiceCombo.getPrimaryDice()))) {
+                if((tiles.get(i).getAllowedDiceCombinationList().contains(singleDiceCombo))) {
                     moves.add(new PossibleMove(this, singleDiceCombo.getPrimaryDice(), i));
                 }
             }
