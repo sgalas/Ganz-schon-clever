@@ -78,7 +78,6 @@ public class GameClient {
             boolean moveIsFine;
             do{
                 try {
-                    moveIsFine=true;
                     setPlayerState(PlayerState.ACTIVE_TURN);
                     updateGUI();
                     waitOnGUI();
@@ -86,6 +85,7 @@ public class GameClient {
                     TileSpecialAction tileSpecialAction = performMove(selectedMove);
                     doSpecialAction(tileSpecialAction);
                     getDiceRoll().rollDices();//replace with getting data from server
+                    moveIsFine=currentPlayer.getPossibleMoves().size()>0;
                 } catch (ImpossibleFillException e) {
                     e.printStackTrace();//replace with showing error in gui
                     moveIsFine=false;
