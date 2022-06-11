@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class GameServer{
-    private ArrayList<Player> playerList;
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
@@ -31,8 +30,10 @@ public class GameServer{
             System.out.println(gracze.size());
         }
         for(int z=0;z<4;z++){
+            System.out.println("NOWA RUNDA");
             for(int i=0;i<4;i++)
             {
+                System.out.println("Petla po prostu");
                 gracze.get(i).getPrintWriter().println("A");
                 //pasywi
                 for(int j=0;j<4;j++)
@@ -40,11 +41,14 @@ public class GameServer{
                     if(i!=j)
                     {
                         gracze.get(j).getPrintWriter().println("P");
+                        System.out.println("Wysylamy "+j);
                     }
                 }
+                System.out.println("Dawania rol");
                 //Dice roll
                 List<Dice> kostki=DiceRoll.rollDice().getDices();
                 DiceRoll roll=new DiceRoll(kostki);
+                System.out.println("Generacja kostek");
                 gracze.get(i).getOos().writeObject(roll);
 
 
@@ -62,42 +66,34 @@ public class GameServer{
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
+                System.out.println("thready");
+                ArrayList<Thread> thready=new ArrayList<>();
+                for (int thread_num = 0; thread_num < 4; thread_num++) {
+                    if(thread_num!=i) {
+                        Thread tr=new Thread(new RunnableJob(gracze.get(thread_num)));
+                        tr.start();
+                        thready.add(tr);
 
-                for (int thread_num = 0; thread_num < 3; thread_num++) {
-                    Thread t =new Thread(new RunnableJob(gracze.get(thread_num).getSocket()));
-                    t.setName("gierka");
+                    }
                 }
+                System.out.println("Po threadach");
                 Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
                 int ileOdeslanych=0;
+
                 while(ileOdeslanych!=3) {
                     ileOdeslanych=0;
-                    for(Thread thread:threadSet) {
-                        //System.out.println(ileOdeslanych);
-                        if(thread.toString().contains("gierka")) {
-                            System.out.println(thread);
-                            if(!thread.isAlive()) {
-                                ileOdeslanych++;
+                    for(Thread thread:thready) {
+                        if(!thread.isAlive()) {
+                            ileOdeslanych++;
                             }
                         }
                     }
+                    System.out.println(ileOdeslanych);
+                    Thread.sleep(500);
                 }
-                    /*while(iter.hasNext()) {
-                        SelectionKey key = iter.next();
-                        SocketChannel client = (SocketChannel) key.channel();
-                        try {
-                            int byteCount = client.read(buffer);
-                            if (byteCount == -1) {
-                                key.channel().close();
-                                key.cancel();
-                                continue;
-                            }
-                        } catch (IOException e) {
-                            client.close();
-                            key.cancel();
-                        }
-                    }*/
+                System.out.println("Wychodzenie");
                 }
             }
-        }
+
 
 }
