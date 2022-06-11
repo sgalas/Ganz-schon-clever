@@ -17,16 +17,16 @@ public class BoardOrange implements Board, Serializable {
         }
 
         tiles.add(0, new Tile(dices,null));
-        tiles.add(1, new Tile(dices,null));
-        tiles.add(2, new Tile(dices,TileSpecialAction.ADDROLL));
-        tiles.add(3, new Tile(dices,null));
-        tiles.add(4, new Tile(dices,TileSpecialAction.ADDRANDOMYELLOW));
-        tiles.add(5, new Tile(dices,TileSpecialAction.ADDADDITIONALDICE));
-        tiles.add(6, new Tile(dices,null));
-        tiles.add(7, new Tile(dices,TileSpecialAction.ADDFOX));
-        tiles.add(8, new Tile(dices,null));
-        tiles.add(9, new Tile(dices,TileSpecialAction.ADDPURPLE6));
-        tiles.add(10, new Tile(dices,null));
+        tiles.add(1, new Tile(null,null));
+        tiles.add(2, new Tile(null,TileSpecialAction.ADDROLL));
+        tiles.add(3, new Tile(null,null));
+        tiles.add(4, new Tile(null,TileSpecialAction.ADDRANDOMYELLOW));
+        tiles.add(5, new Tile(null,TileSpecialAction.ADDADDITIONALDICE));
+        tiles.add(6, new Tile(null,null));
+        tiles.add(7, new Tile(null,TileSpecialAction.ADDFOX));
+        tiles.add(8, new Tile(null,null));
+        tiles.add(9, new Tile(null,TileSpecialAction.ADDPURPLE6));
+        tiles.add(10, new Tile(null,null));
     }
 
 
@@ -37,6 +37,7 @@ public class BoardOrange implements Board, Serializable {
             throw new ImpossibleFillException("Nie można umieścić tej kostki w planszy pomarańczowej!");
         }
         tiles.get(index).updateAllowedDiceList(null);
+        tiles.get(index + 1).updateAllowedDiceList(dices);
         return tiles.get(index).fillWithDice(dice.getPrimaryDice());
     }
 
