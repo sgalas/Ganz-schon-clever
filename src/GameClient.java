@@ -32,6 +32,7 @@ public class GameClient {
             clientSocket = new Socket(hostname, port);
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
         }
         catch(IOException e)
         {
@@ -53,29 +54,27 @@ public class GameClient {
     }
 
     protected void activePlayerTurn() throws IOException {
+        System.out.println("aktyw");
         String odpowiedz;
-        List<Dice> kosci = new ArrayList<>();
+        List<Dice> kosci=new ArrayList<>();
         /*while((odpowiedz=in.readLine())!=null) {
             System.out.println(odpowiedz);
             String buffor[]=odpowiedz.split(",");
             kosci.add(new Dice( Color.values()[ Integer.valueOf(buffor[0]) ], Integer.valueOf(buffor[1]) ));
         }*/
         try {
-            DiceRoll rol = (DiceRoll) ois.readObject();
-            System.out.println("chociaz");
+            DiceRoll rol=(DiceRoll) ois.readObject();
+            System.out.println(rol);
             currentPlayer.setDiceRoll(rol);
-            System.out.println(currentPlayer.getDiceRoll());
 
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
-        //TUTAJ MOJE LOSOWANIE TRZEBA ZASTAPIC ZWROCONYMI KOSCMI Z GUI
-        UsedSlot used = new UsedSlot();
-        Tray tray = new Tray();
-        StringBuilder builder = new StringBuilder();
         boolean hasmoves=currentPlayer.getPossibleMovesForDices(getDiceRoll().getDices()).size()>0;
         for(int i=0;i<3||hasmoves;i++){
+            if(currentPlayer.getPossibleMovesForDices(getDiceRoll().getDices()).size()==0){
+                break;
+            }
             boolean moveIsFine;
             do{
                 try {
@@ -87,34 +86,30 @@ public class GameClient {
                     doSpecialAction(tileSpecialAction);
                     getDiceRoll().rollDices();//replace with getting data from server
                     moveIsFine=true;
-                    hasmoves=currentPlayer.getPossibleMovesForDices(getDiceRoll().getDices()).size()>0;
                 } catch (ImpossibleFillException e) {
                     e.printStackTrace();//replace with showing error in gui
                     moveIsFine=false;
                 }
             } while (!moveIsFine);//repeat until valid move
         }
-
-       /* for(Dice tr:tray.getDices())
-        {
-            builder.append(Integer.toString( tr.getColor().ordinal() )+","+Integer.toString(tr.getValue()) );
-            System.out.print(builder.toString());
-        }*/
+        StringBuilder builder=new StringBuilder();
         oos.writeObject(getTray());
-        System.out.println(tray);
         oos.writeObject(getUsed());
-        System.out.println(used);
+        System.out.println("Wyslano tray i used");
+        System.out.println("Koniec");
     }
-
     protected void passivePlayerTurn() {
         //somehow get Tray and UsedSlot from server
+        System.out.println("pasyw");
         try {
             Tray trayrecv = (Tray)ois.readObject() ;
             UsedSlot usedSlotrecv=(UsedSlot)ois.readObject();
+            System.out.println("Tray: "+trayrecv);
+            System.out.println("Used: "+usedSlotrecv);
             //Tray i used Slot dla gui
             currentPlayer.setTray(trayrecv);
             currentPlayer.setUsedSlot(usedSlotrecv);
-            out.write("dupa");
+            out.println("hej");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -138,6 +133,7 @@ public class GameClient {
             }
         } while (!moveIsFine);//repeat until valid move
         //add sending it to server
+        System.out.println("koniec");
     }
 
 

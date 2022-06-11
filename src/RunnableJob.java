@@ -3,17 +3,17 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class RunnableJob implements Runnable{
-    private Socket s;
-    public RunnableJob(Socket s)
+    Communication com;
+    public RunnableJob(Communication com)
     {
-        this.s=s;
+        this.com=com;
     }
-    @Override
     public void run()
     {
-        try( DataInputStream inStream = new DataInputStream(s.getInputStream()))
+        try
         {
-            inStream.read();
+            com.getBufferedReader().readLine();
+            System.out.println("Otrzymano linie");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
