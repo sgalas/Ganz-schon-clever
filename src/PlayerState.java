@@ -4,7 +4,7 @@
  */
 public enum PlayerState {
     ACTIVE_TURN,
-    PLAYER_STATE,
+    PASSIVE_TURN,
     FINISHED_TURN,
     SELECTYELLOW,
     SELECTBLUE

@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.Color;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,9 +9,9 @@ public class ClientGUI {
 
     //Zmienna przechowujaca gracza - w celu wykonywania operacji - przekazywana na etapie tworzenia
     private Player player;
-    private List<Dice> reusedDice;
-    private List<Dice> usedDice;
-    private List<Dice> trayDice;
+    private List<Dice> reusedDice = new ArrayList<>();
+    private List<Dice> usedDice = new ArrayList<>();
+    private List<Dice> trayDice = new ArrayList<>();
     private boolean canReuse;
 
     /**
@@ -496,9 +497,9 @@ public class ClientGUI {
 
     public void updateAll(){
         diceSel = 0;
+        updateActive();
         updateUsed();
         updateTray();
-        updateActive();
         updateActions();
     }
 

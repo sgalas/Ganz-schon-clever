@@ -1,12 +1,17 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class DiceRoll implements Serializable {
     private List<Dice> dices;
 
     public DiceRoll(List<Dice> dices){
-        this.dices=dices;
+        this.dices= Objects.requireNonNullElseGet(dices, LinkedList::new);;
+    }
+    public DiceRoll(){
+        this(null);
     }
 
     /**
