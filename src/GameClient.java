@@ -70,11 +70,6 @@ public class GameClient {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
-        //TUTAJ MOJE LOSOWANIE TRZEBA ZASTAPIC ZWROCONYMI KOSCMI Z GUI
-
-        UsedSlot used = new UsedSlot();
-        Tray tray = new Tray();
         boolean hasmoves=currentPlayer.getPossibleMovesForDices(getDiceRoll().getDices()).size()>0;
         for(int i=0;i<3||hasmoves;i++){
             if(currentPlayer.getPossibleMovesForDices(getDiceRoll().getDices()).size()==0){
@@ -97,11 +92,9 @@ public class GameClient {
                 }
             } while (!moveIsFine);//repeat until valid move
         }
-        System.out.println("Generated Tray: "+tray );
-        System.out.println("Generated USed: "+used );
         StringBuilder builder=new StringBuilder();
-        oos.writeObject(tray);
-        oos.writeObject(used);
+        oos.writeObject(getTray());
+        oos.writeObject(getUsed());
         System.out.println("Wyslano tray i used");
         System.out.println("Koniec");
     }
