@@ -15,8 +15,7 @@ W składzie:
 
 przyszło nam się zmierzyć z implementacją gry planszowej Rzuć na tacę (znaną również jako: Ganz Schon Clever albo That's pretty clever).Instrukcja do tejże gry planszowej dostępna jest w repozytrium w folderze instrukcje, zarówno w języku angielskim, jak i polskim.
 
-Inspirowaliśmy się dostępną w internecie implementacją pod linkiem: [](https://schmidtspiele.de/static/onlinespiele/ganz-schoen-clever/)
-
+Inspirowaliśmy się dostępną w internecie implementacją pod linkiem: [https://schmidtspiele.de/static/onlinespiele/ganz-schoen-clever/](https://schmidtspiele.de/static/onlinespiele/ganz-schoen-clever/)
 Głównymi założeniami gry było:
 -zaimplementowanie całej logiki gry
 -przedstawienie w przystępny, logiczny i przyjemny dla oka sposób przebiegu gry
