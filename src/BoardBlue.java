@@ -161,7 +161,7 @@ public class BoardBlue implements Board, Serializable {
     public int getPoints() {
         int points = 1;
         int counter = 0;
-        for(int i = 0; i < tiles.size() + 1; i++){
+        for(int i = 0; i < tiles.size(); i++){
             if(!(tiles.get(i).isEmpty())){
                 points+=counter;
                 counter++;
