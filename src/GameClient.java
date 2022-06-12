@@ -70,8 +70,7 @@ public class GameClient {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        boolean hasmoves=currentPlayer.getPossibleMovesForDices(getDiceRoll().getDices()).size()>0;
-        for(int i=0;i<3||hasmoves;i++){
+        for(int i=0;i<3;i++){
             if(currentPlayer.getPossibleMovesForDices(getDiceRoll().getDices()).size()==0){
                 break;
             }
@@ -92,6 +91,7 @@ public class GameClient {
                 }
             } while (!moveIsFine);//repeat until valid move
         }
+        updateGUI();
         StringBuilder builder=new StringBuilder();
         oos.writeObject(getTray());
         oos.writeObject(getUsed());
@@ -109,29 +109,30 @@ public class GameClient {
             //Tray i used Slot dla gui
             currentPlayer.setTray(trayrecv);
             currentPlayer.setUsedSlot(usedSlotrecv);
+            boolean moveIsFine;
+            do{
+                try {
+                    setPlayerState(PlayerState.PASSIVE_TURN);
+                    updateGUI();
+                    waitOnGUI();
+                    PossibleMove selectedMove=getMove();
+                    TileSpecialAction tileSpecialAction = selectedMove.doMove();
+                    doSpecialAction(tileSpecialAction);
+                    getDiceRoll().rollDices();//replace with getting data from server
+                    moveIsFine=true;
+
+                } catch (ImpossibleFillException e) {
+                    e.printStackTrace();//replace with showing error in gui
+                    moveIsFine=false;
+                }
+            } while (!moveIsFine);//repeat until valid move
+            updateGUI();
             out.println("hej");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        boolean moveIsFine;
-        do{
-            try {
-                setPlayerState(PlayerState.PASSIVE_TURN);
-                updateGUI();
-                waitOnGUI();
-                PossibleMove selectedMove=getMove();
-                TileSpecialAction tileSpecialAction = performMove(selectedMove);
-                doSpecialAction(tileSpecialAction);
-                getDiceRoll().rollDices();//replace with getting data from server
-                moveIsFine=true;
-
-            } catch (ImpossibleFillException e) {
-                e.printStackTrace();//replace with showing error in gui
-                moveIsFine=false;
-            }
-        } while (!moveIsFine);//repeat until valid move
         //add sending it to server
         System.out.println("koniec");
     }
@@ -243,17 +244,7 @@ public class GameClient {
 
         return tileSpecialAction;
     }
-    private void nextRound() throws IOException {
-        boolean isActivePlayer=true;//get from server
-        if(isActivePlayer){
-            activePlayerTurn();
-        } else {
-            passivePlayerTurn();
-        }
-        giveBonuses();
-        currentPlayer.incrementRound();
-    }
-    private void giveBonuses(){
+    public void giveBonuses(){
         switch (currentPlayer.getRound()){
             case 1:
             case 3:
@@ -268,6 +259,7 @@ public class GameClient {
             default:
                 break;
         }
+        currentPlayer.incrementRound();
     }
     public void run(){
 

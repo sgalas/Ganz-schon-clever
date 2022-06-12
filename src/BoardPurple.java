@@ -35,7 +35,7 @@ public class BoardPurple implements Board, Serializable {
 
         List<DiceCombination> filled;
         filled = dices;
-        for(DiceCombination dice1: dices){
+        for(DiceCombination dice1: new LinkedList<>( dices)){
             if(dice.getPrimaryDice().getValue() >= dice1.getPrimaryDice().getValue()){
                 filled.remove(dice1);
             }

@@ -11,6 +11,7 @@ public class KlienTest {
                 } else {
                     kli.passivePlayerTurn();
                 }
+                kli.giveBonuses();
             }
         }
     }
