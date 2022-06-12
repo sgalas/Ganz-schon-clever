@@ -45,17 +45,21 @@ public class BoardOrange implements Board, Serializable {
     public int getPoints() {
         int points = 0;
         for(int i = 0; i < tiles.size(); i++) {
-            int temp = tiles.get(i).getFilledWith().getValue();
-            if (i == 3) {
-                temp = temp * 2;
-            } else if (i == 6) {
-                temp = temp * 2;
-            } else if (i == 8) {
-                temp = temp * 2;
-            } else if (i == 10) {
-                temp = temp * 3;
+            Dice dice=tiles.get(i).getFilledWith();
+            if(dice!=null){
+                int temp = dice.getValue();
+                if (i == 3) {
+                    temp = temp * 2;
+                } else if (i == 6) {
+                    temp = temp * 2;
+                } else if (i == 8) {
+                    temp = temp * 2;
+                } else if (i == 10) {
+                    temp = temp * 3;
+                }
+                points = points + temp;
             }
-            points = points + temp;
+
         }
         return points;
     }
