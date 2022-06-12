@@ -376,11 +376,28 @@ public class Player implements Serializable {
      */
     public int calculatePoints(){
         int points=0;
+        int minimal=Integer.MAX_VALUE;
+        if(boardBlue.getPoints()<minimal){
+            minimal=boardBlue.getPoints();
+        }
+        if(boardGreen.getPoints()<minimal){
+            minimal=boardGreen.getPoints();
+        }
+        if(boardYellow.getPoints()<minimal){
+            minimal=boardYellow.getPoints();
+        }
+        if(boardOrange.getPoints()<minimal){
+            minimal=boardOrange.getPoints();
+        }
+        if(boardPurple.getPoints()<minimal){
+            minimal=boardPurple.getPoints();
+        }
         points+=boardBlue.getPoints();
         points+=boardGreen.getPoints();
         points+=boardOrange.getPoints();
         points+=boardYellow.getPoints();
         points+=boardPurple.getPoints();
+        points+=getFoxCount()*minimal;
         return points;
     }
 
