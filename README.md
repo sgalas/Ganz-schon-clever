@@ -3,6 +3,7 @@
 To repozytrium dokumentuje naszą pracę nad projektem z przedmiotu APRO2.
 
 W składzie:
+
 -Konrad Szczepaniak
 
 -Miłosz Sowa
