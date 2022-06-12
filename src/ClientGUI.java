@@ -279,6 +279,7 @@ public class ClientGUI {
         JLabel additionalCount = new JLabel();
         JLabel rerollCount = new JLabel();
         JLabel roundCount = new JLabel();
+        JLabel showTurn = new JLabel();
 
 
     private int diceSel = 0; //Zmienna uzywana do ustalenia ilosci kosci juz ustawionych
@@ -305,8 +306,15 @@ public class ClientGUI {
         });
         roundCount.setText("Obecna runda: ");
         roundCount = createCount(roundCount,910, 100, lp);
-        roundCount.setBounds(910, 100, 100, 100);
+        roundCount.setBounds(910, 100, 300, 300);
         roundCount.setFont(new Font("Serif", Font.PLAIN, 15));
+
+        showTurn.setText("Tura ");
+        showTurn = createCount(showTurn, 910,80, lp);
+        showTurn.setBounds(910,80, 300,300);
+        showTurn.setFont(new Font("Serif", Font.PLAIN, 15));
+
+
 
         {
             y00 = createFiled("3", 110, 115, lp);
@@ -509,16 +517,65 @@ public class ClientGUI {
         updateUsed();
         updateTray();
         updateActions();
+        for(int j=diceSel; j<6; j++) {
+            switch (diceSel) {
+                case 0 -> {
+                    diceOne.setVisible(false);
+                    diceTwo.setVisible(false);
+                    diceThree.setVisible(false);
+                    diceFour.setVisible(false);
+                    diceFive.setVisible(false);
+                    diceSix.setVisible(false);
+                }
+                case 1 -> {
+                    diceTwo.setVisible(false);
+                    diceThree.setVisible(false);
+                    diceFour.setVisible(false);
+                    diceFive.setVisible(false);
+                    diceSix.setVisible(false);
+                }
+                case 2 -> {
+                    diceThree.setVisible(false);
+                    diceFour.setVisible(false);
+                    diceFive.setVisible(false);
+                    diceSix.setVisible(false);
+                }
+                case 3 -> {
+                    diceFour.setVisible(false);
+                    diceFive.setVisible(false);
+                    diceSix.setVisible(false);
+                }
+                case 4 -> {
+                    diceFive.setVisible(false);
+                    diceSix.setVisible(false);
+                }
+                case 5 -> {
+                    diceSix.setVisible(false);
+                }
+            }
+        }
     }
 
     public void updateActions(){
         rerollCount.setText(String.valueOf(player.getRerollCount()));
         additionalCount.setText(String.valueOf(player.getAdditionalDiceCount()));
-        roundCount.setText(roundCount.getText() + player.getRound());
+        roundCount.setText("Obecna runda: " + player.getRound());
+        switch(player.getPlayerState()){
+
+            case ACTIVE_TURN -> {
+                showTurn.setText("Tura aktywna");
+            }
+            case PASSIVE_TURN -> {
+                showTurn.setText("Tura pasywna");
+            }
+
+        }
+
     }
 
     public void setDice(JButton dice, Dice d, int x, int y){
         dice.setBounds(x, y, 41, 41);
+        dice.setVisible(true);
         ActionListener[] listeners = dice.getActionListeners();
         for (ActionListener l : listeners) {
             dice.removeActionListener(l);
