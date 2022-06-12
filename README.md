@@ -4,9 +4,13 @@ To repozytrium dokumentuje naszą pracę nad projektem z przedmiotu APRO2.
 
 W składzie:
 -Konrad Szczepaniak
+
 -Miłosz Sowa
+
 -Krzysztof Zawłocki
+
 -Sebastian Bieńczycki
+
 
 przyszło nam się zmierzyć z implementacją gry planszowej Rzuć na tacę (znaną również jako: Ganz Schon Clever albo That's pretty clever).Instrukcja do tejże gry planszowej dostępna jest w repozytrium w folderze instrukcje, zarówno w języku angielskim, jak i polskim.
 
