@@ -114,7 +114,7 @@ public class ClientGUI {
                         return;
                     }
                 }
-                if(player.getPossibleMovesForDices(usedDice).size() > 0 && trayDice.contains(selectedDice)){
+                if(player.getPossibleMovesForDices(trayDice).size() > 0 && usedDice.contains(selectedDice)){
                     showBadDiceError();
                     selectedDice = null;
                     return;
@@ -609,6 +609,8 @@ public class ClientGUI {
     }
 
     public void updateUsed(){
+        if(player.getPlayerState().equals(PlayerState.PASSIVE_TURN))
+            return;
         List<Dice> usedUserDice;
         usedUserDice = player.getUsedSlot().getDices();
         usedDice = usedUserDice;
