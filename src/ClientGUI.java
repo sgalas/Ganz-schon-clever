@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.Color;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -511,6 +512,10 @@ public class ClientGUI {
 
     public void setDice(JButton dice, Dice d, int x, int y){
         dice.setBounds(x, y, 41, 41);
+        ActionListener[] listeners = dice.getActionListeners();
+        for (ActionListener l : listeners) {
+            dice.removeActionListener(l);
+        }
         dice.addActionListener(e -> selectedDice = d);
         switch (d.getColor()) {
             case GREEN -> {
@@ -602,30 +607,64 @@ public class ClientGUI {
         usedDice = usedUserDice;
         int howManyDice = 0;
         for(Dice d: usedUserDice){
-            switch (diceSel){
-                case 0 ->{
+            switch (diceSel) {
+                case 0 -> {
                     setDice(diceOne, d, 1205, 530);
                     howManyDice++;
 
                 }
                 case 1 -> {
-                    if(howManyDice == 0)
+                    if (howManyDice == 0)
                         setDice(diceTwo, d, 1205, 530);
                     else
                         setDice(diceTwo, d, 1205, 605);
                     howManyDice++;
                 }
                 case 2 -> {
-                    if(howManyDice == 0)
+                    if (howManyDice == 0)
                         setDice(diceThree, d, 1205, 530);
-                    else{
-                        if(howManyDice == 1)
+                    else {
+                        if (howManyDice == 1)
                             setDice(diceThree, d, 1205, 605);
                         else
                             setDice(diceThree, d, 1205, 680);
                     }
                     howManyDice++;
                 }
+                case 3 -> {
+                    if (howManyDice == 0)
+                        setDice(diceFour, d, 1205, 530);
+                    else {
+                        if (howManyDice == 1)
+                            setDice(diceFour, d, 1205, 605);
+                        else
+                            setDice(diceFour, d, 1205, 680);
+                    }
+                    howManyDice++;
+                }
+                case 4 -> {
+                    if (howManyDice == 0)
+                        setDice(diceFive, d, 1205, 530);
+                    else {
+                        if (howManyDice == 1)
+                            setDice(diceFive, d, 1205, 605);
+                        else
+                            setDice(diceFive, d, 1205, 680);
+                    }
+                    howManyDice++;
+                }
+                case 5 -> {
+                    if (howManyDice == 0)
+                        setDice(diceSix, d, 1205, 530);
+                    else {
+                        if (howManyDice == 1)
+                            setDice(diceSix, d, 1205, 605);
+                        else
+                            setDice(diceSix, d, 1205, 680);
+                    }
+                    howManyDice++;
+                }
+
             }
         }
     }
