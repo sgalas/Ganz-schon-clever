@@ -29,7 +29,8 @@ public class GameClient {
     }
     public void getResults() throws IOException {
         String line=new String();
-        while ((line = in.readLine()) != null) {
+        for (int i=0;i<4;i++) {
+            line = in.readLine();
             System.out.println(line);
     }
     }
