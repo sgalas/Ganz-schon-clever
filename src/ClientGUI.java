@@ -568,7 +568,9 @@ public class ClientGUI {
             case PASSIVE_TURN -> {
                 showTurn.setText("Tura pasywna");
             }
-
+            case FINISHED_TURN -> {
+                showTurn.setText("Tura zakończona");
+            }
         }
 
     }
