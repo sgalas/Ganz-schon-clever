@@ -241,11 +241,13 @@ public class GameClient {
                 setPlayerState(PlayerState.SELECTBLUE);
                 updateGUI();
                 waitOnGUI();
+                doSpecialAction(getMove().doMove());
                 break;
             case ADDRANDOMYELLOW:
                 setPlayerState(PlayerState.SELECTYELLOW);
                 updateGUI();
                 waitOnGUI();
+                doSpecialAction(getMove().doMove());
                 break;
         }
     }
