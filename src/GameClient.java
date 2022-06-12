@@ -244,16 +244,6 @@ public class GameClient {
 
         return tileSpecialAction;
     }
-    private void nextRound() throws IOException {
-        boolean isActivePlayer=true;//get from server
-        if(isActivePlayer){
-            activePlayerTurn();
-        } else {
-            passivePlayerTurn();
-        }
-        giveBonuses();
-        currentPlayer.incrementRound();
-    }
     public void giveBonuses(){
         switch (currentPlayer.getRound()){
             case 1:
@@ -269,6 +259,7 @@ public class GameClient {
             default:
                 break;
         }
+        currentPlayer.incrementRound();
     }
     public void run(){
 
