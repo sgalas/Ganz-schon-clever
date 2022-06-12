@@ -131,6 +131,7 @@ public class BoardBlue implements Board, Serializable {
         if( !(tiles.get(index).getAllowedDiceCombinationList().contains(dice)))
             throw new ImpossibleFillException("Nie można umieścić tej kostki w planszy niebieskiej!");
         tiles.get(index).updateAllowedDiceList(null);
+        tiles.get(index).fillWithDice(dice.getPrimaryDice());
         return getSpecialAction(); // change method so that it takes 2 vaules of dices (white and blue)
     }
 
