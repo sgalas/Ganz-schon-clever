@@ -298,6 +298,7 @@ public class ClientGUI {
         reroll.addActionListener(e -> {
             if(player.getRerollCount() > 0)
                 player.useReroll();
+            updateAll();
         });
         additional.addActionListener(e -> {
             if(player.getAdditionalDiceCount() > 0)
@@ -561,7 +562,6 @@ public class ClientGUI {
         additionalCount.setText(String.valueOf(player.getAdditionalDiceCount()));
         roundCount.setText("Obecna runda: " + player.getRound());
         switch(player.getPlayerState()){
-
             case ACTIVE_TURN -> {
                 showTurn.setText("Tura aktywna");
             }
