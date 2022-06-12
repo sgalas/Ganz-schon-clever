@@ -50,7 +50,7 @@ public class BoardPurple implements Board, Serializable {
     @Override
     public int getPoints() {
         int points = 0;
-        for(int i = 0; i < tiles.size() + 1; i++) {
+        for(int i = 0; i < tiles.size(); i++) {
             int temp = tiles.get(i).getFilledWith().getValue();
             points = points + temp;
         }

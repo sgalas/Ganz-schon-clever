@@ -62,7 +62,7 @@ public class BoardGreen implements Board, Serializable {
         int points = 0;
         int counter = 0;
 
-        for (int i = 0; i < tiles.size() + 1; i++){
+        for (int i = 0; i < tiles.size(); i++){
             if(tiles.get(i).getAllowedDiceCombinationList() == null){
                 counter = counter + 1;
             }
