@@ -70,8 +70,7 @@ public class GameClient {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        boolean hasmoves=currentPlayer.getPossibleMovesForDices(getDiceRoll().getDices()).size()>0;
-        for(int i=0;i<3||hasmoves;i++){
+        for(int i=0;i<3;i++){
             if(currentPlayer.getPossibleMovesForDices(getDiceRoll().getDices()).size()==0){
                 break;
             }
