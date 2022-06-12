@@ -111,7 +111,14 @@ public class ClientGUI {
                     if ((trayDice.contains(selectedDice) || usedDice.contains(selectedDice) || reusedDice.contains(selectedDice)) && !canReuse) {
                         showBadDiceError();
                         selectedDice = null;
-                    } else {
+                        return;
+                    }
+                }
+                if(player.getPossibleMovesForDices(usedDice).size() > 0 && trayDice.contains(selectedDice)){
+                    showBadDiceError();
+                    selectedDice = null;
+                    return;
+                }
                         if (canReuse) {
                             reusedDice.add(selectedDice);
                             canReuse = false;
@@ -178,9 +185,9 @@ public class ClientGUI {
                             notYourTurnError();
                         }
                         selectedDice = null;
-                    }
+
                 }
-            }
+
         });
     }
 
