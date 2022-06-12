@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class LoadingGUI {
     public static void main(String[] args) {
@@ -37,7 +38,11 @@ public class LoadingGUI {
         JTextField field4 = new JTextField();
         field4.setText("Nick4      ");
         JTextField field5 = new JTextField();
-        field5.setText("IP         ");
+        field5.setText("localhost");
+        JTextField field6 = new JTextField();
+        field6.setText("Nick");
+        JTextField field7 = new JTextField();
+        field7.setText("5454");
 
 
         final int[] howmanyplayers = new int[1];
@@ -77,7 +82,13 @@ public class LoadingGUI {
 
         JButton jb11 = new JButton("Połącz");
         jb11.addActionListener(e -> {
-
+            try {
+                KlienTest kt = new KlienTest(field5.getText(), Integer.parseInt(field7.getText()), field6.getText());
+            } catch (FailedToConnectException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
 
         // Define the panel to hold the buttons
@@ -126,6 +137,8 @@ public class LoadingGUI {
         panel5.add(jb9);
         panel5.add(jb10);
         panel6.add(field5);
+        panel6.add(field6);
+        panel6.add(field7);
         panel6.add(jb11);
 
         // Set the window to be visible as the default to be false

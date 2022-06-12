@@ -18,9 +18,9 @@ import java.util.concurrent.TimeUnit;
 
 public class GameServer{
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public GameServer(int port) throws IOException, InterruptedException {
 
-        ServerSocket server= new ServerSocket(5454);
+        ServerSocket server= new ServerSocket(port);
         server.setReuseAddress(true);
         ArrayList<Communication> gracze=new ArrayList<>();
         while(gracze.size()!=4)
@@ -95,5 +95,8 @@ public class GameServer{
                 }
             }
 
+    public static void main(String[] args) throws IOException, InterruptedException {
+        GameServer gameServer = new GameServer(Integer.parseInt(args[0]));
+    }
 
 }
