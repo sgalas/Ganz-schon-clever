@@ -609,8 +609,7 @@ public class ClientGUI {
     }
 
     public void updateUsed(){
-        if(player.getPlayerState().equals(PlayerState.PASSIVE_TURN))
-            return;
+
         List<Dice> usedUserDice;
         usedUserDice = player.getUsedSlot().getDices();
         usedDice = usedUserDice;
