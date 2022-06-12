@@ -158,22 +158,22 @@ public class ClientGUI {
                                 case "yellow" -> button.setIcon(new ImageIcon("src/Images/X_Button.png"));
                                 case "orange" -> {
                                     switch (selectedDice.getValue()) {
-                                        case 1 -> o1.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
-                                        case 2 -> o1.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
-                                        case 3 -> o1.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
-                                        case 4 -> o1.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
-                                        case 5 -> o1.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
-                                        case 6 -> o1.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
+                                        case 1 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
+                                        case 2 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
+                                        case 3 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
+                                        case 4 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
+                                        case 5 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
+                                        case 6 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
                                     }
                                 }
                                 case "purple" -> {
                                     switch (selectedDice.getValue()) {
-                                        case 1 -> p1.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
-                                        case 2 -> p1.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
-                                        case 3 -> p1.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
-                                        case 4 -> p1.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
-                                        case 5 -> p1.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
-                                        case 6 -> p1.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
+                                        case 1 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
+                                        case 2 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
+                                        case 3 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
+                                        case 4 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
+                                        case 5 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
+                                        case 6 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
                                     }
                                 }
                                 case "blue" -> button.setIcon(new ImageIcon("src/Images/X_Button.png"));
