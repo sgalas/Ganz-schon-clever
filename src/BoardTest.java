@@ -80,4 +80,21 @@ public class BoardTest {
             Assertions.assertTrue(moves.contains(possibleMove));
         }
     }
+    @Test
+    public void testBoardOrange2(){
+        BoardOrange boardOrange = new BoardOrange();
+        for(int j=0;j<10;j++){
+            List<PossibleMove> testmoves=new ArrayList<>();
+            for (int i=1;i<7;i++){
+                testmoves.add(new PossibleMove(boardOrange,new Dice(DiceColor.ORANGE,i),j));
+            }
+            List<PossibleMove> moves=boardOrange.possibleMoves();
+            for (PossibleMove possibleMove : testmoves){
+                Assertions.assertTrue(moves.contains(possibleMove));
+            }
+            Assertions.assertDoesNotThrow(()->moves.get(0).doMove());
+        }
+
+
+    }
 }
