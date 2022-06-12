@@ -51,4 +51,33 @@ public class BoardTest {
         PossibleMove testmove=new PossibleMove(boardYellow,new Dice(DiceColor.YELLOW,3),0);
         Assertions.assertTrue(moves.contains(testmove));
     }
+    @Test
+    public void testBoardPurple2(){
+        BoardPurple boardPurple = new BoardPurple();
+        List<PossibleMove> testmoves=new ArrayList<>();
+
+        Assertions.assertDoesNotThrow(()->new PossibleMove(boardPurple,new DiceCombination(new Dice(DiceColor.PURPLE,2)),0).doMove());
+        for (int i=3;i<7;i++){
+            testmoves.add(new PossibleMove(boardPurple,new Dice(DiceColor.PURPLE,i),1));
+        }
+        List<PossibleMove> moves=boardPurple.possibleMoves();
+        for (PossibleMove possibleMove : testmoves){
+            Assertions.assertTrue(moves.contains(possibleMove));
+        }
+    }
+    @Test
+    public void testBoardPurple3(){
+        BoardPurple boardPurple = new BoardPurple();
+        List<PossibleMove> testmoves=new ArrayList<>();
+
+        Assertions.assertDoesNotThrow(()->new PossibleMove(boardPurple,new DiceCombination(new Dice(DiceColor.PURPLE,2)),0).doMove());
+        Assertions.assertDoesNotThrow(()->new PossibleMove(boardPurple,new DiceCombination(new Dice(DiceColor.PURPLE,6)),1).doMove());
+        for (int i=1;i<7;i++){
+            testmoves.add(new PossibleMove(boardPurple,new Dice(DiceColor.PURPLE,i),2));
+        }
+        List<PossibleMove> moves=boardPurple.possibleMoves();
+        for (PossibleMove possibleMove : testmoves){
+            Assertions.assertTrue(moves.contains(possibleMove));
+        }
+    }
 }

@@ -40,7 +40,7 @@ public class BoardPurple implements Board, Serializable {
                 filled.remove(dice1);
             }
             if(dice.getPrimaryDice().getValue() == 6){
-                filled = dices;
+                filled = new LinkedList<>(dices);
             }
         }
         tiles.get(index + 1).updateAllowedDiceList(filled);
