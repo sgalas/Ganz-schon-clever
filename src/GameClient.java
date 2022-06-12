@@ -109,30 +109,30 @@ public class GameClient {
             //Tray i used Slot dla gui
             currentPlayer.setTray(trayrecv);
             currentPlayer.setUsedSlot(usedSlotrecv);
+            boolean moveIsFine;
+            do{
+                try {
+                    setPlayerState(PlayerState.PASSIVE_TURN);
+                    updateGUI();
+                    waitOnGUI();
+                    PossibleMove selectedMove=getMove();
+                    TileSpecialAction tileSpecialAction = selectedMove.doMove();
+                    doSpecialAction(tileSpecialAction);
+                    getDiceRoll().rollDices();//replace with getting data from server
+                    moveIsFine=true;
+
+                } catch (ImpossibleFillException e) {
+                    e.printStackTrace();//replace with showing error in gui
+                    moveIsFine=false;
+                }
+            } while (!moveIsFine);//repeat until valid move
+            updateGUI();
             out.println("hej");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        boolean moveIsFine;
-        do{
-            try {
-                setPlayerState(PlayerState.PASSIVE_TURN);
-                updateGUI();
-                waitOnGUI();
-                PossibleMove selectedMove=getMove();
-                TileSpecialAction tileSpecialAction = performMove(selectedMove);
-                doSpecialAction(tileSpecialAction);
-                getDiceRoll().rollDices();//replace with getting data from server
-                moveIsFine=true;
-
-            } catch (ImpossibleFillException e) {
-                e.printStackTrace();//replace with showing error in gui
-                moveIsFine=false;
-            }
-        } while (!moveIsFine);//repeat until valid move
-        updateGUI();
         //add sending it to server
         System.out.println("koniec");
     }
@@ -254,7 +254,7 @@ public class GameClient {
         giveBonuses();
         currentPlayer.incrementRound();
     }
-    private void giveBonuses(){
+    public void giveBonuses(){
         switch (currentPlayer.getRound()){
             case 1:
             case 3:
