@@ -509,6 +509,43 @@ public class ClientGUI {
         updateUsed();
         updateTray();
         updateActions();
+        for(int j=diceSel; j<6; j++) {
+            switch (diceSel) {
+                case 0 -> {
+                    diceOne.setVisible(false);
+                    diceTwo.setVisible(false);
+                    diceThree.setVisible(false);
+                    diceFour.setVisible(false);
+                    diceFive.setVisible(false);
+                    diceSix.setVisible(false);
+                }
+                case 1 -> {
+                    diceTwo.setVisible(false);
+                    diceThree.setVisible(false);
+                    diceFour.setVisible(false);
+                    diceFive.setVisible(false);
+                    diceSix.setVisible(false);
+                }
+                case 2 -> {
+                    diceThree.setVisible(false);
+                    diceFour.setVisible(false);
+                    diceFive.setVisible(false);
+                    diceSix.setVisible(false);
+                }
+                case 3 -> {
+                    diceFour.setVisible(false);
+                    diceFive.setVisible(false);
+                    diceSix.setVisible(false);
+                }
+                case 4 -> {
+                    diceFive.setVisible(false);
+                    diceSix.setVisible(false);
+                }
+                case 5 -> {
+                    diceSix.setVisible(false);
+                }
+            }
+        }
     }
 
     public void updateActions(){
@@ -519,6 +556,7 @@ public class ClientGUI {
 
     public void setDice(JButton dice, Dice d, int x, int y){
         dice.setBounds(x, y, 41, 41);
+        dice.setVisible(true);
         ActionListener[] listeners = dice.getActionListeners();
         for (ActionListener l : listeners) {
             dice.removeActionListener(l);
