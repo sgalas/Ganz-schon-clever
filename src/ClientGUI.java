@@ -429,17 +429,17 @@ public class ClientGUI {
             p10 = createFiled("", 717, 660, lp);
             p11 = createFiled("", 785, 660, lp);
 
-            addTileAction(p1, "orange", 0);
-            addTileAction(p2, "orange", 1);
-            addTileAction(p3, "orange", 2);
-            addTileAction(p4, "orange", 3);
-            addTileAction(p5, "orange", 4);
-            addTileAction(p6, "orange", 5);
-            addTileAction(p7, "orange", 6);
-            addTileAction(p8, "orange", 7);
-            addTileAction(p9, "orange", 8);
-            addTileAction(p10, "orange", 9);
-            addTileAction(p11, "orange", 10);
+            addTileAction(p1, "purple", 0);
+            addTileAction(p2, "purple", 1);
+            addTileAction(p3, "purple", 2);
+            addTileAction(p4, "purple", 3);
+            addTileAction(p5, "purple", 4);
+            addTileAction(p6, "purple", 5);
+            addTileAction(p7, "purple", 6);
+            addTileAction(p8, "purple", 7);
+            addTileAction(p9, "purple", 8);
+            addTileAction(p10, "purple", 9);
+            addTileAction(p11, "purple", 10);
 
         }//Inicjalizacja pol fioletowych
 
