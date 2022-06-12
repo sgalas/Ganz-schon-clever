@@ -20,42 +20,38 @@ public class GameServer{
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        ServerSocket server= new ServerSocket(5454);
+        ServerSocket server = new ServerSocket(5454);
         server.setReuseAddress(true);
-        ArrayList<Communication> gracze=new ArrayList<>();
-        while(gracze.size()!=4)
-        {
+        ArrayList<Communication> gracze = new ArrayList<>();
+        while (gracze.size() != 4) {
             Socket client = server.accept();
             gracze.add(new Communication(client));
             System.out.println(gracze.size());
         }
-        for(int z=0;z<4;z++){
+        for (int z = 0; z < 4; z++) {
             System.out.println("NOWA RUNDA");
-            for(int i=0;i<4;i++)
-            {
+            for (int i = 0; i < 4; i++) {
                 System.out.println("Petla po prostu");
                 gracze.get(i).getPrintWriter().println("A");
                 //pasywi
-                for(int j=0;j<4;j++)
-                {
-                    if(i!=j)
-                    {
+                for (int j = 0; j < 4; j++) {
+                    if (i != j) {
                         gracze.get(j).getPrintWriter().println("P");
-                        System.out.println("Wysylamy "+j);
+                        System.out.println("Wysylamy " + j);
                     }
                 }
                 System.out.println("Dawania rol");
                 //Dice roll
-                List<Dice> kostki=DiceRoll.rollDice().getDices();
-                DiceRoll roll=new DiceRoll(kostki);
+                List<Dice> kostki = DiceRoll.rollDice().getDices();
+                DiceRoll roll = new DiceRoll(kostki);
                 System.out.println("Generacja kostek");
                 gracze.get(i).getOos().writeObject(roll);
 
 
                 try {
-                  Tray tray=(Tray)gracze.get(i).getOis().readObject();
-                  System.out.println(tray);
-                    UsedSlot used =(UsedSlot) gracze.get(i).getOis().readObject();
+                    Tray tray = (Tray) gracze.get(i).getOis().readObject();
+                    System.out.println(tray);
+                    UsedSlot used = (UsedSlot) gracze.get(i).getOis().readObject();
                     System.out.println(used);
                     for (int j = 0; j < 4; j++) {
                         if (i != j) {
@@ -78,23 +74,23 @@ public class GameServer{
                 }
                 System.out.println("Po threadach");
                 Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
-                int ileOdeslanych=0;
+                int ileOdeslanych = 0;
                 while (ileOdeslanych != 4) {
                     ileOdeslanych = 0;
                     for (Thread thread : thready) {
-                      //System.out.println(ileOdeslanych);
-                      if (!thread.isAlive()) {
-                          ileOdeslanych++;
-                      }
+                        //System.out.println(ileOdeslanych);
+                        if (!thread.isAlive()) {
+                            ileOdeslanych++;
+                        }
                     }
                 }
-            for (int s = 0; s < 4; s++) {
-                gracze.get(s).setGracz(prace.get(s).getPlayer());
-                System.out.println(gracze.get(s).getGracz().getNick());
-            }
-            System.out.println("Wychodzenie");
+                for (int s = 0; s < 4; s++) {
+                    gracze.get(s).setGracz(prace.get(s).getPlayer());
+                    System.out.println(gracze.get(s).getGracz().getNick());
                 }
+                System.out.println("Wychodzenie");
             }
+        }
 
-
+    }
 }

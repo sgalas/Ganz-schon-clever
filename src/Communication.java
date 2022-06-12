@@ -7,6 +7,7 @@ public class Communication {
     private BufferedReader br;
     private ObjectOutputStream oos;
     private ObjectInputStream ois;
+    private Player gracz;
     public Communication(Socket s)
     {
         this.s=s;
@@ -19,6 +20,15 @@ public class Communication {
             throw new RuntimeException(e);
         }
     }
+
+    public Player getGracz() {
+        return gracz;
+    }
+
+    public void setGracz(Player gracz) {
+        this.gracz = gracz;
+    }
+
     public Socket getSocket()
     {
         return s;
