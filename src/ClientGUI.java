@@ -328,7 +328,7 @@ public class ClientGUI {
             y22 = createFiled("2", 240, 215, lp);
             y23 = createFiled("4", 240, 265, lp);
             y31 = createFiled("5", 305, 165, lp);
-            y32 = createFiled("5", 305, 215, lp);
+            y32 = createFiled("4", 305, 215, lp);
             y33 = createFiled("6", 305, 265, lp);
 
             addTileAction(y00, "yellow", 0);
