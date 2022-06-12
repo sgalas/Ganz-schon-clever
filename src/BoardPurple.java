@@ -34,13 +34,13 @@ public class BoardPurple implements Board, Serializable {
             throw new ImpossibleFillException("Nie można umieścić tej kostki w planszy fioletowej!");
 
         List<DiceCombination> filled;
-        filled = dices;
+        filled = new LinkedList<>(dices);
         for(DiceCombination dice1: new LinkedList<>( dices)){
             if(dice.getPrimaryDice().getValue() >= dice1.getPrimaryDice().getValue()){
                 filled.remove(dice1);
             }
             if(dice.getPrimaryDice().getValue() == 6){
-                filled.add(dice1);
+                filled = dices;
             }
         }
         tiles.get(index + 1).updateAllowedDiceList(filled);
