@@ -95,7 +95,7 @@ public class GameServer{
         {
             for(int k=0;k<4;k++)
             {
-                gracz.getPrintWriter().println(gracze.get(i).getGracz().getNick()+" "+gracze.get(i).getGracz().calculatePoints());
+                gracz.getPrintWriter().println(gracze.get(k).getGracz().getNick()+" "+gracze.get(k).getGracz().calculatePoints());
             }
         }
 

@@ -27,8 +27,8 @@ public class GameClient {
     }
     private void getID(){
     }
-    public void getResults()
-    {
+    public void getResults() throws IOException {
+        String line=new String();
         while ((line = in.readLine()) != null) {
             System.out.println(line);
     }
