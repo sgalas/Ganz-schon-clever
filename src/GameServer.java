@@ -67,31 +67,32 @@ public class GameServer{
                     throw new RuntimeException(e);
                 }
                 System.out.println("thready");
-                ArrayList<Thread> thready=new ArrayList<>();
+                ArrayList<Thread> thready = new ArrayList<>();
+                ArrayList<RunnableJob> prace = new ArrayList<>();
                 for (int thread_num = 0; thread_num < 4; thread_num++) {
-                    if(thread_num!=i) {
-                        Thread tr=new Thread(new RunnableJob(gracze.get(thread_num)));
-                        tr.start();
-                        thready.add(tr);
-
-                    }
+                    RunnableJob praca = new RunnableJob(gracze.get(thread_num));
+                    Thread tr = new Thread(praca);
+                    tr.start();
+                    thready.add(tr);
+                    prace.add(praca);
                 }
                 System.out.println("Po threadach");
                 Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
                 int ileOdeslanych=0;
-
-                while(ileOdeslanych!=3) {
-                    ileOdeslanych=0;
-                    for(Thread thread:thready) {
-                        if(!thread.isAlive()) {
-                            ileOdeslanych++;
-                            }
-                        }
+                while (ileOdeslanych != 4) {
+                    ileOdeslanych = 0;
+                    for (Thread thread : thready) {
+                      //System.out.println(ileOdeslanych);
+                      if (!thread.isAlive()) {
+                          ileOdeslanych++;
+                      }
                     }
-                    System.out.println(ileOdeslanych);
-                    Thread.sleep(500);
                 }
-                System.out.println("Wychodzenie");
+            for (int s = 0; s < 4; s++) {
+                gracze.get(s).setGracz(prace.get(s).getPlayer());
+                System.out.println(gracze.get(s).getGracz().getNick());
+            }
+            System.out.println("Wychodzenie");
                 }
             }
 
