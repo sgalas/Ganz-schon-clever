@@ -119,10 +119,6 @@ public class ClientGUI {
                     selectedDice = null;
                     return;
                 }
-                        if (canReuse) {
-                            reusedDice.add(selectedDice);
-                            canReuse = false;
-                        }
                         PossibleMove possibleMove = null;
                         switch (color) {
                             case "green" -> possibleMove = new PossibleMove(player.getBoardGreen(), selectedDice, index);
@@ -143,7 +139,13 @@ public class ClientGUI {
                             }
                         }
                         try {
-                            player.executeMove(possibleMove);
+                            if(canReuse){
+                                player.executeAdditionalDice(possibleMove);
+                                reusedDice.add(selectedDice);
+                                canReuse = false;
+                            } else {
+                                player.executeMove(possibleMove);
+                            }
                             switch (color) {
                                 case "green" -> {
                                     switch (selectedDice.getValue()) {

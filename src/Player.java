@@ -21,7 +21,8 @@ public class Player implements Serializable {
     private Queue<PossibleMove> moveQueue;
     private PlayerState playerState;
     private int round;
-    public Player(int id, String nick, int rerollCount, int additionalDiceCount, int foxCount, BoardGreen boardGreen, BoardPurple boardPurple, BoardOrange boardOrange, BoardBlue boardBlue, BoardYellow boardYellow, Queue<PossibleMove> moveQueue, PlayerState playerState,int round,UsedSlot usedSlot,DiceRoll diceRoll,Tray tray ) {
+    private int playerTurn;
+    public Player(int id, String nick, int rerollCount, int additionalDiceCount, int foxCount, BoardGreen boardGreen, BoardPurple boardPurple, BoardOrange boardOrange, BoardBlue boardBlue, BoardYellow boardYellow, Queue<PossibleMove> moveQueue, PlayerState playerState,int round,int playerTurn,UsedSlot usedSlot,DiceRoll diceRoll,Tray tray ) {
         this.id = id;
         this.nick = nick;
         this.rerollCount = rerollCount;
@@ -35,6 +36,7 @@ public class Player implements Serializable {
         this.moveQueue = moveQueue;
         this.playerState = playerState;
         this.round=round;
+        this.playerTurn=playerTurn;
         this.usedSlot=usedSlot;
         this.tray=tray;
         this.diceRoll=diceRoll;
@@ -57,7 +59,7 @@ public class Player implements Serializable {
         UsedSlot usedSlot=new UsedSlot();
         DiceRoll diceRoll=new DiceRoll();
         Tray tray=new Tray();
-        Player player =new Player(id,nick,0,0,0,boardGreen, boardPurple,boardOrange,boardBlue,boardYellow,moveQueue,playerState,0,usedSlot,diceRoll,tray);
+        Player player =new Player(id,nick,0,0,0,boardGreen, boardPurple,boardOrange,boardBlue,boardYellow,moveQueue,playerState,0,0,usedSlot,diceRoll,tray);
         return player;
     }
 
@@ -94,7 +96,7 @@ public class Player implements Serializable {
         }
         return retList;
     }
-    public List<PossibleMove> getPossibleMovesForDices(List<Dice>dices){
+    public List<PossibleMove> getPossibleMovesForDices(List<Dice>dices,List<Dice>helperdice){
         List<PossibleMove> retList = getPossibleMoves();
         for (PossibleMove possibleMove:new ArrayList<>(retList)){
             DiceCombination diceCombination=possibleMove.getDiceCombination();
@@ -105,7 +107,7 @@ public class Player implements Serializable {
             }
             if(diceCombination.getHelperDices()!=null){
                 for (Dice dicehelper:diceCombination.getHelperDices()){
-                    if(!dices.contains(dicehelper))
+                    if(!helperdice.contains(dicehelper))
                     {
                         retList.remove(possibleMove);
                         break;
@@ -115,7 +117,15 @@ public class Player implements Serializable {
         }
         return retList;
     }
-
+    public List<PossibleMove> getPossibleMovesForDices(List<Dice>dices){
+        return getPossibleMovesForDices(dices,getHelperDie());
+    }
+    private List<Dice>getHelperDie(){
+        List<Dice> retList=new ArrayList<>(diceRoll.getDices());
+        retList.addAll(usedSlot.getDices());
+        retList.addAll(tray.getDices());
+        return retList;
+    }
     /**
      * Zwraca numer rundy
      * @return numer rundy
@@ -124,6 +134,15 @@ public class Player implements Serializable {
         return round;
     }
 
+    public int getPlayerTurn() {
+        return playerTurn;
+    }
+    public void resetTurn(){
+        playerTurn=0;
+    }
+    public void incrementTurn(){
+        ++playerTurn;
+    }
     /**
      * Zwraca nick gracza
      * @return nick gracza
@@ -322,6 +341,11 @@ public class Player implements Serializable {
         verifyMove(possibleMove);
         moveQueue.add(possibleMove);
         setPlayerState(PlayerState.FINISHED_TURN);
+    }
+    public void executeAdditionalDice(PossibleMove possibleMove) throws InvalidMoveException, NotReadyException {
+        verifyMove(possibleMove);
+        moveQueue.add(possibleMove);
+        setPlayerState(PlayerState.SPECIAL_MOVE_TURN);
     }
 
     /**
