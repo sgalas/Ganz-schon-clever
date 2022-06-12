@@ -94,7 +94,7 @@ public class Player implements Serializable {
         }
         return retList;
     }
-    public List<PossibleMove> getPossibleMovesForDices(List<Dice>dices){
+    public List<PossibleMove> getPossibleMovesForDices(List<Dice>dices,List<Dice>helperdice){
         List<PossibleMove> retList = getPossibleMoves();
         for (PossibleMove possibleMove:new ArrayList<>(retList)){
             DiceCombination diceCombination=possibleMove.getDiceCombination();
@@ -105,7 +105,7 @@ public class Player implements Serializable {
             }
             if(diceCombination.getHelperDices()!=null){
                 for (Dice dicehelper:diceCombination.getHelperDices()){
-                    if(!dices.contains(dicehelper))
+                    if(!helperdice.contains(dicehelper))
                     {
                         retList.remove(possibleMove);
                         break;
@@ -115,7 +115,15 @@ public class Player implements Serializable {
         }
         return retList;
     }
-
+    public List<PossibleMove> getPossibleMovesForDices(List<Dice>dices){
+        return getPossibleMovesForDices(dices,getHelperDie());
+    }
+    private List<Dice>getHelperDie(){
+        List<Dice> retList=new ArrayList<>(diceRoll.getDices());
+        retList.addAll(usedSlot.getDices());
+        retList.addAll(tray.getDices());
+        return retList;
+    }
     /**
      * Zwraca numer rundy
      * @return numer rundy
