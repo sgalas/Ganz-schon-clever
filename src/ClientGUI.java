@@ -109,6 +109,7 @@ public class ClientGUI {
                 try {
                     player.executeAdditionalDice(new PossibleMove(player.getBoardYellow(), player.getBoardYellow().getTiles().get(index).getAllowedDiceCombinationList().get(0), index));
                     canDoYellow = false;
+                    button.setIcon(new ImageIcon("src/Images/X_Button.png"));
                 } catch (InvalidMoveException ex) {
                     ex.printStackTrace();
                 } catch (NotReadyException ex) {
@@ -119,6 +120,8 @@ public class ClientGUI {
                 try {
                     player.executeAdditionalDice(new PossibleMove(player.getBoardBlue(), player.getBoardBlue().getTiles().get(index).getAllowedDiceCombinationList().get(0), index));
                     canDoBlue = false;
+                    button.setIcon(new ImageIcon("src/Images/X_Button.png"));
+
                 } catch (InvalidMoveException ex) {
                     ex.printStackTrace();
                 } catch (NotReadyException ex) {
