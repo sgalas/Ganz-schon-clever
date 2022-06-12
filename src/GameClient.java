@@ -92,6 +92,7 @@ public class GameClient {
                 }
             } while (!moveIsFine);//repeat until valid move
         }
+        updateGUI();
         StringBuilder builder=new StringBuilder();
         oos.writeObject(getTray());
         oos.writeObject(getUsed());
@@ -132,6 +133,7 @@ public class GameClient {
                 moveIsFine=false;
             }
         } while (!moveIsFine);//repeat until valid move
+        updateGUI();
         //add sending it to server
         System.out.println("koniec");
     }
