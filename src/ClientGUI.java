@@ -298,6 +298,7 @@ public class ClientGUI {
         reroll.addActionListener(e -> {
             if(player.getRerollCount() > 0)
                 player.useReroll();
+            updateAll();
         });
         additional.addActionListener(e -> {
             if(player.getAdditionalDiceCount() > 0)
@@ -327,7 +328,7 @@ public class ClientGUI {
             y22 = createFiled("2", 240, 215, lp);
             y23 = createFiled("4", 240, 265, lp);
             y31 = createFiled("5", 305, 165, lp);
-            y32 = createFiled("5", 305, 215, lp);
+            y32 = createFiled("4", 305, 215, lp);
             y33 = createFiled("6", 305, 265, lp);
 
             addTileAction(y00, "yellow", 0);
@@ -561,14 +562,15 @@ public class ClientGUI {
         additionalCount.setText(String.valueOf(player.getAdditionalDiceCount()));
         roundCount.setText("Obecna runda: " + player.getRound());
         switch(player.getPlayerState()){
-
             case ACTIVE_TURN -> {
                 showTurn.setText("Tura aktywna");
             }
             case PASSIVE_TURN -> {
                 showTurn.setText("Tura pasywna");
             }
-
+            case FINISHED_TURN -> {
+                showTurn.setText("Tura zakończona");
+            }
         }
 
     }

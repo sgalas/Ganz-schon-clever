@@ -111,6 +111,7 @@ public class GameClient {
             //Tray i used Slot dla gui
             currentPlayer.setTray(trayrecv);
             currentPlayer.setUsedSlot(usedSlotrecv);
+            currentPlayer.setDiceRoll(new DiceRoll());
             boolean moveIsFine;
             do{
                 try {
