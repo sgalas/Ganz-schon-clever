@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 public class ClientStarter {
@@ -16,8 +17,22 @@ public class ClientStarter {
                 int port=Integer.parseInt(input);
                 System.out.println("Enter nick:");
                 String nick=scanner.nextLine();
-                GameClient gameClient=new GameClient(hostname,port,nick);
-                gameClient.run();
+                try {
+                    GameClient gameClient=new GameClient(hostname,port,nick);
+                    for(int round=0;round<4;round++ ) {
+                        for (int tour = 0; tour < 4; tour++) {
+                            int status = gameClient.checkStatus();
+                            if (status == 1) {
+                                gameClient.activePlayerTurn();
+                            } else {
+                                gameClient.passivePlayerTurn();
+                            }
+                            gameClient.giveBonuses();
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 System.out.println("Stop game?:");
                 boolean correctOption=false;
                 while(!correctOption) {
