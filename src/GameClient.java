@@ -55,13 +55,6 @@ public class GameClient {
 
     protected void activePlayerTurn() throws IOException {
         System.out.println("aktyw");
-        String odpowiedz;
-        List<Dice> kosci=new ArrayList<>();
-        /*while((odpowiedz=in.readLine())!=null) {
-            System.out.println(odpowiedz);
-            String buffor[]=odpowiedz.split(",");
-            kosci.add(new Dice( Color.values()[ Integer.valueOf(buffor[0]) ], Integer.valueOf(buffor[1]) ));
-        }*/
         try {
             DiceRoll rol=(DiceRoll) ois.readObject();
             System.out.println(rol);
@@ -93,10 +86,14 @@ public class GameClient {
                 }
             } while (!moveIsFine);//repeat until valid move
         }
+        Tray traysent=getTray();
+        UsedSlot usedsent=getUsed();
+        currentPlayer.setTray(new Tray());
+        currentPlayer.setUsedSlot(new UsedSlot());
+        currentPlayer.setDiceRoll(new DiceRoll());
         updateGUI();
-        StringBuilder builder=new StringBuilder();
-        oos.writeObject(getTray());
-        oos.writeObject(getUsed());
+        oos.writeObject(traysent);
+        oos.writeObject(usedsent);
         System.out.println("Wyslano tray i used");
         System.out.println("Koniec");
     }
@@ -129,6 +126,9 @@ public class GameClient {
                     moveIsFine=false;
                 }
             } while (!moveIsFine);//repeat until valid move
+            currentPlayer.setTray(new Tray());
+            currentPlayer.setUsedSlot(new UsedSlot());
+            currentPlayer.setDiceRoll(new DiceRoll());
             updateGUI();
             out.println("hej");
         } catch (IOException e) {
