@@ -4,6 +4,7 @@ import java.net.Socket;
 
 public class RunnableJob implements Runnable{
     Communication com;
+    Player zwrot;
     public RunnableJob(Communication com)
     {
         this.com=com;
@@ -12,11 +13,16 @@ public class RunnableJob implements Runnable{
     {
         try
         {
-            com.getBufferedReader().readLine();
+            this.zwrot=(Player)com.getOis().readObject();
             System.out.println("Otrzymano linie");
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
+    }
+    public Player getPlayer()
+    {
+        System.out.println("otrzymuje zwrot");
+        return zwrot;
     }
 }

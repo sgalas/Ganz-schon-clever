@@ -20,42 +20,38 @@ public class GameServer{
 
     public GameServer(int port) throws IOException, InterruptedException {
 
-        ServerSocket server= new ServerSocket(port);
+        ServerSocket server = new ServerSocket(port);
         server.setReuseAddress(true);
-        ArrayList<Communication> gracze=new ArrayList<>();
-        while(gracze.size()!=4)
-        {
+        ArrayList<Communication> gracze = new ArrayList<>();
+        while (gracze.size() != 4) {
             Socket client = server.accept();
             gracze.add(new Communication(client));
             System.out.println(gracze.size());
         }
-        for(int z=0;z<4;z++){
+        for (int z = 0; z < 4; z++) {
             System.out.println("NOWA RUNDA");
-            for(int i=0;i<4;i++)
-            {
+            for (int i = 0; i < 4; i++) {
                 System.out.println("Petla po prostu");
                 gracze.get(i).getPrintWriter().println("A");
                 //pasywi
-                for(int j=0;j<4;j++)
-                {
-                    if(i!=j)
-                    {
+                for (int j = 0; j < 4; j++) {
+                    if (i != j) {
                         gracze.get(j).getPrintWriter().println("P");
-                        System.out.println("Wysylamy "+j);
+                        System.out.println("Wysylamy " + j);
                     }
                 }
                 System.out.println("Dawania rol");
                 //Dice roll
-                List<Dice> kostki=DiceRoll.rollDice().getDices();
-                DiceRoll roll=new DiceRoll(kostki);
+                List<Dice> kostki = DiceRoll.rollDice().getDices();
+                DiceRoll roll = new DiceRoll(kostki);
                 System.out.println("Generacja kostek");
                 gracze.get(i).getOos().writeObject(roll);
 
 
                 try {
-                  Tray tray=(Tray)gracze.get(i).getOis().readObject();
-                  System.out.println(tray);
-                    UsedSlot used =(UsedSlot) gracze.get(i).getOis().readObject();
+                    Tray tray = (Tray) gracze.get(i).getOis().readObject();
+                    System.out.println(tray);
+                    UsedSlot used = (UsedSlot) gracze.get(i).getOis().readObject();
                     System.out.println(used);
                     for (int j = 0; j < 4; j++) {
                         if (i != j) {
@@ -67,34 +63,43 @@ public class GameServer{
                     throw new RuntimeException(e);
                 }
                 System.out.println("thready");
-                ArrayList<Thread> thready=new ArrayList<>();
+                ArrayList<Thread> thready = new ArrayList<>();
+                ArrayList<RunnableJob> prace = new ArrayList<>();
                 for (int thread_num = 0; thread_num < 4; thread_num++) {
-                    if(thread_num!=i) {
-                        Thread tr=new Thread(new RunnableJob(gracze.get(thread_num)));
-                        tr.start();
-                        thready.add(tr);
-
-                    }
+                    RunnableJob praca = new RunnableJob(gracze.get(thread_num));
+                    Thread tr = new Thread(praca);
+                    tr.start();
+                    thready.add(tr);
+                    prace.add(praca);
                 }
                 System.out.println("Po threadach");
                 Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
-                int ileOdeslanych=0;
-
-                while(ileOdeslanych!=3) {
-                    ileOdeslanych=0;
-                    for(Thread thread:thready) {
-                        if(!thread.isAlive()) {
+                int ileOdeslanych = 0;
+                while (ileOdeslanych != 4) {
+                    ileOdeslanych = 0;
+                    for (Thread thread : thready) {
+                        //System.out.println(ileOdeslanych);
+                        if (!thread.isAlive()) {
                             ileOdeslanych++;
-                            }
                         }
                     }
-                    System.out.println(ileOdeslanych);
-                    Thread.sleep(500);
+                }
+                for (int s = 0; s < 4; s++) {
+                    gracze.get(s).setGracz(prace.get(s).getPlayer());
+                    System.out.println(gracze.get(s).getGracz().getNick());
                 }
                 System.out.println("Wychodzenie");
-                }
             }
+        }
+        for(Communication gracz:gracze)
+        {
+            for(int k=0;k<4;k++)
+            {
+                gracz.getPrintWriter().println(gracze.get(k).getGracz().getNick()+" "+gracze.get(k).getGracz().calculatePoints());
+            }
+        }
 
+    }
     public static void main(String[] args) throws IOException, InterruptedException {
         GameServer gameServer = new GameServer(Integer.parseInt(args[0]));
     }

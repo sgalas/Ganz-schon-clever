@@ -27,6 +27,12 @@ public class GameClient {
     }
     private void getID(){
     }
+    public void getResults() throws IOException {
+        String line=new String();
+        while ((line = in.readLine()) != null) {
+            System.out.println(line);
+    }
+    }
     private void connect(String hostname,int port) throws FailedToConnectException {
         try {
             clientSocket = new Socket(hostname, port);
@@ -102,6 +108,8 @@ public class GameClient {
         oos.writeObject(traysent);
         oos.writeObject(usedsent);
         System.out.println("Wyslano tray i used");
+        oos.writeObject(currentPlayer);
+        System.out.println("wypisano obiekt");
         System.out.println("Koniec");
     }
     protected void passivePlayerTurn() {
@@ -149,7 +157,8 @@ public class GameClient {
             currentPlayer.setUsedSlot(new UsedSlot());
             currentPlayer.setDiceRoll(new DiceRoll());
             updateGUI();
-            out.println("hej");
+            oos.writeObject(currentPlayer);
+            System.out.println("wypisano obiekt");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
