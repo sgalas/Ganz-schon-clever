@@ -117,6 +117,9 @@ public class GameClient {
             currentPlayer.setUsedSlot(usedSlotrecv);
             currentPlayer.setDiceRoll(new DiceRoll());
             while (currentPlayer.getPlayerTurn()<1) {
+                if(currentPlayer.getPossibleMovesForDices(getDiceRoll().getDices()).size()==0&&currentPlayer.getPossibleMovesForDices(getUsed().getDices()).size()==0){
+                    break;
+                }
                 boolean moveIsFine;
                 do {
                     try {
