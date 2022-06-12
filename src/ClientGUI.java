@@ -107,78 +107,78 @@ public class ClientGUI {
                 showEmptyError();
             }
             else {
-                if((trayDice.contains(selectedDice) || usedDice.contains(selectedDice) || reusedDice.contains(selectedDice)) && !canReuse){
-                    showBadDiceError();
-                    selectedDice = null;
-                }
-                else{
-                    if(canReuse){
-                        reusedDice.add(selectedDice);
-                        canReuse = false;
-                    }
-                PossibleMove possibleMove = null;
-                switch (color){
-                    case "green" ->  possibleMove = new PossibleMove(player.getBoardGreen(), selectedDice, index);
-                    case "yellow" -> possibleMove = new PossibleMove(player.getBoardYellow(), selectedDice, index);
-                    case "orange" -> possibleMove = new PossibleMove(player.getBoardOrange(), selectedDice, index);
-                    case "purple" -> possibleMove = new PossibleMove(player.getBoardPurple(), selectedDice, index);
-                    case "blue" -> {
-                        if(!(selectedDice.getColor().equals(DiceColor.BLUE) || selectedDice.getColor().equals(DiceColor.WHITE))){
+                if (player.getPlayerState().equals(PlayerState.ACTIVE_TURN)) {
+                    if ((trayDice.contains(selectedDice) || usedDice.contains(selectedDice) || reusedDice.contains(selectedDice)) && !canReuse) {
+                        showBadDiceError();
+                        selectedDice = null;
+                    } else {
+                        if (canReuse) {
+                            reusedDice.add(selectedDice);
+                            canReuse = false;
+                        }
+                        PossibleMove possibleMove = null;
+                        switch (color) {
+                            case "green" -> possibleMove = new PossibleMove(player.getBoardGreen(), selectedDice, index);
+                            case "yellow" -> possibleMove = new PossibleMove(player.getBoardYellow(), selectedDice, index);
+                            case "orange" -> possibleMove = new PossibleMove(player.getBoardOrange(), selectedDice, index);
+                            case "purple" -> possibleMove = new PossibleMove(player.getBoardPurple(), selectedDice, index);
+                            case "blue" -> {
+                                if (!(selectedDice.getColor().equals(DiceColor.BLUE) || selectedDice.getColor().equals(DiceColor.WHITE))) {
+                                    showFillError();
+                                    selectedDice = null;
+                                    return;
+                                }
+                                if (selectedDice.getColor().equals(DiceColor.BLUE))
+                                    possibleMove = new PossibleMove(player.getBoardBlue(), DiceCombination.createTwoDiceCombo(selectedDice, player.getDice(DiceColor.WHITE)), index);
+                                else
+                                    possibleMove = new PossibleMove(player.getBoardBlue(), DiceCombination.createTwoDiceCombo(selectedDice, player.getDice(DiceColor.BLUE)), index);
+
+                            }
+                        }
+                        try {
+                            player.executeMove(possibleMove);
+                            switch (color) {
+                                case "green" -> {
+                                    switch (selectedDice.getValue()) {
+                                        case 1 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
+                                        case 2 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
+                                        case 3 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
+                                        case 4 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
+                                        case 5 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
+                                        case 6 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
+                                    }
+                                }
+                                case "yellow" -> button.setIcon(new ImageIcon("src/Images/X_Button.png"));
+                                case "orange" -> {
+                                    switch (selectedDice.getValue()) {
+                                        case 1 -> o1.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
+                                        case 2 -> o1.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
+                                        case 3 -> o1.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
+                                        case 4 -> o1.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
+                                        case 5 -> o1.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
+                                        case 6 -> o1.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
+                                    }
+                                }
+                                case "purple" -> {
+                                    switch (selectedDice.getValue()) {
+                                        case 1 -> p1.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
+                                        case 2 -> p1.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
+                                        case 3 -> p1.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
+                                        case 4 -> p1.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
+                                        case 5 -> p1.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
+                                        case 6 -> p1.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
+                                    }
+                                }
+                                case "blue" -> button.setIcon(new ImageIcon("src/Images/X_Button.png"));
+
+                            }
+                        } catch (InvalidMoveException exception) {
                             showFillError();
-                            selectedDice = null;
-                            return;
+                        } catch (NotReadyException exception) {
+                            notYourTurnError();
                         }
-                        if(selectedDice.getColor().equals(DiceColor.BLUE))
-                            possibleMove = new PossibleMove(player.getBoardBlue(), DiceCombination.createTwoDiceCombo(selectedDice, player.getDice(DiceColor.WHITE)), index);
-                        else
-                            possibleMove = new PossibleMove(player.getBoardBlue(), DiceCombination.createTwoDiceCombo(selectedDice, player.getDice(DiceColor.BLUE)), index);
-
+                        selectedDice = null;
                     }
-                }
-                    try {
-                        player.executeMove(possibleMove);
-                        switch (color){
-                            case "green" -> {
-                                switch (selectedDice.getValue()) {
-                                    case 1 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Green.png"));
-                                    case 2 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Green.png"));
-                                    case 3 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Green.png"));
-                                    case 4 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Green.png"));
-                                    case 5 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Green.png"));
-                                    case 6 -> button.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Green.png"));
-                                }
-                            }
-                            case "yellow" -> button.setIcon(new ImageIcon("src/Images/X_Button.png"));
-                            case "orange" -> {
-                                switch (selectedDice.getValue()) {
-                                    case 1 -> o1.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Orange.png"));
-                                    case 2 -> o1.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Orange.png"));
-                                    case 3 -> o1.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Orange.png"));
-                                    case 4 -> o1.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Orange.png"));
-                                    case 5 -> o1.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Orange.png"));
-                                    case 6 -> o1.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Orange.png"));
-                                }
-                            }
-                            case "purple" -> {
-                                switch (selectedDice.getValue()) {
-                                    case 1 -> p1.setIcon(new ImageIcon("src/Images/Dices/Dice_One_Purple.png"));
-                                    case 2 -> p1.setIcon(new ImageIcon("src/Images/Dices/Dice_Two_Purple.png"));
-                                    case 3 -> p1.setIcon(new ImageIcon("src/Images/Dices/Dice_Three_Purple.png"));
-                                    case 4 -> p1.setIcon(new ImageIcon("src/Images/Dices/Dice_Four_Purple.png"));
-                                    case 5 -> p1.setIcon(new ImageIcon("src/Images/Dices/Dice_Five_Purple.png"));
-                                    case 6 -> p1.setIcon(new ImageIcon("src/Images/Dices/Dice_Six_Purple.png"));
-                                }
-                            }
-                            case "blue" -> button.setIcon(new ImageIcon("src/Images/X_Button.png"));
-
-                        }
-                    } catch (InvalidMoveException exception) {
-                        showFillError();
-                    }
-                    catch (NotReadyException exception){
-                        notYourTurnError();
-                    }
-                    selectedDice = null;
                 }
             }
         });
