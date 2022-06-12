@@ -14,6 +14,7 @@ public class KlienTest {
                 kli.giveBonuses();
             }
         }
+        kli.getResults();
     }
 }
 

@@ -91,6 +91,13 @@ public class GameServer{
                 System.out.println("Wychodzenie");
             }
         }
+        for(Communication gracz:gracze)
+        {
+            for(int k=0;k<4;k++)
+            {
+                gracz.getPrintWriter().println(gracze.get(i).getGracz().getNick()+" "+gracze.get(i).getGracz().calculatePoints());
+            }
+        }
 
     }
 }

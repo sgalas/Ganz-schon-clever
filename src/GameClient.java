@@ -27,6 +27,12 @@ public class GameClient {
     }
     private void getID(){
     }
+    public void getResults()
+    {
+        while ((line = in.readLine()) != null) {
+            System.out.println(line);
+    }
+    }
     private void connect(String hostname,int port) throws FailedToConnectException {
         try {
             clientSocket = new Socket(hostname, port);
