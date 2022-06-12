@@ -51,8 +51,11 @@ public class BoardPurple implements Board, Serializable {
     public int getPoints() {
         int points = 0;
         for(int i = 0; i < tiles.size(); i++) {
-            int temp = tiles.get(i).getFilledWith().getValue();
-            points = points + temp;
+            Dice dice=tiles.get(i).getFilledWith();
+            if(dice!=null){
+                int temp = tiles.get(i).getFilledWith().getValue();
+                points = points + temp;
+            }
         }
         return points;
     }
