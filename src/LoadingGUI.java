@@ -81,15 +81,15 @@ public class LoadingGUI {
         });
 
         JButton jb11 = new JButton("Połącz");
-        jb11.addActionListener(e -> {
-            try {
-                KlienTest kt = new KlienTest(field5.getText(), Integer.parseInt(field7.getText()), field6.getText());
-            } catch (FailedToConnectException ex) {
-                ex.printStackTrace();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        });
+//        jb11.addActionListener(e -> {
+//            try {
+//                KlienTest kt = new KlienTest(field5.getText(), Integer.parseInt(field7.getText()), field6.getText());
+//            } catch (FailedToConnectException ex) {
+//                ex.printStackTrace();
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
+//            }
+//        });
 
         // Define the panel to hold the buttons
         JPanel panel = new JPanel();

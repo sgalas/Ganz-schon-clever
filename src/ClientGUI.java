@@ -139,7 +139,7 @@ public class ClientGUI {
                             return;
                         }
                     }
-                    if (player.getPossibleMovesForDices(trayDice).size() > 0 && usedDice.contains(selectedDice)) {
+                    if (player.getPossibleMovesForDices(trayDice).size() > 0 && usedDice.contains(selectedDice) && !canReuse) {
                         List<PossibleMove> list=player.getPossibleMovesForDices(trayDice);
                         System.out.println(list);
                         showBadDiceError();

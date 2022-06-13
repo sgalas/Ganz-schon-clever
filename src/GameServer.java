@@ -28,7 +28,7 @@ public class GameServer{
             gracze.add(new Communication(client));
             System.out.println(gracze.size());
         }
-        for (int z = 0; z < 1; z++) {
+        for (int z = 0; z < 4; z++) {
             System.out.println("NOWA RUNDA");
             for (int i = 0; i < 4; i++) {
                 System.out.println("Petla po prostu");

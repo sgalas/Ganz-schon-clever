@@ -224,18 +224,21 @@ public class GameClient {
                 nextTileSpecialAction =possibleMove.doMove();
                 updateGUI();
                 doSpecialAction(nextTileSpecialAction);
+                updateGUI();
                 break;
             case ADDORANGE5:
                 possibleMove= currentPlayer.getBoardOrange().possibleMovesWithDice(new DiceCombination(new Dice(DiceColor.ORANGE,5))).get(0);
                 nextTileSpecialAction =possibleMove.doMove();
                 updateGUI();
                 doSpecialAction(nextTileSpecialAction);
+                updateGUI();
                 break;
             case ADDORANGE6:
                 possibleMove= currentPlayer.getBoardOrange().possibleMovesWithDice(new DiceCombination(new Dice(DiceColor.ORANGE,6))).get(0);
                 nextTileSpecialAction =possibleMove.doMove();
                 updateGUI();
                 doSpecialAction(nextTileSpecialAction);
+                updateGUI();
                 break;
             case ADDRANDOMGREEN:
                 List<PossibleMove> list= currentPlayer.getBoardGreen().possibleMoves();
@@ -243,24 +246,28 @@ public class GameClient {
                 nextTileSpecialAction =possibleMove.doMove();
                 updateGUI();
                 doSpecialAction(nextTileSpecialAction);
+                updateGUI();
                 break;
             case ADDPURPLE6:
                 possibleMove= currentPlayer.getBoardPurple().possibleMovesWithDice(new DiceCombination(new Dice(DiceColor.PURPLE,6))).get(0);
                 nextTileSpecialAction =possibleMove.doMove();
                 updateGUI();
                 doSpecialAction(nextTileSpecialAction);
+                updateGUI();
                 break;
             case ADDRANDOMBLUE:
                 setPlayerState(PlayerState.SELECTBLUE);
-                updateGUI();
                 waitOnGUI();
+                updateGUI();
                 doSpecialAction(getMove().doMove());
+                updateGUI();
                 break;
             case ADDRANDOMYELLOW:
                 setPlayerState(PlayerState.SELECTYELLOW);
-                updateGUI();
                 waitOnGUI();
+                updateGUI();
                 doSpecialAction(getMove().doMove());
+                updateGUI();
                 break;
         }
     }

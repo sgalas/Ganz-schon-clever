@@ -3,7 +3,7 @@ import java.io.IOException;
 public class KlienTest {
     public KlienTest(String hostname, int port, String nick) throws FailedToConnectException, IOException {
         GameClient kli = new GameClient(hostname, port, nick);
-        for (int round = 0; round < 1; round++) {
+        for (int round = 0; round < 4; round++) {
             for (int tour = 0; tour < 4; tour++) {
                 int status = kli.checkStatus();
                 if (status == 1) {
