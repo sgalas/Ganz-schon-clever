@@ -19,7 +19,7 @@ public class ClientStarter {
                 String nick=scanner.nextLine();
                 try {
                     GameClient gameClient=new GameClient(hostname,port,nick);
-                    for(int round=0;round<4;round++ ) {
+                    for(int round=0;round<1;round++ ) {
                         for (int tour = 0; tour < 4; tour++) {
                             int status = gameClient.checkStatus();
                             if (status == 1) {
@@ -29,6 +29,7 @@ public class ClientStarter {
                             }
                             gameClient.giveBonuses();
                         }
+                        gameClient.getResults();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
