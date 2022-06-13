@@ -29,8 +29,8 @@ public class ClientStarter {
                             }
                             gameClient.giveBonuses();
                         }
-                        gameClient.getResults();
                     }
+                    gameClient.getResults();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
