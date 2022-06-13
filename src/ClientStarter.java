@@ -27,8 +27,8 @@ public class ClientStarter {
                             } else {
                                 gameClient.passivePlayerTurn();
                             }
-                            gameClient.giveBonuses();
                         }
+                        gameClient.giveBonuses();
                     }
                     gameClient.getResults();
                 } catch (IOException e) {

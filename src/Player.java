@@ -59,7 +59,7 @@ public class Player implements Serializable {
         UsedSlot usedSlot=new UsedSlot();
         DiceRoll diceRoll=new DiceRoll();
         Tray tray=new Tray();
-        Player player =new Player(id,nick,0,0,0,boardGreen, boardPurple,boardOrange,boardBlue,boardYellow,moveQueue,playerState,0,0,usedSlot,diceRoll,tray);
+        Player player =new Player(id,nick,0,0,0,boardGreen, boardPurple,boardOrange,boardBlue,boardYellow,moveQueue,playerState,1,0,usedSlot,diceRoll,tray);
         return player;
     }
 

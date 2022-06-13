@@ -43,7 +43,6 @@ public class GameClient {
         }
         catch(IOException e)
         {
-            System.out.println("Nie można się połączyć!");
             throw new FailedToConnectException();
         }
     }
@@ -61,10 +60,8 @@ public class GameClient {
     }
 
     protected void activePlayerTurn() throws IOException {
-        System.out.println("aktyw");
         try {
             DiceRoll rol=(DiceRoll) ois.readObject();
-            System.out.println(rol);
             currentPlayer.setDiceRoll(rol);
 
         } catch (ClassNotFoundException e) {
@@ -108,19 +105,13 @@ public class GameClient {
         updateGUI();
         oos.writeObject(traysent);
         oos.writeObject(usedsent);
-        System.out.println("Wyslano tray i used");
         oos.writeObject(currentPlayer);
-        System.out.println("wypisano obiekt");
-        System.out.println("Koniec");
     }
     protected void passivePlayerTurn() {
         //somehow get Tray and UsedSlot from server
-        System.out.println("pasyw");
         try {
             Tray trayrecv = (Tray)ois.readObject() ;
             UsedSlot usedSlotrecv=(UsedSlot)ois.readObject();
-            System.out.println("Tray: "+trayrecv);
-            System.out.println("Used: "+usedSlotrecv);
             //Tray i used Slot dla gui
             currentPlayer.setTray(trayrecv);
             currentPlayer.setUsedSlot(usedSlotrecv);
@@ -159,14 +150,11 @@ public class GameClient {
             currentPlayer.setDiceRoll(new DiceRoll());
             updateGUI();
             oos.writeObject(currentPlayer);
-            System.out.println("wypisano obiekt");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        //add sending it to server
-        System.out.println("koniec");
     }
 
 
@@ -257,6 +245,7 @@ public class GameClient {
                 break;
             case ADDRANDOMBLUE:
                 setPlayerState(PlayerState.SELECTBLUE);
+                updateGUI();
                 waitOnGUI();
                 updateGUI();
                 doSpecialAction(getMove().doMove());
@@ -264,6 +253,7 @@ public class GameClient {
                 break;
             case ADDRANDOMYELLOW:
                 setPlayerState(PlayerState.SELECTYELLOW);
+                updateGUI();
                 waitOnGUI();
                 updateGUI();
                 doSpecialAction(getMove().doMove());
