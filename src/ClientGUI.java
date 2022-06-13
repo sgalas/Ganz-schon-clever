@@ -140,6 +140,8 @@ public class ClientGUI {
                         }
                     }
                     if (player.getPossibleMovesForDices(trayDice).size() > 0 && usedDice.contains(selectedDice)) {
+                        List<PossibleMove> list=player.getPossibleMovesForDices(trayDice);
+                        System.out.println(list);
                         showBadDiceError();
                         selectedDice = null;
                         return;

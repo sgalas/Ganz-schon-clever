@@ -44,6 +44,7 @@ public class BoardPurple implements Board, Serializable {
             }
         }
         tiles.get(index + 1).updateAllowedDiceList(filled);
+        tiles.get(index).updateAllowedDiceList(null);
         return tiles.get(index).fillWithDice(dice.getPrimaryDice());
     }
 
